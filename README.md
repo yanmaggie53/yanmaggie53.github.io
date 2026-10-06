@@ -45,8 +45,10 @@ assets/js/after-hours.js   pin-up wall + night lamp
 
 ## Fonts
 
+- **Cabinet Grotesk** (Fontshare) for the name, headlines, and titles.
 - **Satoshi** (Fontshare) for body text and interface.
-- **Instrument Serif** (Google Fonts) for the name, headings, and italic accents.
+
+Both load from Fontshare as two separate links. A combined Fontshare link returns Switzer in place of Satoshi, so keep them separate.
 
 ## Preview locally
 

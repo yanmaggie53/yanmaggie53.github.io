@@ -138,7 +138,7 @@
 
 :root {
   --font-sans: 'Satoshi', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --font-display: 'Cabinet Grotesk', 'Satoshi', ui-sans-serif, system-ui, sans-serif;
   --radius: 14px;
   --radius-lg: 22px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -202,10 +202,16 @@ a:hover { color: var(--accent); text-decoration-color: currentColor; }
 
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
-h1, h2, h3, h4 { margin: 0; font-weight: 500; line-height: 1.15; }
+/* Cabinet Grotesk for headlines, Satoshi for everything you read. */
+h1, h2, h3, h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+}
 p { margin: 0; }
 
-.serif { font-family: var(--font-serif); font-weight: 400; }
 
 .label {
   font-size: 12px;
@@ -216,13 +222,13 @@ p { margin: 0; }
 }
 
 .section-title {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(30px, 3.4vw, 40px);
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3vw, 36px);
+  letter-spacing: -0.02em;
   line-height: 1.05;
 }
-.section-title em { font-style: italic; color: var(--accent); }
+.section-title em { font-style: normal; color: var(--accent); }
 
 .visually-hidden {
   position: absolute !important;
@@ -414,13 +420,13 @@ p { margin: 0; }
 }
 .identity__mark svg { width: 100%; height: 100%; }
 .identity__name {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: 48px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 42px;
   line-height: 0.95;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.03em;
 }
-.identity__name em { font-style: italic; }
+.identity__name em { font-style: normal; color: var(--accent); }
 .identity__role {
   margin-top: 10px;
   font-size: 15px;
@@ -703,10 +709,10 @@ p { margin: 0; }
   color: var(--ink-3);
 }
 .media__placeholder b {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(24px, 3vw, 34px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: clamp(20px, 2.4vw, 28px);
   color: var(--ink-2);
   line-height: 1.1;
 }
@@ -977,7 +983,7 @@ p { margin: 0; }
   grid-template-columns: 1fr auto;
   gap: 4px 16px;
 }
-.project__title { font-size: 19px; font-weight: 500; }
+.project__title { font-size: 20px; letter-spacing: -0.01em; }
 .project__year { color: var(--ink-3); font-size: 14.5px; font-variant-numeric: tabular-nums; }
 .project__desc { grid-column: 1 / -1; color: var(--ink-2); font-size: 15.5px; max-width: 62ch; }
 .project__context { grid-column: 1 / -1; font-size: 13.5px; color: var(--ink-3); }
@@ -1000,7 +1006,7 @@ p { margin: 0; }
 .tile:hover { color: inherit; }
 .tile .media { aspect-ratio: 1 / 1; transition: transform 0.5s var(--ease); }
 .tile:hover .media { transform: translateY(-3px) rotate(-0.4deg); }
-.tile__title { font-size: 16px; font-weight: 500; }
+.tile__title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.005em; }
 .tile__desc { font-size: 14px; color: var(--ink-2); }
 
 /* A live tile: a 24-hour time-lapse of this site's sky */
@@ -1159,10 +1165,11 @@ p { margin: 0; }
 
 .cs-side-title {
   margin-top: 6px;
-  font-family: var(--font-serif);
-  font-size: 30px;
-  line-height: 1.02;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
 .toc { display: grid; gap: 8px; }
@@ -1191,13 +1198,13 @@ p { margin: 0; }
 .cs-header { padding-top: 40px; display: grid; gap: 18px; }
 .cs-kicker { display: flex; flex-wrap: wrap; gap: 6px 14px; }
 .cs-title {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(42px, 6vw, 72px);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(40px, 5.6vw, 66px);
   line-height: 0.98;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
-.cs-title em { font-style: italic; color: var(--accent); }
+.cs-title em { font-style: normal; color: var(--accent); }
 .cs-summary { font-size: 19px; line-height: 1.55; color: var(--ink-2); max-width: 60ch; }
 
 .cs-hero { margin-top: 40px; aspect-ratio: 16 / 9; }
@@ -1220,11 +1227,11 @@ p { margin: 0; }
 .cs-section { padding-top: 88px; scroll-margin-top: 24px; }
 .cs-section > .label { display: block; margin-bottom: 10px; }
 .cs-section h2 {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(30px, 3.4vw, 40px);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3vw, 36px);
   line-height: 1.05;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   margin-bottom: 20px;
 }
 .prose { max-width: 66ch; display: grid; gap: 18px; color: var(--ink-2); }
@@ -1236,9 +1243,11 @@ p { margin: 0; }
   margin: 0;
   padding: 28px 0 28px 28px;
   border-left: 3px solid var(--accent);
-  font-family: var(--font-serif);
-  font-size: clamp(26px, 3vw, 34px);
-  line-height: 1.2;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   color: var(--ink);
 }
 .question cite { display: block; margin-top: 12px; font-family: var(--font-sans); font-style: normal; font-size: 13px; color: var(--ink-3); }
@@ -1364,22 +1373,22 @@ p { margin: 0; }
   border-bottom: 1px solid var(--line);
   text-decoration: none;
 }
-.next-project b { font-family: var(--font-serif); font-weight: 400; font-size: 30px; }
+.next-project b { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: -0.02em; }
 .next-project:hover b { color: var(--accent); }
 
 /* 8. After hours ---------------------------------------------------------- */
 
 .ah-header { padding-top: 40px; display: grid; gap: 8px; }
 .ah-title {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  font-size: clamp(52px, 7vw, 84px);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(48px, 6.6vw, 80px);
   line-height: 0.95;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
 }
-.ah-pron { font-family: var(--font-serif); font-style: italic; font-size: 22px; color: var(--ink-3); }
+.ah-pron { font-style: italic; font-size: 18px; color: var(--ink-3); }
 .ah-def { max-width: 46ch; color: var(--ink-2); }
-.ah-def i { font-family: var(--font-serif); font-size: 1.1em; color: var(--ink-3); }
+.ah-def i { color: var(--ink-3); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 30px 0 0; }
 .chip {
@@ -1474,7 +1483,7 @@ dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-fi
 .lightbox__body { display: grid; grid-template-columns: 1.4fr 1fr; }
 .lightbox__body .media { border-radius: 0; min-height: 420px; }
 .lightbox__text { padding: 28px; display: grid; gap: 12px; align-content: start; }
-.lightbox__text h2 { font-family: var(--font-serif); font-weight: 400; font-size: 34px; }
+.lightbox__text h2 { font-size: 30px; letter-spacing: -0.02em; }
 .lightbox__text p { color: var(--ink-2); font-size: 15.5px; }
 .lightbox__close {
   position: absolute;
@@ -1494,8 +1503,8 @@ dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-fi
 /* 9. About ---------------------------------------------------------------- */
 
 .about-header { padding-top: 40px; display: grid; gap: 22px; }
-.about-header h1 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(40px, 5vw, 60px); line-height: 1.02; letter-spacing: -0.015em; max-width: 18ch; }
-.about-header h1 em { font-style: italic; color: var(--accent); }
+.about-header h1 { font-weight: 700; font-size: clamp(34px, 4.4vw, 52px); line-height: 1.04; letter-spacing: -0.025em; max-width: 20ch; }
+.about-header h1 em { font-style: normal; color: var(--accent); }
 .about-photo { width: 100%; max-width: 360px; aspect-ratio: 4 / 5; }
 
 .cv-list { list-style: none; margin: 0; padding: 0; display: grid; }
