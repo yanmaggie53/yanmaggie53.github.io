@@ -1,6 +1,6 @@
 /* site.js — shared by every page.
    - the sky (sun, moon, stars, clouds) drawn for the visitor's real time
-   - the day bar: pick a mode, or drag through the day
+   - the day bar: drag through the day to change the mode
    - Maggie's own clock in Boston
    - stickers you can pick up and toss
    - table-of-contents highlighting on case studies */
@@ -12,15 +12,17 @@
 
   // What the sidebar says Maggie is probably doing, based on the sky in Boston.
   var HOME_STATUS = {
+    sunrise: 'so I’m probably just waking up.',
     day: 'so I’m probably in class or at my desk.',
     afternoon: 'so I’m probably fighting the afternoon slump.',
     sunset: 'so I’m probably out on a run.',
     night: 'so I’m probably asleep (or should be).'
   };
 
-  var MODE_NAMES = { day: 'day', afternoon: 'afternoon', sunset: 'sunset', night: 'night' };
+  var MODE_NAMES = { sunrise: 'sunrise', day: 'day', afternoon: 'afternoon', sunset: 'sunset', night: 'night' };
 
   var ICONS = {
+    sunrise: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17.5h19M6 21h12"/><path d="M7 17.5a5 5 0 0 1 10 0"/><path d="M12 3.5v6M9.5 6l2.5-2.5L14.5 6"/></svg>',
     day: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.5 1.5M17.2 17.2l1.5 1.5M5.3 18.7l1.5-1.5M17.2 6.8l1.5-1.5"/></svg>',
     afternoon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 10h12v4.5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V10z"/><path d="M16.5 11.5h1.2a2.3 2.3 0 0 1 0 4.6h-1.6"/><path d="M8.5 3.5c-.8 1 .8 1.9 0 3M12 3.5c-.8 1 .8 1.9 0 3"/></svg>',
     sunset: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 17.5h19M6 21h12"/><path d="M7 17.5a5 5 0 0 1 10 0"/><path d="M12 6.5v2.5M5.2 10.6l1.6 1.4M18.8 10.6l-1.6 1.4"/></svg>',
@@ -28,6 +30,7 @@
   };
 
   var FAVICONS = {
+    sunrise: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M5 22a11 11 0 0 1 22 0z" fill="#f7a8b8"/><path d="M9 22a7 7 0 0 1 14 0z" fill="#ffd2a8"/><rect x="2" y="23.5" width="28" height="3" rx="1.5" fill="#7f8fc8"/></svg>',
     day: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="#f4b73c"/><g stroke="#f4b73c" stroke-width="2.4" stroke-linecap="round"><path d="M16 2v3M16 27v3M2 16h3M27 16h3M6.1 6.1l2.1 2.1M23.8 23.8l2.1 2.1M6.1 25.9l2.1-2.1M23.8 8.2l2.1-2.1"/></g></svg>',
     afternoon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="17" r="11" fill="#eab35a"/><circle cx="16" cy="17" r="6.5" fill="#fff3d6"/></svg>',
     sunset: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M5 22a11 11 0 0 1 22 0z" fill="#ff8a5c"/><rect x="2" y="23.5" width="28" height="3" rx="1.5" fill="#a84a63"/></svg>',
@@ -230,41 +233,30 @@
     document.querySelectorAll('[data-daybar]').forEach(function (el) {
       el.classList.add('daybar');
       el.innerHTML =
-        '<div class="daybar__head"><span data-db-time></span><button type="button" class="daybar__auto" data-db-auto>follow my sky</button></div>' +
-        '<div class="daybar__modes" role="radiogroup" aria-label="Time of day">' +
-        S.MODES.map(function (m) {
-          return '<button type="button" role="radio" class="daybar__mode" data-db-mode="' + m + '" aria-checked="false">' + ICONS[m] + '<span>' + MODE_NAMES[m] + '</span></button>';
-        }).join('') +
-        '</div>' +
+        '<div class="daybar__head"><span class="daybar__now-mode" data-db-mode></span><span class="daybar__time" data-db-time></span></div>' +
         '<div class="daybar__track"><div class="daybar__segments" data-db-segments></div><span class="daybar__now" data-db-now></span>' +
-        '<input class="daybar__range" type="range" min="0" max="1435" step="5" aria-label="Drag through your day" data-db-range></div>' +
+        '<input class="daybar__range" type="range" min="0" max="1435" step="5" aria-label="Drag through your day to change the time of day" data-db-range></div>' +
         '<div class="daybar__ticks" aria-hidden="true"><span>12a</span><span>6a</span><span>12p</span><span>6p</span><span>12a</span></div>' +
-        '<p class="daybar__note" data-db-note></p>';
+        '<p class="daybar__note"><span data-db-note></span> <button type="button" class="daybar__auto" data-db-auto>Follow my sky</button></p>';
 
       var bar = {
         el: el,
+        mode: el.querySelector('[data-db-mode]'),
         time: el.querySelector('[data-db-time]'),
         note: el.querySelector('[data-db-note]'),
         segments: el.querySelector('[data-db-segments]'),
         now: el.querySelector('[data-db-now]'),
-        range: el.querySelector('[data-db-range]'),
-        modes: el.querySelectorAll('[data-db-mode]')
+        range: el.querySelector('[data-db-range]')
       };
       bars.push(bar);
 
-      bar.modes.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var mode = btn.getAttribute('data-db-mode');
-          virtualMinute = null;
-          if (mode === S.modeAt(S.now(), place)) S.followSun();
-          else S.choose(mode);
-          render();
-        });
-      });
       bar.range.addEventListener('input', function () {
         var minute = +bar.range.value;
+        var mode = S.modeAt(atMinute(minute), place);
         virtualMinute = minute;
-        S.choose(S.modeAt(atMinute(minute), place), minute);
+        // Dragging back to right now means "follow my sky" again.
+        if (Math.abs(minute - minuteOf(S.now())) < 5) S.followSun();
+        else S.choose(mode, minute);
         render();
       });
       el.querySelector('[data-db-auto]').addEventListener('click', function () {
@@ -284,30 +276,34 @@
     });
   }
 
+  function sunTimes(date) {
+    return S.solarTimes(new Date(midnightOf(date).getTime() + 12 * 36e5), place.lat, place.lng);
+  }
+
+  function skyNote(now) {
+    var t = sunTimes(now);
+    var fmt = S.formatTime;
+    if (!t.sunset || !t.sunrise) return 'No sunrise or sunset for you today. Enjoy the long light (or the long night).';
+    if (now < t.sunrise) return 'Sunrise at ' + fmt(t.sunrise) + ' for you today.';
+    if (now < t.sunset) return (t.goldenHour ? 'Golden hour starts ' + fmt(t.goldenHour) + ', sunset at ' : 'Sunset at ') + fmt(t.sunset) + ' for you today.';
+    var tomorrow = sunTimes(new Date(now.getTime() + 864e5));
+    return 'The sun set at ' + fmt(t.sunset) + '.' + (tomorrow.sunrise ? ' Sunrise tomorrow at ' + fmt(tomorrow.sunrise) + '.' : '');
+  }
+
   function updateDaybars(mode, date) {
     if (!bars.length) return;
     var now = S.now();
     var auto = !S.override();
-    var times = S.solarTimes(new Date(midnightOf(now).getTime() + 12 * 36e5), place.lat, place.lng);
-    var note;
-    if (!auto) {
-      note = 'Showing ' + MODE_NAMES[mode] + '. Your real sky is ' + MODE_NAMES[S.modeAt(now, place)] + ' right now.';
-    } else if (times.sunset && times.goldenHour) {
-      note = (now < times.sunset ? 'Golden hour starts ' + S.formatTime(times.goldenHour) + ', sunset at ' + S.formatTime(times.sunset) : 'The sun set at ' + S.formatTime(times.sunset)) + ' for you today.';
-    } else {
-      note = 'No sunset for you today. Enjoy the long light (or the long night).';
-    }
+    var note = auto
+      ? skyNote(now)
+      : 'Showing ' + MODE_NAMES[mode] + '. Your real sky is ' + MODE_NAMES[S.modeAt(now, place)] + ' right now.';
     bars.forEach(function (bar) {
-      bar.time.innerHTML = auto
-        ? 'it’s <b>' + S.formatTime(now) + '</b> for you'
-        : 'showing <b>' + S.formatTime(date) + '</b>';
+      bar.mode.innerHTML = ICONS[mode] + '<span>' + MODE_NAMES[mode] + '</span>';
+      bar.time.textContent = auto ? S.formatTime(now) + ' for you' : S.formatTime(date);
       bar.note.textContent = note;
       bar.now.style.left = (minuteOf(now) / 14.4).toFixed(2) + '%';
       if (document.activeElement !== bar.range) bar.range.value = minuteOf(date) - (minuteOf(date) % 5);
       bar.range.setAttribute('aria-valuetext', S.formatTime(date) + ', ' + MODE_NAMES[mode]);
-      bar.modes.forEach(function (btn) {
-        btn.setAttribute('aria-checked', btn.getAttribute('data-db-mode') === mode ? 'true' : 'false');
-      });
     });
   }
 

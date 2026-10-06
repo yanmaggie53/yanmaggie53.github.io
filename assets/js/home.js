@@ -1,9 +1,9 @@
 /* home.js — the home page.
-   - chat-message intro (text lives in index.html <template>s)
-   - research / play switch + filters
+   - research / practice switch + filters
    - video previews on project cards
    - the sneak-peek plot: drag things around
-   - the garden: plant something before you go */
+   - "say hi": a small chat that plays when it scrolls into view
+   - the garden: build one before you go (saved for next visit) */
 (function () {
   'use strict';
 
@@ -11,11 +11,13 @@
   var Site = window.Site;
   var reduceMotion = Site.reduceMotion;
   var CHAT_SEEN = 'maggie:chat-seen';
+  var GARDEN_KEY = 'maggie:garden';
   var EMAIL = 'yanmaggie53@gmail.com';
 
   function mode() { return document.documentElement.getAttribute('data-mode'); }
+  function store(kind) { try { return window[kind]; } catch (err) { return null; } }
 
-  /* ---------- chat intro ---------- */
+  /* ---------- say hi ---------- */
 
   function setupChat() {
     var chat = document.querySelector('[data-chat]');
@@ -37,22 +39,14 @@
     var later = messagesFrom(chat.querySelector('template[data-chat-rest]'));
 
     function bubble(msg) {
-      var el;
-      if (msg.from === 'file') {
-        el = msg.node.cloneNode(true);
-        el.classList.add('msg', 'msg--me', 'msg--file');
-        el.removeAttribute('data-from');
-      } else {
-        el = document.createElement('p');
-        el.className = 'msg msg--' + msg.from;
-        el.innerHTML = msg.node.innerHTML;
-      }
+      var el = document.createElement('p');
+      el.className = 'msg msg--' + msg.from;
+      el.innerHTML = msg.node.innerHTML;
       return el;
     }
-    function side(msg) { return msg.from === 'them' ? 'them' : 'me'; }
     function stamp(msg) {
       var t = document.createElement('span');
-      t.className = 'msg__time msg__time--' + side(msg);
+      t.className = 'msg__time msg__time--' + msg.from;
       t.textContent = S.formatTime(Site.skyDate());
       return t;
     }
@@ -63,56 +57,71 @@
       list.forEach(function (msg, i) {
         target.appendChild(bubble(msg));
         var next = list[i + 1];
-        if (!next || side(next) !== side(msg)) target.appendChild(stamp(msg));
+        if (!next || next.from !== msg.from) target.appendChild(stamp(msg));
       });
     }
 
+    var done = false;
     function finish() {
+      done = true;
       if (reply) reply.classList.add('is-ready');
-      try { sessionStorage.setItem(CHAT_SEEN, '1'); } catch (err) { /* fine */ }
+      var ss = store('sessionStorage');
+      try { if (ss) ss.setItem(CHAT_SEEN, '1'); } catch (err) { /* fine */ }
     }
 
-    var seen = false;
-    try { seen = sessionStorage.getItem(CHAT_SEEN) === '1'; } catch (err) { /* fine */ }
-
-    if (seen || reduceMotion.matches) {
+    // Lay everything out up front (hidden) so nothing below the chat jumps.
+    function prepare() {
       renderAll(opener, openerFor(mode()));
       renderAll(rest, later);
-      finish();
-    } else {
-      play(openerFor(mode()).map(function (m) { return [opener, m]; }).concat(later.map(function (m) { return [rest, m]; })));
+      var items = Array.prototype.slice.call(chat.querySelectorAll('.msg, .msg__time'));
+      items.forEach(function (el) { el.classList.add('is-waiting'); });
+      return items;
     }
 
-    // Plays messages one by one, with a typing indicator before Maggie's.
-    function play(queue) {
+    // Reveal one by one, with a typing indicator before each of Maggie's.
+    function reveal(items) {
       var i = 0;
       (function next() {
-        if (i >= queue.length) return finish();
-        var target = queue[i][0], msg = queue[i][1];
-        var following = queue[i + 1] && queue[i + 1][1];
-        i++;
+        if (i >= items.length) return finish();
+        var el = items[i++];
+        if (el.classList.contains('msg__time')) {
+          el.classList.remove('is-waiting');
+          return next();
+        }
+        var mine = el.classList.contains('msg--me');
         var show = function () {
-          target.appendChild(bubble(msg));
-          if (!following || side(following) !== side(msg)) target.appendChild(stamp(msg));
-          setTimeout(next, msg.from === 'them' ? 650 : 380);
+          el.classList.remove('is-waiting', 'is-typing');
+          setTimeout(next, mine ? 380 : 650);
         };
-        if (side(msg) === 'me') {
-          var typing = document.createElement('p');
-          typing.className = 'msg msg--me msg--typing';
-          typing.setAttribute('aria-hidden', 'true');
-          typing.innerHTML = '<i></i><i></i><i></i>';
-          target.appendChild(typing);
-          var len = msg.node.textContent.length;
-          setTimeout(function () { typing.remove(); show(); }, Math.min(420 + len * 11, 1150));
+        if (mine) {
+          el.classList.add('is-typing');
+          setTimeout(show, Math.min(420 + el.textContent.length * 11, 1150));
         } else {
           show();
         }
       })();
     }
 
-    // Switching modes swaps the greeting to match.
+    var seen = false;
+    try { var ss = store('sessionStorage'); seen = !!ss && ss.getItem(CHAT_SEEN) === '1'; } catch (err) { /* fine */ }
+
+    if (seen || reduceMotion.matches || !('IntersectionObserver' in window)) {
+      renderAll(opener, openerFor(mode()));
+      renderAll(rest, later);
+      finish();
+    } else {
+      var items = prepare();
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        reveal(items);
+      }, { threshold: 0.5 });
+      io.observe(chat);
+    }
+
+    // Switching modes swaps the reply to match.
     document.addEventListener('modechange', function (e) {
-      if (opener.childNodes.length) renderAll(opener, openerFor(e.detail.mode));
+      if (done) renderAll(opener, openerFor(e.detail.mode));
     });
 
     if (reply) {
@@ -124,7 +133,7 @@
     }
   }
 
-  /* ---------- research / play ---------- */
+  /* ---------- research / practice ---------- */
 
   function setupWork() {
     var track = document.querySelector('[data-switch]');
@@ -132,21 +141,21 @@
     var labels = document.querySelectorAll('[data-side]');
     var panels = document.querySelectorAll('[data-panel]');
 
-    function show(side, focus) {
-      var play = side === 'play';
-      track.setAttribute('aria-checked', play ? 'true' : 'false');
+    function show(side, remember) {
+      var practice = side === 'practice';
+      track.setAttribute('aria-checked', practice ? 'true' : 'false');
       labels.forEach(function (l) { l.classList.toggle('is-on', l.getAttribute('data-side') === side); });
       panels.forEach(function (p) { p.hidden = p.getAttribute('data-panel') !== side; });
-      if (focus) history.replaceState(null, '', play ? '#play' : '#work');
+      if (remember) history.replaceState(null, '', practice ? '#practice' : '#work');
     }
     track.addEventListener('click', function () {
-      show(track.getAttribute('aria-checked') === 'true' ? 'research' : 'play', true);
+      show(track.getAttribute('aria-checked') === 'true' ? 'research' : 'practice', true);
     });
     labels.forEach(function (l) {
       l.addEventListener('click', function () { show(l.getAttribute('data-side'), true); });
     });
-    show(location.hash === '#play' ? 'play' : 'research');
-    if (location.hash === '#play') document.getElementById('work').scrollIntoView();
+    show(location.hash === '#practice' ? 'practice' : 'research');
+    if (location.hash === '#practice') document.getElementById('work').scrollIntoView();
 
     // Filters are built from the tags on the cards, so new projects show up automatically.
     var cards = Array.prototype.slice.call(document.querySelectorAll('.project'));
@@ -161,7 +170,7 @@
     selects.forEach(function (sel) {
       var key = sel.getAttribute('data-filter');
       var all = {};
-      cards.forEach(function (c) { tagsOf(c, key).forEach(function (t) { all[t] = (all[t] || 0) + 1; }); });
+      cards.forEach(function (c) { tagsOf(c, key).forEach(function (t) { all[t] = true; }); });
       Object.keys(all).sort().forEach(function (t) {
         var o = document.createElement('option');
         o.value = t;
@@ -283,170 +292,472 @@
 
   /* ---------- garden ---------- */
 
+  // Plant colors for each time of day.
+  var GARDEN_COLORS = {
+    sunrise: { leaf: '#6e9e7e', leaf2: '#9cc59a', pine: '#5d8a72', trunk: '#86624f', blooms: ['#f6b3c6', '#ffd29a', '#c9b6f7', '#ffb38a', '#f9c6d6'], center: '#fff4c7', cactus: '#6aa587', cactusDark: '#4f8a6c', succulent: '#9cc7b3', succulent2: '#c3e0d0', tip: '#f09ab5', cap: '#e8746c', dot: '#fff7ef', stem: '#f4e6d4' },
+    day: { leaf: '#5c9b6b', leaf2: '#86bf7f', pine: '#3f7d5c', trunk: '#7a5a43', blooms: ['#f4a6b8', '#f7c948', '#8fb8f2', '#f29a6b', '#b9a3f2'], center: '#fff4c7', cactus: '#4f9a74', cactusDark: '#3b7e5d', succulent: '#8fbfa8', succulent2: '#b7dccb', tip: '#e79bb0', cap: '#e2574c', dot: '#fff4e8', stem: '#f1e4cf' },
+    afternoon: { leaf: '#7a9461', leaf2: '#a3b07a', pine: '#5f7a52', trunk: '#7d6047', blooms: ['#e7a96b', '#d98b8b', '#e6c26e', '#b9a07a', '#d6a3b0'], center: '#fbefd9', cactus: '#71926a', cactusDark: '#5a7954', succulent: '#a5b48e', succulent2: '#c8cfae', tip: '#d99a8a', cap: '#c9694f', dot: '#fbefd9', stem: '#efe0c6' },
+    sunset: { leaf: '#7d9a7e', leaf2: '#a0b896', pine: '#5f7a68', trunk: '#a0705a', blooms: ['#ffb38a', '#ff8f7a', '#ffd29a', '#f7a1c0', '#ffc46b'], center: '#3b2338', cactus: '#86a383', cactusDark: '#647f63', succulent: '#a9bfa3', succulent2: '#c8d8c0', tip: '#ff9f8a', cap: '#ff8f7a', dot: '#ffe3c8', stem: '#f2d8c8' },
+    night: { leaf: '#4f7f7a', leaf2: '#6b9a92', pine: '#3d6a66', trunk: '#5a6488', blooms: ['#c9d3ff', '#fff3b0', '#a6b6ff', '#e3c8ff', '#b8f0e0'], center: '#fff3b0', cactus: '#4f857a', cactusDark: '#3a6a61', succulent: '#6f9c95', succulent2: '#8fb8b0', tip: '#c9b6f7', cap: '#8f9bd6', dot: '#e8ebf7', stem: '#c7cde6' }
+  };
+
+  var PLANTS = [
+    { id: 'mix', name: 'mix' },
+    { id: 'flower', name: 'flower', gap: 22, layer: 2 },
+    { id: 'tulip', name: 'tulip', gap: 18, layer: 2 },
+    { id: 'tree', name: 'tree', gap: 56, layer: 0 },
+    { id: 'succulent', name: 'succulent', gap: 30, layer: 3 },
+    { id: 'cactus', name: 'cactus', gap: 34, layer: 1 },
+    { id: 'grass', name: 'grass', gap: 12, layer: 3 },
+    { id: 'mushroom', name: 'mushroom', gap: 18, layer: 3 }
+  ];
+  var BY_ID = {};
+  PLANTS.forEach(function (p) { BY_ID[p.id] = p; });
+
+  function rng(seed) {
+    return function () {
+      seed = (seed + 0x6d2b79f5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function pick(list, r) { return list[Math.floor(r() * list.length)]; }
+
+  function pointedLeaf(ctx, x0, y0, x1, y1, w) {
+    var mx = (x0 + x1) / 2, my = (y0 + y1) / 2;
+    var len = Math.hypot(x1 - x0, y1 - y0) || 1;
+    var nx = -(y1 - y0) / len * w, ny = (x1 - x0) / len * w;
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.quadraticCurveTo(mx + nx, my + ny, x1, y1);
+    ctx.quadraticCurveTo(mx - nx, my - ny, x0, y0);
+    ctx.fill();
+  }
+
+  // Each drawer: (ctx, x, ground y, random, colors, growth 0–1, scale, mode)
+  var DRAW = {
+    flower: function (ctx, x, y0, r, C, g, k, m) {
+      var hgt = (40 + r() * 50) * k * g;
+      var lean = (r() - 0.5) * 16 * k * g;
+      var color = pick(C.blooms, r);
+      var petals = 5 + Math.floor(r() * 3);
+      var size = (6 + r() * 4) * k * g;
+      var droop = m === 'afternoon';
+      var topX = x + lean, topY = y0 - hgt;
+      var hx = droop ? topX + 14 * k * g : topX;
+      var hy = droop ? topY + 12 * k * g : topY;
+      ctx.strokeStyle = C.leaf;
+      ctx.lineWidth = 1.5 * k;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x, y0);
+      if (droop) ctx.bezierCurveTo(x, y0 - hgt * 0.6, topX - 4 * k, topY - 8 * k, hx, hy);
+      else ctx.quadraticCurveTo(x + lean * 0.2, y0 - hgt * 0.5, topX, topY);
+      ctx.stroke();
+      ctx.fillStyle = C.leaf2;
+      pointedLeaf(ctx, x + lean * 0.1, y0 - hgt * 0.3, x + lean * 0.1 + 10 * k * g, y0 - hgt * 0.42, 3 * k * g);
+      ctx.fillStyle = color;
+      for (var i = 0; i < petals; i++) {
+        var a = (i / petals) * Math.PI * 2 + (droop ? 0.6 : 0);
+        ctx.beginPath();
+        ctx.ellipse(hx + Math.cos(a) * size * 0.8, hy + Math.sin(a) * size * 0.8, size * 0.62, size * 0.42, a, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = C.center;
+      ctx.beginPath();
+      ctx.arc(hx, hy, size * 0.38, 0, Math.PI * 2);
+      ctx.fill();
+    },
+
+    tulip: function (ctx, x, y0, r, C, g, k) {
+      var hgt = (34 + r() * 36) * k * g;
+      var lean = (r() - 0.5) * 8 * k * g;
+      var w = (5 + r() * 2) * k * g;
+      var hx = x + lean, hy = y0 - hgt;
+      ctx.fillStyle = C.leaf2;
+      pointedLeaf(ctx, x, y0, x - 9 * k * g, y0 - hgt * 0.55, 3.2 * k * g);
+      pointedLeaf(ctx, x, y0, x + 8 * k * g, y0 - hgt * 0.45, 3 * k * g);
+      ctx.strokeStyle = C.leaf;
+      ctx.lineWidth = 1.6 * k;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x, y0);
+      ctx.quadraticCurveTo(x, y0 - hgt * 0.5, hx, hy);
+      ctx.stroke();
+      ctx.fillStyle = pick(C.blooms, r);
+      ctx.beginPath();
+      ctx.moveTo(hx - w, hy - w * 0.9);
+      ctx.quadraticCurveTo(hx - w * 1.05, hy + w * 0.6, hx, hy + w * 0.7);
+      ctx.quadraticCurveTo(hx + w * 1.05, hy + w * 0.6, hx + w, hy - w * 0.9);
+      ctx.lineTo(hx + w * 0.45, hy - w * 0.35);
+      ctx.lineTo(hx, hy - w * 1.05);
+      ctx.lineTo(hx - w * 0.45, hy - w * 0.35);
+      ctx.closePath();
+      ctx.fill();
+    },
+
+    tree: function (ctx, x, y0, r, C, g, k) {
+      var trunkH = (44 + r() * 46) * k * g;
+      var trunkW = (4.5 + r() * 2.5) * k;
+      var top = y0 - trunkH;
+      ctx.fillStyle = C.trunk;
+      ctx.beginPath();
+      ctx.moveTo(x - trunkW / 2, y0);
+      ctx.lineTo(x - trunkW * 0.3, top);
+      ctx.lineTo(x + trunkW * 0.3, top);
+      ctx.lineTo(x + trunkW / 2, y0);
+      ctx.fill();
+      if (r() < 0.3) {
+        // a little pine
+        ctx.fillStyle = C.pine;
+        var layers = 3, wBase = (16 + r() * 8) * k * g;
+        for (var i = 0; i < layers; i++) {
+          var ly = top + 10 * k * g - i * 15 * k * g;
+          var lw = wBase * (1 - i * 0.22);
+          ctx.beginPath();
+          ctx.moveTo(x - lw, ly + 6 * k * g);
+          ctx.lineTo(x, ly - 20 * k * g);
+          ctx.lineTo(x + lw, ly + 6 * k * g);
+          ctx.closePath();
+          ctx.fill();
+        }
+        return;
+      }
+      var blobs = 3 + Math.floor(r() * 3);
+      var R = (14 + r() * 9) * k * g;
+      for (var j = 0; j < blobs; j++) {
+        ctx.fillStyle = j % 2 ? C.leaf2 : C.leaf;
+        ctx.beginPath();
+        ctx.arc(x + (r() - 0.5) * R * 1.6, top - R * 0.5 + (r() - 0.5) * R, R * (0.7 + r() * 0.4), 0, Math.PI * 2);
+        ctx.fill();
+      }
+    },
+
+    succulent: function (ctx, x, y0, r, C, g, k) {
+      var R = (13 + r() * 8) * k * g;
+      var n = 7 + Math.floor(r() * 4);
+      var rings = [[R, C.succulent], [R * 0.68, C.succulent2]];
+      rings.forEach(function (ring) {
+        for (var i = 0; i < n; i++) {
+          var a = Math.PI + (i + 0.5) / n * Math.PI;
+          var tx = x + Math.cos(a) * ring[0];
+          var ty = y0 + Math.sin(a) * ring[0] * 0.9;
+          ctx.fillStyle = ring[1];
+          pointedLeaf(ctx, x, y0, tx, ty, ring[0] * 0.22);
+          if (ring[1] === C.succulent) {
+            ctx.fillStyle = C.tip;
+            ctx.beginPath();
+            ctx.arc(tx, ty, 1.2 * k, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      });
+    },
+
+    cactus: function (ctx, x, y0, r, C, g, k) {
+      var H = (34 + r() * 44) * k * g;
+      var W = (10 + r() * 5) * k;
+      var top = y0 - H + W / 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = C.cactus;
+      var arms = Math.floor(r() * 3);
+      var side = r() < 0.5 ? -1 : 1;
+      for (var i = 0; i < arms; i++) {
+        var ay = y0 - H * (0.35 + r() * 0.25);
+        var out = (5 + r() * 5) * k;
+        var up = (9 + r() * 12) * k * g;
+        ctx.lineWidth = W * 0.68;
+        ctx.beginPath();
+        ctx.moveTo(x, ay);
+        ctx.lineTo(x + side * (W / 2 + out), ay);
+        ctx.lineTo(x + side * (W / 2 + out), ay - up);
+        ctx.stroke();
+        side = -side;
+      }
+      ctx.lineWidth = W;
+      ctx.beginPath();
+      ctx.moveTo(x, y0 + W);
+      ctx.lineTo(x, top);
+      ctx.stroke();
+      ctx.strokeStyle = C.cactusDark;
+      ctx.lineWidth = Math.max(0.8, 0.9 * k);
+      ctx.beginPath();
+      ctx.moveTo(x - W * 0.2, y0);
+      ctx.lineTo(x - W * 0.2, top + 2 * k);
+      ctx.moveTo(x + W * 0.2, y0);
+      ctx.lineTo(x + W * 0.2, top + 2 * k);
+      ctx.stroke();
+      if (r() < 0.35) {
+        ctx.fillStyle = pick(C.blooms, r);
+        ctx.beginPath();
+        ctx.arc(x, top - W * 0.45, W * 0.32, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    },
+
+    grass: function (ctx, x, y0, r, C, g, k) {
+      var blades = 5 + Math.floor(r() * 5);
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 1.6 * k;
+      for (var i = 0; i < blades; i++) {
+        var bx = x + (r() - 0.5) * 10 * k;
+        var hgt = (12 + r() * 24) * k * g;
+        var tip = (r() - 0.5) * 16 * k * g;
+        ctx.strokeStyle = i % 2 ? C.leaf2 : C.leaf;
+        ctx.beginPath();
+        ctx.moveTo(bx, y0);
+        ctx.quadraticCurveTo(bx, y0 - hgt * 0.6, bx + tip, y0 - hgt);
+        ctx.stroke();
+      }
+    },
+
+    mushroom: function (ctx, x, y0, r, C, g, k) {
+      var stemH = (8 + r() * 12) * k * g;
+      var stemW = (4 + r() * 3) * k;
+      var capR = (7 + r() * 7) * k * g;
+      ctx.fillStyle = C.stem;
+      ctx.beginPath();
+      ctx.moveTo(x - stemW / 2, y0);
+      ctx.lineTo(x - stemW * 0.4, y0 - stemH);
+      ctx.lineTo(x + stemW * 0.4, y0 - stemH);
+      ctx.lineTo(x + stemW / 2, y0);
+      ctx.fill();
+      ctx.fillStyle = C.cap;
+      ctx.beginPath();
+      ctx.ellipse(x, y0 - stemH, capR, capR * 0.78, 0, Math.PI, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = C.dot;
+      for (var i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.arc(x + (i - 1) * capR * 0.45, y0 - stemH - capR * (0.3 + r() * 0.25), capR * 0.12, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  };
+
   function setupGarden() {
     var garden = document.querySelector('[data-garden]');
     if (!garden) return;
     var canvas = garden.querySelector('canvas');
     var ctx = canvas.getContext('2d');
-    var plants = [];
-    var raf = null;
-    var w = 0, h = 0;
-    var LIFE = 5200, GROW = 700, FADE = 1300;
+    var tools = document.querySelector('[data-garden-tools]');
+    var countEl = document.querySelector('[data-garden-count]');
+    var clearBtn = document.querySelector('[data-garden-clear]');
+    var prompt = document.querySelector('[data-garden-prompt]');
+    var local = store('localStorage');
+    var w = 0, h = 0, dpr = 1;
+    var raf = null, visible = true;
+    var selected = 'flower';
+    var plants = load();
+    var fireflies = [];
+    var GROW = 700;
 
-    var PALETTES = {
-      day: ['#f4a6b8', '#f7c948', '#8fb8f2', '#f29a6b', '#b9a3f2'],
-      afternoon: ['#e7a96b', '#d98b8b', '#e6c26e', '#b9a07a', '#d6a3b0'],
-      sunset: ['#ffb38a', '#ff8f7a', '#ffd29a', '#f7a1c0', '#ffc46b'],
-      night: ['#fff3b0', '#d6f5ff', '#ffe08a']
+    var PROMPTS = {
+      sunrise: 'Pick a plant, click to plant it, drag for a row. Early mornings are good for gardening.',
+      day: 'Pick a plant, click to plant it, drag for a row. It’ll still be here next time you visit.',
+      afternoon: 'Pick a plant, click to plant it, drag for a row. (The flowers are a little sleepy right now.)',
+      sunset: 'Pick a plant, click to plant it, drag for a row. Someone might jog by.',
+      night: 'Pick a plant, click to plant it, drag for a row. The fireflies come out at night.'
     };
 
+    function load() {
+      try {
+        var raw = local && local.getItem(GARDEN_KEY);
+        var list = raw ? JSON.parse(raw) : [];
+        return Array.isArray(list) ? list.filter(function (p) { return DRAW[p.t]; }) : [];
+      } catch (err) { return []; }
+    }
+    function save() {
+      try {
+        if (local) local.setItem(GARDEN_KEY, JSON.stringify(plants.map(function (p) { return { t: p.t, x: p.x, s: p.s }; })));
+      } catch (err) { /* storage full or blocked: the garden just won't be remembered */ }
+    }
+
+    function colors() { return GARDEN_COLORS[mode()] || GARDEN_COLORS.day; }
+
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = garden.clientWidth;
       h = garden.clientHeight;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       garden.style.setProperty('--garden-w', w + 'px');
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    var prompt = document.querySelector('[data-garden-prompt]');
-    var PROMPTS = {
-      day: 'Plant something before you go.',
-      afternoon: 'Plant something before you go. (They’re a little sleepy right now.)',
-      sunset: 'Plant something before you go. Someone might jog by.',
-      night: 'Let a firefly out before you go.'
-    };
-    function updatePrompt() { if (prompt) prompt.textContent = PROMPTS[mode()] || PROMPTS.day; }
-    updatePrompt();
-    document.addEventListener('modechange', updatePrompt);
-
-    function ink() { return getComputedStyle(document.body).color; }
-
-    function plant(x, y) {
-      var m = mode();
-      var palette = PALETTES[m];
-      var now = performance.now();
-      if (m === 'night') {
-        for (var i = 0; i < 3; i++) {
-          plants.push({ kind: 'firefly', x: x + (Math.random() - 0.5) * 30, y: y, t0: now + i * 90, color: palette[i % palette.length], drift: (Math.random() - 0.5) * 0.04, rise: 0.02 + Math.random() * 0.025, phase: Math.random() * 6 });
-        }
-      } else {
-        plants.push({ kind: m === 'afternoon' ? 'droop' : 'flower', x: x, t0: now, color: palette[Math.floor(Math.random() * palette.length)], height: 46 + Math.random() * 70, petals: 5 + Math.floor(Math.random() * 3), size: 6 + Math.random() * 5, lean: (Math.random() - 0.5) * 16 });
-      }
-      if (plants.length > 160) plants.splice(0, plants.length - 160);
-      if (!raf) raf = requestAnimationFrame(draw);
+      draw(performance.now());
     }
 
     function draw(time) {
-      raf = null;
       ctx.clearRect(0, 0, w, h);
-      var stem = ink();
-      plants = plants.filter(function (p) { return time - p.t0 < LIFE + FADE; });
-      plants.forEach(function (p) {
-        var age = time - p.t0;
-        if (age < 0) return;
-        var alpha = age > LIFE ? 1 - (age - LIFE) / FADE : 1;
-        var grow = reduceMotion.matches ? 1 : Math.min(1, age / GROW);
-        grow = 1 - Math.pow(1 - grow, 3);
-        ctx.globalAlpha = Math.max(0, alpha);
-        if (p.kind === 'firefly') return drawFirefly(p, age, time);
-        drawFlower(p, grow, stem, time);
+      var scale = w < 500 ? 1.05 : 1.3;
+      var C = colors();
+      var m = mode();
+      var growing = false;
+      var order = plants.slice().sort(function (a, b) { return BY_ID[a.t].layer - BY_ID[b.t].layer; });
+      order.forEach(function (p) {
+        var g = 1;
+        if (p.b !== undefined && !reduceMotion.matches) {
+          g = Math.min(1, (time - p.b) / GROW);
+          if (g < 1) growing = true;
+          g = 1 - Math.pow(1 - g, 3);
+        }
+        if (g <= 0) return;
+        ctx.save();
+        DRAW[p.t](ctx, p.x * w, h, rng(p.s), C, g, scale, m);
+        ctx.restore();
       });
-      ctx.globalAlpha = 1;
-      if (plants.length) raf = requestAnimationFrame(draw);
+      var glowing = drawFireflies(time, m);
+      return growing || glowing;
     }
 
-    function drawFlower(p, grow, stemColor, time) {
-      var droop = p.kind === 'droop';
-      var hgt = p.height * grow;
-      var sway = reduceMotion.matches ? 0 : Math.sin(time / 900 + p.x) * 3;
-      var topX = p.x + p.lean * grow + sway;
-      var topY = h - hgt;
-      var headX = droop ? topX + 16 * grow : topX;
-      var headY = droop ? topY + 14 * grow : topY;
-
-      ctx.strokeStyle = stemColor;
-      ctx.lineWidth = 1.4;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(p.x, h);
-      if (droop) ctx.bezierCurveTo(p.x, h - hgt * 0.6, topX - 4, topY - 8, headX, headY);
-      else ctx.quadraticCurveTo(p.x + p.lean * 0.2, h - hgt * 0.5, topX, topY);
-      ctx.stroke();
-
-      // a leaf
-      if (grow > 0.5) {
-        ctx.fillStyle = stemColor;
-        ctx.beginPath();
-        var ly = h - hgt * 0.35;
-        ctx.ellipse(p.x + 5, ly, 6 * grow, 2.4 * grow, -0.5, 0, Math.PI * 2);
-        ctx.fill();
+    // At night, a few fireflies drift over whatever you've planted.
+    function drawFireflies(time, m) {
+      if (m !== 'night' || !plants.length || reduceMotion.matches) {
+        fireflies = [];
+        return false;
       }
-
-      var size = p.size * grow;
-      ctx.fillStyle = p.color;
-      for (var i = 0; i < p.petals; i++) {
-        var a = (i / p.petals) * Math.PI * 2 + (droop ? 0.6 : 0);
-        ctx.beginPath();
-        ctx.ellipse(headX + Math.cos(a) * size * 0.8, headY + Math.sin(a) * size * 0.8, size * 0.62, size * 0.42, a, 0, Math.PI * 2);
-        ctx.fill();
+      var want = Math.min(14, 3 + Math.floor(plants.length / 3));
+      while (fireflies.length < want) {
+        fireflies.push({ x: Math.random(), y: 0.25 + Math.random() * 0.6, p: Math.random() * 6, s: 0.4 + Math.random() * 0.6 });
       }
-      ctx.fillStyle = mode() === 'sunset' ? '#3b2338' : '#fff4c7';
-      ctx.beginPath();
-      ctx.arc(headX, headY, size * 0.38, 0, Math.PI * 2);
-      ctx.fill();
+      fireflies.length = want;
+      fireflies.forEach(function (f) {
+        var x = (f.x + Math.sin(time / 4000 * f.s + f.p) * 0.03) * w;
+        var y = (f.y + Math.cos(time / 3000 * f.s + f.p) * 0.08) * h;
+        var glow = 0.35 + 0.65 * Math.max(0, Math.sin(time / 600 * f.s + f.p));
+        var grad = ctx.createRadialGradient(x, y, 0, x, y, 9);
+        grad.addColorStop(0, 'rgba(255, 243, 176,' + glow + ')');
+        grad.addColorStop(1, 'rgba(255, 243, 176, 0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(x, y, 9, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      return true;
     }
 
-    function drawFirefly(p, age, time) {
-      var x = p.x + Math.sin(age / 700 + p.phase) * 12 + p.drift * age;
-      var y = p.y - p.rise * age;
-      var blink = 0.55 + 0.45 * Math.sin(time / 260 + p.phase);
-      var g = ctx.createRadialGradient(x, y, 0, x, y, 12);
-      g.addColorStop(0, p.color);
-      g.addColorStop(1, 'rgba(255,240,170,0)');
-      ctx.globalAlpha *= blink;
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(x, y, 12, 0, Math.PI * 2);
-      ctx.fill();
+    function tick(time) {
+      raf = null;
+      var again = draw(time);
+      if (again && visible && !document.hidden) raf = requestAnimationFrame(tick);
+    }
+    function wake() { if (!raf) raf = requestAnimationFrame(tick); }
+
+    function plant(xPx) {
+      var type = selected === 'mix' ? PLANTS[1 + Math.floor(Math.random() * (PLANTS.length - 1))].id : selected;
+      plants.push({ t: type, x: Math.max(0.01, Math.min(0.99, xPx / w)), s: Math.floor(Math.random() * 1e9), b: performance.now() });
+      if (plants.length > 160) plants.splice(0, plants.length - 160);
+      save();
+      updateCount();
+      wake();
+      return type;
     }
 
-    // Click to plant one, drag to plant a row.
+    function updateCount() {
+      if (countEl) countEl.textContent = plants.length ? plants.length + (plants.length === 1 ? ' plant' : ' plants') : '';
+      if (clearBtn) clearBtn.hidden = !plants.length;
+    }
+
+    // Tool buttons, each with a little drawing of its plant.
+    var buttons = [];
+    var end = tools && tools.querySelector('.garden-tools__end');
+    PLANTS.forEach(function (p) {
+      if (!tools) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'garden-tool';
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-checked', p.id === selected ? 'true' : 'false');
+      btn.innerHTML = '<canvas width="80" height="80" aria-hidden="true"></canvas><span>' + p.name + '</span>';
+      btn.addEventListener('click', function () {
+        selected = p.id;
+        buttons.forEach(function (b) { b.btn.setAttribute('aria-checked', b.id === selected ? 'true' : 'false'); });
+      });
+      tools.insertBefore(btn, end);
+      buttons.push({ id: p.id, btn: btn, canvas: btn.querySelector('canvas') });
+    });
+
+    function drawIcons() {
+      var C = colors();
+      buttons.forEach(function (b) {
+        var c = b.canvas.getContext('2d');
+        c.setTransform(2, 0, 0, 2, 0, 0);
+        c.clearRect(0, 0, 40, 40);
+        if (b.id === 'mix') {
+          [['tulip', 0.42], ['succulent', 0.62], ['mushroom', 0.7]].forEach(function (t, i) {
+            c.save();
+            DRAW[t[0]](c, 9 + i * 11, 36, rng(7 + i), C, 1, t[1], 'day');
+            c.restore();
+          });
+          return;
+        }
+        c.save();
+        var seeds = { flower: 3, tulip: 11, tree: 5, succulent: 9, cactus: 14, grass: 2, mushroom: 6 };
+        var scale = { flower: 0.45, tulip: 0.5, tree: 0.36, succulent: 0.95, cactus: 0.42, grass: 0.8, mushroom: 0.95 }[b.id];
+        DRAW[b.id](c, 20, 37, rng(seeds[b.id]), C, 1, scale, 'day');
+        c.restore();
+      });
+    }
+
+    function onMode() {
+      if (prompt) prompt.textContent = PROMPTS[mode()] || PROMPTS.day;
+      drawIcons();
+      wake();
+    }
+
+    // Click to plant, drag for a row.
     var last = null, down = false;
-    function pos(e) {
-      var r = canvas.getBoundingClientRect();
-      return { x: e.clientX - r.left, y: e.clientY - r.top };
-    }
+    function xOf(e) { return e.clientX - canvas.getBoundingClientRect().left; }
     garden.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
       down = true;
-      last = pos(e);
-      plant(last.x, last.y);
+      last = xOf(e);
+      plant(last);
     });
     garden.addEventListener('pointermove', function (e) {
-      if (!down || e.pointerType === 'touch') return;
-      var p = pos(e);
-      if (Math.abs(p.x - last.x) > 20) {
-        last = p;
-        plant(p.x, p.y);
+      if (!down) return;
+      var x = xOf(e);
+      var gap = selected === 'mix' ? 26 : BY_ID[selected].gap;
+      if (Math.abs(x - last) >= gap) {
+        last = x;
+        plant(x);
       }
     });
     window.addEventListener('pointerup', function () { down = false; });
     garden.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        plant(20 + Math.random() * (w - 40), h * 0.6);
+        plant(20 + Math.random() * (w - 40));
       }
     });
+    if (clearBtn) clearBtn.addEventListener('click', function () {
+      plants = [];
+      save();
+      updateCount();
+      draw(performance.now());
+    });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        if (visible) wake();
+      }).observe(garden);
+    }
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) wake(); });
+    document.addEventListener('modechange', onMode);
+    window.addEventListener('resize', resize);
+
+    resize();
+    onMode();
+    updateCount();
   }
 
   function init() {
-    setupChat();
     setupWork();
     setupPreviews();
     setupPlot();
+    setupChat();
     setupGarden();
   }
 

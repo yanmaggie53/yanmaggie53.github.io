@@ -30,7 +30,7 @@
     <aside class="sidebar">
       <a class="back-link" href="index.html">&larr; home</a>
       <div class="side-block">
-        <p class="bio">This is the hobby side of me: drawing, painting, architecture sketches, and things I’ve built by hand over the years. No research questions here, just making.</p>
+        <p class="bio">The hobby side of me: figure drawings, portraits, and architecture sketches from my high school art portfolio, photography, and things I’ve made on my own, like the chainmail top I wore to the MIT Gala. No research questions here, just making.</p>
       </div>
       <div class="side-block">
         <span class="label">How to look around</span>
@@ -49,48 +49,57 @@
       <header class="ah-header">
         <h1 class="ah-title">after hours</h1>
         <p class="ah-pron">/ˈaf·tər ou(ə)rz/</p>
-        <p class="ah-def"><i>noun.</i> the time after the work is done, when the making happens. Also: a pin-up wall of things I’ve drawn, painted, and built.</p>
+        <p class="ah-def"><i>noun.</i> the time after the work is done, when the making happens. Also: a pin-up wall of things I’ve drawn, photographed, and made.</p>
       </header>
 
       <div class="chips" role="group" aria-label="Filter the wall">
         <button type="button" class="chip" data-kind-filter="all" aria-pressed="true">everything</button>
-        <button type="button" class="chip" data-kind-filter="fine art" aria-pressed="false">fine art</button>
-        <button type="button" class="chip" data-kind-filter="architecture" aria-pressed="false">architecture sketches</button>
-        <button type="button" class="chip" data-kind-filter="fabrication" aria-pressed="false">fabrication</button>
+        <button type="button" class="chip" data-kind-filter="figures &amp; portraits" aria-pressed="false">figures &amp; portraits</button>
+        <button type="button" class="chip" data-kind-filter="architecture" aria-pressed="false">architecture sketchbook</button>
+        <button type="button" class="chip" data-kind-filter="photography" aria-pressed="false">photography</button>
+        <button type="button" class="chip" data-kind-filter="fabrication" aria-pressed="false">made by hand</button>
       </div>
 
       <!-- The wall. Each piece: data-kind (for the filter), data-title, data-meta,
            data-desc (shown up close). --r tilts it, --ratio sets the image shape.
-           Swap the placeholder div for <img src="assets/img/after-hours/..." alt="..."> -->
+           Swap the placeholder div for <img src="assets/img/after-hours/..." alt="...">
+           Note: data-kind="figures &amp; portraits" must match its filter chip exactly. -->
       <div class="wall" data-wall>
-        <button type="button" class="piece" style="--r:-2.5deg;--ratio:4/5" data-kind="fabrication" data-title="3D-printed chainmail top" data-meta="Fabrication · PLA · year" data-desc="A wearable top made from interlocking 3D-printed links. Add a line about how you designed the link geometry and how many hours of printing it took.">
+        <button type="button" class="piece" style="--r:-2.5deg;--ratio:4/5" data-kind="fabrication" data-title="Chainmail top" data-meta="Made by hand · 3D printed · MIT Gala 2025" data-desc="A wearable top of interlocking 3D-printed links that I made to wear to the MIT Gala in 2025. Add how you designed the link geometry and how long it took to print and assemble.">
           <div class="media"><div class="media__placeholder"><b>Chainmail top</b><span>photo</span></div></div>
-          <span class="piece__caption"><b>3D-printed chainmail top</b><span>fabrication</span></span>
+          <span class="piece__caption"><b>Chainmail top</b><span>made by hand · 2025</span></span>
         </button>
-
-        <button type="button" class="piece" style="--r:1.8deg;--ratio:1/1" data-kind="fine art" data-title="Drawing &amp; illustration" data-meta="Fine art · medium · year" data-desc="Add a short note: what you were drawing and why.">
-          <div class="media"><div class="media__placeholder"><b>Illustration</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Drawing &amp; illustration</b><span>fine art</span></span>
+        <button type="button" class="piece" style="--r:1.8deg;--ratio:4/5" data-kind="figures &amp; portraits" data-title="Figure study" data-meta="Figures · medium · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
+          <div class="media"><div class="media__placeholder"><b>Figure study</b><span>scan</span></div></div>
+          <span class="piece__caption"><b>Figure study</b><span>figures · high school</span></span>
         </button>
-
-        <button type="button" class="piece" style="--r:-1deg;--ratio:3/4" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture · pen on paper · year" data-desc="Where you were, what you were looking at.">
+        <button type="button" class="piece" style="--r:-1deg;--ratio:3/4" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture sketchbook · pen on paper · high school" data-desc="Where you were, what building you were looking at.">
           <div class="media"><div class="media__placeholder"><b>Sketch</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Architecture sketch</b><span>architecture</span></span>
+          <span class="piece__caption"><b>Architecture sketch</b><span>architecture sketchbook</span></span>
         </button>
-
-        <button type="button" class="piece" style="--r:2.6deg;--ratio:4/3" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture · medium · year" data-desc="Where you were, what you were looking at.">
+        <button type="button" class="piece" style="--r:2.6deg;--ratio:4/3" data-kind="photography" data-title="Photograph" data-meta="Photography · year" data-desc="Where and when you took it.">
+          <div class="media"><div class="media__placeholder"><b>Photo</b><span>photo</span></div></div>
+          <span class="piece__caption"><b>Photograph</b><span>photography</span></span>
+        </button>
+        <button type="button" class="piece" style="--r:-3deg;--ratio:4/5" data-kind="figures &amp; portraits" data-title="Portrait" data-meta="Portraits · medium · high school art portfolio" data-desc="Who or what it is, and the medium.">
+          <div class="media"><div class="media__placeholder"><b>Portrait</b><span>scan</span></div></div>
+          <span class="piece__caption"><b>Portrait</b><span>portraits · high school</span></span>
+        </button>
+        <button type="button" class="piece" style="--r:1.2deg;--ratio:3/4" data-kind="fabrication" data-title="Prom dress" data-meta="Made by hand · materials · high school" data-desc="The prom dress I made in high school. Add the materials, how long it took, and anything you’d do differently.">
+          <div class="media"><div class="media__placeholder"><b>Prom dress</b><span>photo</span></div></div>
+          <span class="piece__caption"><b>Prom dress</b><span>made by hand · high school</span></span>
+        </button>
+        <button type="button" class="piece" style="--r:-1.6deg;--ratio:4/3" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture sketchbook · medium · high school" data-desc="Where you were, what building you were looking at.">
           <div class="media"><div class="media__placeholder"><b>Sketch</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Architecture sketch</b><span>architecture</span></span>
+          <span class="piece__caption"><b>Architecture sketch</b><span>architecture sketchbook</span></span>
         </button>
-
-        <button type="button" class="piece" style="--r:-3deg;--ratio:4/5" data-kind="fine art" data-title="Painting" data-meta="Fine art · medium · year" data-desc="Add a short note about this piece.">
-          <div class="media"><div class="media__placeholder"><b>Painting</b><span>photo</span></div></div>
-          <span class="piece__caption"><b>Painting</b><span>fine art</span></span>
+        <button type="button" class="piece" style="--r:2.2deg;--ratio:1/1" data-kind="photography" data-title="Photograph" data-meta="Photography · year" data-desc="Where and when you took it.">
+          <div class="media"><div class="media__placeholder"><b>Photo</b><span>photo</span></div></div>
+          <span class="piece__caption"><b>Photograph</b><span>photography</span></span>
         </button>
-
-        <button type="button" class="piece" style="--r:1.2deg;--ratio:1/1" data-kind="fabrication" data-title="Fabrication piece" data-meta="Fabrication · material · year" data-desc="What it is, how you made it, what tools you used (laser cutter, CNC, sewing machine…).">
-          <div class="media"><div class="media__placeholder"><b>Built thing</b><span>photo</span></div></div>
-          <span class="piece__caption"><b>Fabrication piece</b><span>fabrication</span></span>
+        <button type="button" class="piece" style="--r:-2deg;--ratio:4/5" data-kind="figures &amp; portraits" data-title="Figure study" data-meta="Figures · medium · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
+          <div class="media"><div class="media__placeholder"><b>Figure study</b><span>scan</span></div></div>
+          <span class="piece__caption"><b>Figure study</b><span>figures · high school</span></span>
         </button>
       </div>
 

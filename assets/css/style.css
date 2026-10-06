@@ -52,6 +52,35 @@
   color-scheme: light;
 }
 
+/* Dawn: pastel and soft. Lighter than sunset, so the morning rises into light
+   while the evening falls into dark. */
+:root[data-mode="sunrise"] {
+  --bg: #f6e6df;
+  --surface: rgba(255, 250, 247, 0.7);
+  --surface-solid: #fdf4ef;
+  --ink: #2a1f2b;
+  --ink-2: #5d4b58;
+  --ink-3: #74616d;
+  --line: rgba(42, 31, 43, 0.12);
+  --grid: rgba(180, 90, 120, 0.08);
+  --accent: #a23b5f;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(162, 59, 95, 0.1);
+  --sky-1: #7f8fc8;
+  --sky-2: #d9a9c4;
+  --sky-3: #ffd2a8;
+  --sun-core: #fff1d6;
+  --sun-glow: rgba(255, 170, 140, 0.55);
+  --sun-size: 104px;
+  --cloud: rgba(255, 225, 235, 0.8);
+  --cloud-opacity: 0.7;
+  --stars-opacity: 0.15;
+  --shadow: 0 1px 2px rgba(60, 20, 40, 0.06), 0 8px 24px rgba(60, 20, 40, 0.07);
+  --placeholder-a: #f1d3d6;
+  --placeholder-b: #fbe9df;
+  color-scheme: light;
+}
+
 /* The after-lunch slump: same light, but warmer, hazier, a little dimmer. */
 :root[data-mode="afternoon"] {
   --bg: #f1e9da;
@@ -380,7 +409,8 @@ p { margin: 0; }
   filter: drop-shadow(0 0 18px rgba(220, 228, 255, 0.35));
 }
 :root[data-mode="night"] .sky__moon { opacity: 1; }
-:root[data-mode="sunset"] .sky__moon { opacity: 0.25; }
+:root[data-mode="sunset"] .sky__moon,
+:root[data-mode="sunrise"] .sky__moon { opacity: 0.25; }
 
 .sky__clouds {
   position: absolute;
@@ -490,6 +520,14 @@ p { margin: 0; }
   color: var(--ink-2);
 }
 .daybar__head b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+.daybar__now-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-weight: 500;
+}
+.daybar__now-mode svg { width: 17px; height: 17px; color: var(--accent); }
 .daybar__auto {
   border: 0;
   background: none;
@@ -501,30 +539,7 @@ p { margin: 0; }
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-:root[data-auto="true"] .daybar__auto { visibility: hidden; }
-
-.daybar__modes {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 4px;
-}
-.daybar__mode {
-  display: grid;
-  justify-items: center;
-  gap: 3px;
-  padding: 7px 2px 6px;
-  border: 0;
-  border-radius: 10px;
-  background: transparent;
-  color: var(--ink-3);
-  font: inherit;
-  font-size: 11.5px;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-.daybar__mode svg { width: 20px; height: 20px; }
-.daybar__mode:hover { color: var(--ink); background: var(--accent-soft); }
-.daybar__mode[aria-checked="true"] { color: var(--ink); background: var(--surface-solid); box-shadow: 0 0 0 1px var(--line), var(--shadow); }
+:root[data-auto="true"] .daybar__auto { display: none; }
 
 .daybar__track {
   position: relative;
@@ -539,6 +554,7 @@ p { margin: 0; }
 }
 .daybar__seg { height: 100%; }
 .daybar__seg[data-mode="night"] { background: #1c2244; }
+.daybar__seg[data-mode="sunrise"] { background: linear-gradient(90deg, #d9a9c4, #ffd2a8); }
 .daybar__seg[data-mode="day"] { background: #9cc6ee; }
 .daybar__seg[data-mode="afternoon"] { background: #e7d3a2; }
 .daybar__seg[data-mode="sunset"] { background: linear-gradient(90deg, #f29a6b, #a84a63); }
@@ -723,6 +739,69 @@ p { margin: 0; }
 .main > section { padding-top: 96px; }
 .main > section:first-child { padding-top: 40px; }
 
+/* Research interests: the top of the home page */
+.interests { min-height: min(68vh, 660px); display: grid; align-content: start; gap: 34px; }
+.interests__statement {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  max-width: 21ch;
+}
+.interests__statement em { font-style: normal; color: var(--accent); }
+.focus { display: grid; gap: 12px; }
+.focus__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 28px;
+}
+.focus__list li {
+  display: grid;
+  gap: 2px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 15.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.focus__list a {
+  justify-self: start;
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+}
+.focus__list a:hover { text-decoration: underline; }
+
+/* Lately: dated news in the sidebar */
+.news { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: 14.5px; color: var(--ink-2); }
+.news li { display: grid; gap: 1px; line-height: 1.45; }
+.news time { font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.news a { color: var(--ink); }
+
+/* Practice tiles: course + internship work */
+.tile__meta { font-size: 13px; color: var(--ink-3); }
+div.tile { cursor: default; }
+.tile .badge {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: var(--surface-solid);
+  color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+/* Say hi: a small chat near the bottom */
+.say-hi__head { display: grid; gap: 8px; margin-bottom: 22px; }
+.say-hi .chat { margin-left: 0; }
+.say-hi .chat-reply { margin-left: 0; }
+
 /* Chat intro */
 .intro { min-height: min(72vh, 700px); }
 .chat {
@@ -804,6 +883,31 @@ p { margin: 0; }
 .msg--file .file-meta { display: grid; line-height: 1.3; }
 .msg--file .file-meta small { color: var(--ink-3); font-size: 12px; }
 .msg--file .file-dl { margin-left: auto; color: var(--ink-3); }
+
+/* Pre-laid-out chat: hidden until revealed, so the page doesn't jump. */
+.msg { position: relative; }
+.chat .is-waiting { visibility: hidden; animation: none; }
+.chat .msg.is-typing::after {
+  content: '';
+  visibility: visible;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 56px;
+  height: 38px;
+  border-radius: 20px 20px 20px 6px;
+  background:
+    radial-gradient(circle 3px at 17px 19px, var(--ink-3) 95%, transparent),
+    radial-gradient(circle 3px at 28px 19px, var(--ink-3) 95%, transparent),
+    radial-gradient(circle 3px at 39px 19px, var(--ink-3) 95%, transparent),
+    var(--surface-solid);
+  box-shadow: inset 0 0 0 1px var(--line);
+  animation: typing-pulse 0.9s ease-in-out infinite;
+}
+@keyframes typing-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
 
 @keyframes pop {
   from { opacity: 0; transform: translateY(8px) scale(0.97); }
@@ -1009,39 +1113,6 @@ p { margin: 0; }
 .tile__title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.005em; }
 .tile__desc { font-size: 14px; color: var(--ink-2); }
 
-/* A live tile: a 24-hour time-lapse of this site's sky */
-.timelapse {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  background-color: #6fa8e6;
-  box-shadow: inset 0 -200px 160px -60px #dcebf7;
-  animation: timelapse 16s linear infinite;
-}
-.timelapse::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  width: 54px;
-  height: 54px;
-  margin-left: -27px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #fff3c4 0 34%, rgba(255, 190, 110, 0.6) 35%, transparent 70%);
-  animation: timelapse-sun 16s linear infinite;
-}
-@keyframes timelapse {
-  0%, 30% { background-color: #6fa8e6; box-shadow: inset 0 -200px 160px -60px #dcebf7; }
-  45% { box-shadow: inset 0 -200px 160px -60px #eddcbc; background-color: #9fb7c9; }
-  62% { box-shadow: inset 0 -200px 160px -60px #e0815f; background-color: #3a2456; }
-  78%, 100% { box-shadow: inset 0 -200px 160px -60px #111a3c; background-color: #03050c; }
-}
-@keyframes timelapse-sun {
-  0% { top: 70%; opacity: 1; }
-  30% { top: 18%; }
-  62% { top: 72%; opacity: 1; }
-  70%, 100% { top: 90%; opacity: 0; }
-}
-
 /* Sneak peek: a scatter plot of what's on my mind */
 .peek__intro { margin-top: 10px; color: var(--ink-2); max-width: 56ch; }
 .plot {
@@ -1104,19 +1175,45 @@ p { margin: 0; }
 .plot__hint { margin-top: 10px; font-size: 13px; color: var(--ink-3); display: flex; justify-content: space-between; gap: 12px; }
 
 /* Garden footer: plant something before you go */
-.site-footer { padding-top: 110px; padding-bottom: 36px; }
-.garden__prompt { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.site-footer { padding-top: 96px; padding-bottom: 36px; }
+.garden__prompt { display: grid; gap: 8px; }
 .garden__prompt p { color: var(--ink-2); font-size: 15px; }
-.garden__prompt small { color: var(--ink-3); font-size: 13px; }
 .garden {
   position: relative;
-  height: 210px;
+  height: 250px;
   margin-top: 12px;
   border-bottom: 1.5px solid var(--line);
   cursor: crosshair;
   touch-action: pan-y;
 }
 .garden canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.garden-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+}
+.garden-tool {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  width: 64px;
+  padding: 6px 4px 5px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-2);
+  font: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s var(--ease);
+}
+.garden-tool canvas { width: 40px; height: 40px; }
+.garden-tool:hover { color: var(--ink); transform: translateY(-1px); }
+.garden-tool[aria-checked="true"] { color: var(--ink); background: var(--surface-solid); box-shadow: inset 0 0 0 1.5px var(--accent), var(--shadow); }
+.garden-tools__end { margin-left: auto; display: flex; align-items: center; gap: 14px; font-size: 13px; color: var(--ink-3); }
 .runner {
   position: absolute;
   bottom: 0;
@@ -1527,7 +1624,7 @@ dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-fi
 /* Responsive ---------------------------------------------------------------- */
 
 @media (max-width: 960px) {
-  .intro { min-height: 0; padding-bottom: 20px; }
+  .intro, .interests { min-height: 0; padding-bottom: 20px; }
   .chat, .chat-reply, .intro__static { margin-left: 0; max-width: none; }
   .identity__name { font-size: 44px; }
   .glance { grid-template-columns: 1fr 1fr; }
@@ -1541,7 +1638,9 @@ dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-fi
 }
 
 @media (max-width: 600px) {
-  .explore-grid, .findings { grid-template-columns: 1fr; }
+  .explore-grid, .findings, .focus__list { grid-template-columns: 1fr; }
+  .garden-tool { width: 56px; }
+  .garden-tools__end { margin-left: 0; width: 100%; justify-content: space-between; }
   .glance { grid-template-columns: 1fr; }
   .glance .wide { grid-column: auto; }
   .plot { height: 520px; }
@@ -1564,5 +1663,4 @@ dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-fi
     transition-duration: 0.01ms !important;
   }
   .cloud { animation: none; left: var(--x, 10%); }
-  .timelapse, .timelapse::after { animation: none; }
 }

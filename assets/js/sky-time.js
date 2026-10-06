@@ -2,21 +2,22 @@
    Works out what time of day it is for the visitor (based on where the sun
    actually is for them) and sets <html data-mode="..."> before the page paints.
 
-   Modes:  day → afternoon → sunset → night
-   - day:       sunrise until 2pm
+   Modes:  sunrise → day → afternoon → sunset → night
+   - sunrise:   dawn (sun 6° below the horizon) until the sun is 6° up
+   - day:       from there until 2pm
    - afternoon: 2pm until golden hour (the after-lunch slump)
    - sunset:    golden hour (sun 6° above the horizon) until dusk (6° below)
-   - night:     dusk until sunrise
+   - night:     dusk until dawn
 
    Loaded in <head> on every page, so keep it small and dependency-free.
    Testing helpers: add ?mode=sunset or ?at=18:30 to any URL. */
 (function () {
   'use strict';
 
-  var MODES = ['day', 'afternoon', 'sunset', 'night'];
+  var MODES = ['sunrise', 'day', 'afternoon', 'sunset', 'night'];
   var AFTERNOON_STARTS = 14;   // local hour the afternoon slump kicks in
-  var GOLDEN_HOUR = 6;         // sun altitude (degrees) where sunset mode begins
-  var DUSK = -6;               // civil dusk: sunset mode ends, night begins
+  var GOLDEN_HOUR = 6;         // sun altitude (degrees) where sunrise ends and sunset begins
+  var DUSK = -6;               // civil dawn/dusk: where night ends and begins
   var SUNRISE = -0.833;        // standard sunrise/sunset altitude
   var KEY_MODE = 'maggie:mode';
   var KEY_MINUTE = 'maggie:minute';
@@ -119,12 +120,14 @@
     function at(j) { return j === null ? null : fromJulian(j); }
 
     var set = evening(SUNRISE);
+    var dusk = evening(DUSK);
     return {
       noon: fromJulian(Jnoon),
+      dawn: morningOf(dusk),
       sunrise: morningOf(set),
       goldenHour: at(evening(GOLDEN_HOUR)),
       sunset: at(set),
-      dusk: at(evening(DUSK))
+      dusk: at(dusk)
     };
   }
 
@@ -175,7 +178,7 @@
     if (alt >= GOLDEN_HOUR) return localHour(date, place.tz) >= AFTERNOON_STARTS ? 'afternoon' : 'day';
     var descending = sunAltitude(new Date(date.getTime() + 6e5), place.lat, place.lng) < alt;
     if (descending) return alt >= DUSK ? 'sunset' : 'night';
-    return alt >= SUNRISE ? 'day' : 'night';
+    return alt >= DUSK ? 'sunrise' : 'night';
   }
 
   // The visitor's whole day split into mode segments, for the day bar.
@@ -202,7 +205,7 @@
       var weight = (s.end - s.start) + (mode === 'night' && s.start > 720 ? 600 : 0);
       if (!best || weight > best.weight) best = { weight: weight, s: s };
     });
-    if (!best) return { day: 600, afternoon: 900, sunset: 1110, night: 1350 }[mode];
+    if (!best) return { sunrise: 390, day: 600, afternoon: 900, sunset: 1110, night: 1350 }[mode];
     if (mode === 'night' && best.s.start > 720) return Math.min(best.s.start + 150, 1430);
     return Math.round((best.s.start + best.s.end) / 2);
   }
