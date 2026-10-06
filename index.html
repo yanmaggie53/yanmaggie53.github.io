@@ -65,6 +65,10 @@
             <span>My paper on <a href="projects/xai-financial-literacy.html">XAI for financial literacy</a> appears at <a href="https://sigdoc.acm.org/conference/2026/">ACM SIGDOC 2026</a> in St. Paul, MN.</span>
           </li>
           <li>
+            <time datetime="2026-10-22">Oct 22, 2026</time>
+            <span>Presenting the Murmurmations: Silent Vocal Communication project on behalf of the Responsive Environments group at the MIT Media Lab’s <a href="https://www.media.mit.edu/posts/40_plus_40/#agenda">40 + 40</a> open house (2:30–5:30pm).</span>
+          </li>
+          <li>
             <time datetime="2026-10-03">Oct 3, 2026</time>
             <span>Part of the Critical Matter Group team (MIT Media Lab) behind the <a href="https://mad.mit.edu/events/met-open-house-mit-future-fest">electroSPUN canopy</a>, installed at the MET Open House for MIT Future Fest.</span>
           </li>
@@ -85,22 +89,59 @@
     <!-- ================= Main ================= -->
     <main class="main" id="main">
 
-      <!-- Research interests -->
+      <!-- Research interests, as a small typographic tree.
+           Size = scope: field (largest) → theme → focus area (smallest).
+           Linked focus areas lead to related projects. -->
       <section class="interests" aria-labelledby="interests-title">
         <span class="label" id="interests-title">Research interests</span>
-        <p class="interests__statement">Human–computer and human–AI interaction, with interests in <em>AI trust</em>, <em>co-creation</em>, and <em>usability</em> in health and decision-making contexts.</p>
-        <div class="focus">
-          <span class="label">Areas of focus</span>
-          <ul class="focus__list">
-            <li>Trust, transparency, and adoption of AI-assisted decision support across clinician- and patient-facing systems</li>
-            <li>Explainable AI (XAI)<a href="projects/xai-financial-literacy.html">&rarr; XAI in Financial Literacy</a></li>
-            <li>Human–AI co-creation and collaborative design</li>
-            <li>Mental health technology design</li>
-            <li>Human-centered design for health technology and medical devices<a href="projects/zzalign.html">&rarr; ZzAlign Patient Dashboards</a></li>
-            <li>Accessible and inclusive design in research and maker environments</li>
-            <li>Human understanding of and response to anthropomorphic systems<a href="projects/uncanny-valley.html">&rarr; Uncanny Valley Prototype</a></li>
+        <figure class="imap">
+          <p class="imap__root">Human–computer <span class="imap__amp">&amp;</span> human–AI interaction</p>
+          <ul class="imap__branches">
+            <li class="imap__branch">
+              <span class="imap__theme">AI trust</span>
+              <ul class="imap__leaves">
+                <li>transparency</li>
+                <li>adoption</li>
+                <li><a href="projects/xai-financial-literacy.html">explainable AI</a></li>
+                <li><a href="projects/neurafutures.html">anthropomorphic systems</a></li>
+              </ul>
+            </li>
+            <li class="imap__branch">
+              <span class="imap__theme">co-creation</span>
+              <ul class="imap__leaves">
+                <li>human–AI co-creation</li>
+                <li>collaborative design</li>
+              </ul>
+            </li>
+            <li class="imap__branch">
+              <span class="imap__theme">usability</span>
+              <ul class="imap__leaves">
+                <li>accessible &amp; inclusive design</li>
+                <li>research &amp; maker environments</li>
+              </ul>
+            </li>
+            <li class="imap__branch">
+              <span class="imap__theme">health</span>
+              <ul class="imap__leaves">
+                <li>mental health technology</li>
+                <li><a href="projects/zzalign.html">medical devices</a></li>
+              </ul>
+            </li>
+            <li class="imap__branch">
+              <span class="imap__theme">decision-making</span>
+              <ul class="imap__leaves">
+                <li><a href="projects/washu-i2db.html">AI-assisted decision support</a></li>
+                <li>clinician- &amp; patient-facing systems</li>
+              </ul>
+            </li>
           </ul>
-        </div>
+          <figcaption class="imap__key">
+            <span><i class="k k1"></i>field</span>
+            <span><i class="k k2"></i>theme</span>
+            <span><i class="k k3"></i>focus area</span>
+            <span class="imap__hint">Underlined terms lead to projects.</span>
+          </figcaption>
+        </figure>
       </section>
 
       <!-- Work: research case studies / practice (internship + class work) -->
@@ -128,30 +169,17 @@
           <!-- Newest first. data-methods and data-domains (comma-separated) feed the filters.
                Add data-preview="assets/video/name.mp4" to play a clip on hover. -->
           <div class="projects">
-            <article class="project" data-methods="" data-domains="">
-              <a class="project__link" href="projects/silent-speech.html">
-                <div class="media">
-                  <div class="media__placeholder"><b>Silent Vocal Communication</b><span>hero image or preview clip</span></div>
-                </div>
-                <div class="project__info">
-                  <h3 class="project__title">Silent Vocal Communication</h3>
-                  <span class="project__year"> Fall 2026</span>
-                  <p class="project__desc"><span class="todo">One sentence: the question you’re exploring, and how.</span></p>
-                  <p class="project__context">Undergraduate Researcher · Responsive Environments Group, MIT Media Lab</p>
-                </div>
-              </a>
-            </article>
-
-            <article class="project" data-methods="" data-domains="">
+            <article class="project" data-methods="usability testing, cognitive walkthroughs, observation, thematic analysis" data-domains="health, AI, decision-making">
               <a class="project__link" href="projects/washu-i2db.html">
                 <div class="media">
-                  <div class="media__placeholder"><b>WashU I2DB</b><span>hero image or preview clip</span></div>
+                  <div class="media__placeholder"><b>ML-Augmented Postoperative Risk Report</b><span>hero image or preview clip</span></div>
                 </div>
                 <div class="project__info">
                   <h3 class="project__title">Iterative User-Centered Evaluation of a Machine Learning-Augmented Postoperative Risk Summary Report</h3>
-                  <span class="project__year"> Summer2026</span>
-                  <p class="project__desc"><span class="todo">One sentence: the question you worked on this summer, and how.</span></p>
+                  <span class="project__year">Summer 2026</span>
+                  <p class="project__desc">An iterative, mixed-methods usability study of a machine learning risk report for postoperative ICU care, alongside observations of how clinicians hand patients off from the OR to the ICU.</p>
                   <p class="project__context">Bioinformatics Research Intern · Institute for Informatics, Data Science &amp; Biostatistics (I2DB), Washington University in St. Louis</p>
+                  <ul class="tags"><li>usability testing</li><li>cognitive walkthroughs</li><li>observation</li><li>thematic analysis</li></ul>
                 </div>
               </a>
             </article>
@@ -163,9 +191,9 @@
                 </div>
                 <div class="project__info">
                   <h3 class="project__title">“What-If” Financial Decision-Making Simulation Informed by Narrative vs. Factual XAI Explanations</h3>
-                  <span class="project__year"> Fall 2025 - Present</span>
-                  <p class="project__desc">Study on a“what-if” simulation game where college students make budgeting, saving, and borrowing decisions and get immediate feedback from explainable AI.</p>
-                  <p class="project__context"> Independent Study · Human-Computer Interaction Lab, Wellesley College · Accepted to ACM SIGDOC 2026, published in the conference proceedings</p>
+                  <span class="project__year">Fall 2025–present</span>
+                  <p class="project__desc">Study on a “what-if” simulation game where college students make budgeting, saving, and borrowing decisions and get immediate feedback from explainable AI.</p>
+                  <p class="project__context">Independent Study · Human-Computer Interaction Lab, Wellesley College · Accepted to ACM SIGDOC 2026, published in the conference proceedings</p>
                   <ul class="tags"><li>prototyping</li><li>game design</li><li>explainable AI</li></ul>
                 </div>
               </a>
@@ -178,22 +206,22 @@
                 </div>
                 <div class="project__info">
                   <h3 class="project__title">3D Printed Mouthguard to Treat Obstructive Sleep Apnea</h3>
-                  <span class="project__year"> Fall 2025 - Spring 2026</span>
+                  <span class="project__year">Fall 2025–Spring 2026</span>
                   <p class="project__desc">Interactive dashboards that organize multimodal sleep, device, and survey data into one place, supporting research on a mouthguard for obstructive sleep apnea.</p>
-                  <p class="project__context">Undergraduate Researcher · Roche Lab (Therapeutic Technolology Device and Development) · MIT Institute for Medical Engineering &amp; Science</p>
+                  <p class="project__context">Undergraduate Researcher · Roche Lab (Therapeutic Technology Device and Development) · MIT Institute for Medical Engineering &amp; Science</p>
                   <ul class="tags"><li>data visualization</li><li>dashboard design</li><li>prototyping</li></ul>
                 </div>
               </a>
             </article>
 
             <article class="project" data-methods="prototyping" data-domains="anthropomorphic systems">
-              <a class="project__link" href="projects/uncanny-valley.html">
+              <a class="project__link" href="projects/neurafutures.html">
                 <div class="media">
                   <div class="media__placeholder"><b>NeuraFutures and Brain Sensing</b><span>hero image or preview clip</span></div>
                 </div>
                 <div class="project__info">
                   <h3 class="project__title">NeuraFutures and Brain Sensing</h3>
-                  <span class="project__year"> Spring 2025</span>
+                  <span class="project__year">Spring 2025</span>
                   <p class="project__desc"><span class="todo">One sentence: what you prototyped, and what you wanted to learn about how people respond to humanlike systems.</span></p>
                   <p class="project__context">Undergraduate Researcher · Fluid Interfaces Group, MIT Media Lab</p>
                   <ul class="tags"><li>prototyping</li><li>anthropomorphic systems</li></ul>
@@ -209,22 +237,28 @@
         <div data-panel="practice" hidden>
           <div class="explore-grid">
             <div class="tile">
-              <div class="media"><div class="media__placeholder"><b><span class="todo">Class name</span></b><span>fabrication deliverable</span></div><span class="badge">in progress</span></div>
-              <b class="tile__title"><span class="todo">Class name</span></b>
-              <span class="tile__meta"><span class="todo">School</span> · Fall 2026</span>
+              <div class="media"><div class="media__placeholder"><b>Objects and Interaction</b><span>fabrication deliverable</span></div><span class="badge">in progress</span></div>
+              <b class="tile__title">Objects and Interaction</b>
+              <span class="tile__meta">MIT 4.031 · Fall 2026</span>
               <p class="tile__desc"><span class="todo">One line on what you’re making.</span></p>
             </div>
             <div class="tile">
-              <div class="media"><div class="media__placeholder"><b><span class="todo">Class name</span></b><span>fabrication deliverable</span></div><span class="badge">in progress</span></div>
-              <b class="tile__title"><span class="todo">Class name</span></b>
-              <span class="tile__meta"><span class="todo">School</span> · Fall 2026</span>
+              <div class="media"><div class="media__placeholder"><b>Advanced New Media</b><span>fabrication deliverable</span></div><span class="badge">in progress</span></div>
+              <b class="tile__title">Advanced New Media</b>
+              <span class="tile__meta">Wellesley ARTS 321 · Fall 2026</span>
               <p class="tile__desc"><span class="todo">One line on what you’re making.</span></p>
             </div>
+            <a class="tile" href="https://devpost.com/software/memento-mlqs2o">
+              <div class="media"><div class="media__placeholder"><b>MEmento</b><span>photo of the music box</span></div><span class="badge">hackathon</span></div>
+              <b class="tile__title">MEmento &#8599;</b>
+              <span class="tile__meta">HARD MODE: Hardware × AI Hackathon · Spring 2026</span>
+              <p class="tile__desc">A hand-cranked music box that turns your heart rate and skin response into a short song. Your body’s data as a ritual, not a dashboard.</p>
+            </a>
             <div class="tile">
               <div class="media"><div class="media__placeholder"><b>EEG Embroidery Machine</b></div></div>
               <b class="tile__title">EEG Embroidery Machine</b>
-              <span class="tile__meta">MIT class · Fall 2025</span>
-              <p class="tile__desc"><span class="todo">One line: what it does (brain signals → stitches?) and which class.</span></p>
+              <span class="tile__meta">MIT MAS.S60 · Fall 2025</span>
+              <p class="tile__desc"><span class="todo">One line: what it does (brain signals → stitches?).</span></p>
             </div>
             <a class="tile" href="projects/understanding-psilocybin.html">
               <div class="media"><div class="media__placeholder"><b>Understanding Psilocybin</b></div></div>
@@ -249,7 +283,7 @@
           <span class="plot__label plot__label--top">on my mind lately</span>
           <span class="plot__label plot__label--bottom">on my mind for years</span>
 
-          <span class="chip-sticker" style="--x:84%;--y:14%;--r:-4deg;--chip-bg:#f7c948">silent speech</span>
+          <span class="chip-sticker" style="--x:84%;--y:14%;--r:-4deg;--chip-bg:#f7c948">AI trust</span>
           <span class="chip-sticker" style="--x:30%;--y:16%;--r:4deg;--chip-bg:#f4a6b8">electrospinning</span>
           <span class="chip-sticker" style="--x:64%;--y:30%;--r:3deg;--chip-bg:#c9b6f7">explainable AI</span>
           <span class="chip-sticker" style="--x:40%;--y:36%;--r:-2deg;--chip-bg:#b8e0d2">sleep science</span>
@@ -261,46 +295,6 @@
           <span class="chip-sticker" style="--x:88%;--y:86%;--r:-3deg;--chip-bg:#ffb38a">sunset runs</span>
         </div>
         <div class="plot__hint"><span>n = 1, not peer reviewed</span><button type="button" class="text-btn" data-plot-reset hidden>put it back</button></div>
-      </section>
-
-      <!-- Say hi: plays when it scrolls into view. The first exchange changes with the time of day. -->
-      <section class="say-hi" aria-labelledby="hi-title">
-        <div class="say-hi__head">
-          <h2 class="section-title" id="hi-title">Say <em>hi</em></h2>
-        </div>
-        <div class="chat" data-chat aria-live="polite">
-          <template data-opener="sunrise">
-            <p data-from="them">hi! could we talk about your research?</p>
-            <p data-from="me">early bird 🌅 i’m probably just waking up, but i’d love to</p>
-          </template>
-          <template data-opener="day">
-            <p data-from="them">hi! could we talk about your research?</p>
-            <p data-from="me">of course ☀️ my inbox is open</p>
-          </template>
-          <template data-opener="afternoon">
-            <p data-from="them">hi! could we talk about your research?</p>
-            <p data-from="me">yes please, it’ll get me through the afternoon slump ☕</p>
-          </template>
-          <template data-opener="sunset">
-            <p data-from="them">hi! could we talk about your research?</p>
-            <p data-from="me">i’m probably out on a run right now 🏃‍♀️ but i’ll write back when i’m home</p>
-          </template>
-          <template data-opener="night">
-            <p data-from="them">hi! could we talk about your research?</p>
-            <p data-from="me">i’m probably asleep 🌙 but i’ll reply in the morning</p>
-          </template>
-          <template data-chat-rest>
-            <p data-from="me">email me at <a href="mailto:yanmaggie53@gmail.com">yanmaggie53@gmail.com</a>, or write a note below. it opens your email ↓</p>
-          </template>
-        </div>
-        <noscript>
-          <p>Email me at <a href="mailto:yanmaggie53@gmail.com">yanmaggie53@gmail.com</a>.</p>
-        </noscript>
-        <form class="chat-reply" data-chat-reply>
-          <label class="visually-hidden" for="reply">Write Maggie a note</label>
-          <input id="reply" type="text" placeholder="write a note, it opens your email" autocomplete="off">
-          <button type="submit" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        </form>
       </section>
 
       <footer class="site-footer">

@@ -21,14 +21,14 @@ Visitors can drag through their day on the bar in the sidebar to change the mode
 ## Where things live
 
 ```
-index.html                 home: research interests, work (research / practice), sneak peek, say hi, garden
+index.html                 home: research interests chart, work (research / practice), sneak peek, garden
 projects/*.html            case studies (one shared structure, see below)
 after-hours.html           fine art, architecture sketches, fabrication
 about.html                 interests, education, experience, CV
 assets/css/style.css       all styles; mode colors are at the top
 assets/js/sky-time.js      sun math + picks the mode (loads first, in <head>)
 assets/js/site.js          sky, day bar, stickers, clock (every page)
-assets/js/home.js          filters, previews, plot, say-hi chat, garden
+assets/js/home.js          filters, previews, plot, garden
 assets/js/after-hours.js   pin-up wall + night lamp
 ```
 
@@ -38,7 +38,7 @@ assets/js/after-hours.js   pin-up wall + night lamp
 - **Lately:** the `<ul class="news">` in the sidebar of `index.html`. Newest first, 2–4 items.
 - **Research:** each `<article class="project">` in `index.html`, newest first. The `data-methods` and `data-domains` lists feed the filter dropdowns automatically. Add `data-preview="assets/video/clip.mp4"` to play a muted clip on hover.
 - **Practice** (internship + class work): the `.tile`s in the `data-panel="practice"` block. Use `<a class="tile" href="…">` once a project has its own page.
-- **Say hi chat:** the `<template>` blocks in the say-hi section. `data-from="them"` is the visitor, `data-from="me"` is you. The first exchange changes with the time of day.
+- **Research interests chart:** the `<figure class="imap">` at the top of `index.html`. Fields, then themes (`.imap__theme`), then focus areas (`.imap__leaves`). Wrap a focus area in a link to tie it to a project.
 - **After hours:** each `.piece` on the wall. `data-kind` must match one of the filter chips.
 - **New case study:** copy `projects/zzalign.html`, then update the title, the sidebar table of contents, and the next-project link. Research pages link in a loop, newest to oldest.
 - **Images:** swap a `<div class="media__placeholder">…</div>` for `<img src="assets/img/…" alt="…">` (keep it inside the `.media` box).

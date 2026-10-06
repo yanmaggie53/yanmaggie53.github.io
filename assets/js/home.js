@@ -2,7 +2,6 @@
    - research / practice switch + filters
    - video previews on project cards
    - the sneak-peek plot: drag things around
-   - "say hi": a small chat that plays when it scrolls into view
    - the garden: build one before you go (saved for next visit) */
 (function () {
   'use strict';
@@ -10,128 +9,10 @@
   var S = window.SkyTime;
   var Site = window.Site;
   var reduceMotion = Site.reduceMotion;
-  var CHAT_SEEN = 'maggie:chat-seen';
   var GARDEN_KEY = 'maggie:garden';
-  var EMAIL = 'yanmaggie53@gmail.com';
 
   function mode() { return document.documentElement.getAttribute('data-mode'); }
   function store(kind) { try { return window[kind]; } catch (err) { return null; } }
-
-  /* ---------- say hi ---------- */
-
-  function setupChat() {
-    var chat = document.querySelector('[data-chat]');
-    if (!chat) return;
-    var opener = document.createElement('div');
-    var rest = document.createElement('div');
-    opener.style.display = rest.style.display = 'contents';
-    chat.appendChild(opener);
-    chat.appendChild(rest);
-    var reply = document.querySelector('[data-chat-reply]');
-
-    function messagesFrom(template) {
-      if (!template) return [];
-      return Array.prototype.map.call(template.content.children, function (node) {
-        return { from: node.getAttribute('data-from'), node: node };
-      });
-    }
-    function openerFor(m) { return messagesFrom(chat.querySelector('template[data-opener="' + m + '"]')); }
-    var later = messagesFrom(chat.querySelector('template[data-chat-rest]'));
-
-    function bubble(msg) {
-      var el = document.createElement('p');
-      el.className = 'msg msg--' + msg.from;
-      el.innerHTML = msg.node.innerHTML;
-      return el;
-    }
-    function stamp(msg) {
-      var t = document.createElement('span');
-      t.className = 'msg__time msg__time--' + msg.from;
-      t.textContent = S.formatTime(Site.skyDate());
-      return t;
-    }
-
-    // Render a list instantly, with a timestamp after each run of messages.
-    function renderAll(target, list) {
-      target.innerHTML = '';
-      list.forEach(function (msg, i) {
-        target.appendChild(bubble(msg));
-        var next = list[i + 1];
-        if (!next || next.from !== msg.from) target.appendChild(stamp(msg));
-      });
-    }
-
-    var done = false;
-    function finish() {
-      done = true;
-      if (reply) reply.classList.add('is-ready');
-      var ss = store('sessionStorage');
-      try { if (ss) ss.setItem(CHAT_SEEN, '1'); } catch (err) { /* fine */ }
-    }
-
-    // Lay everything out up front (hidden) so nothing below the chat jumps.
-    function prepare() {
-      renderAll(opener, openerFor(mode()));
-      renderAll(rest, later);
-      var items = Array.prototype.slice.call(chat.querySelectorAll('.msg, .msg__time'));
-      items.forEach(function (el) { el.classList.add('is-waiting'); });
-      return items;
-    }
-
-    // Reveal one by one, with a typing indicator before each of Maggie's.
-    function reveal(items) {
-      var i = 0;
-      (function next() {
-        if (i >= items.length) return finish();
-        var el = items[i++];
-        if (el.classList.contains('msg__time')) {
-          el.classList.remove('is-waiting');
-          return next();
-        }
-        var mine = el.classList.contains('msg--me');
-        var show = function () {
-          el.classList.remove('is-waiting', 'is-typing');
-          setTimeout(next, mine ? 380 : 650);
-        };
-        if (mine) {
-          el.classList.add('is-typing');
-          setTimeout(show, Math.min(420 + el.textContent.length * 11, 1150));
-        } else {
-          show();
-        }
-      })();
-    }
-
-    var seen = false;
-    try { var ss = store('sessionStorage'); seen = !!ss && ss.getItem(CHAT_SEEN) === '1'; } catch (err) { /* fine */ }
-
-    if (seen || reduceMotion.matches || !('IntersectionObserver' in window)) {
-      renderAll(opener, openerFor(mode()));
-      renderAll(rest, later);
-      finish();
-    } else {
-      var items = prepare();
-      var io = new IntersectionObserver(function (entries) {
-        if (!entries[0].isIntersecting) return;
-        io.disconnect();
-        reveal(items);
-      }, { threshold: 0.5 });
-      io.observe(chat);
-    }
-
-    // Switching modes swaps the reply to match.
-    document.addEventListener('modechange', function (e) {
-      if (done) renderAll(opener, openerFor(e.detail.mode));
-    });
-
-    if (reply) {
-      reply.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var text = reply.querySelector('input').value.trim();
-        location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('hi maggie!') + (text ? '&body=' + encodeURIComponent(text) : '');
-      });
-    }
-  }
 
   /* ---------- research / practice ---------- */
 
@@ -294,18 +175,17 @@
 
   // Plant colors for each time of day.
   var GARDEN_COLORS = {
-    sunrise: { leaf: '#6e9e7e', leaf2: '#9cc59a', pine: '#5d8a72', trunk: '#86624f', blooms: ['#f6b3c6', '#ffd29a', '#c9b6f7', '#ffb38a', '#f9c6d6'], center: '#fff4c7', cactus: '#6aa587', cactusDark: '#4f8a6c', succulent: '#9cc7b3', succulent2: '#c3e0d0', tip: '#f09ab5', cap: '#e8746c', dot: '#fff7ef', stem: '#f4e6d4' },
-    day: { leaf: '#5c9b6b', leaf2: '#86bf7f', pine: '#3f7d5c', trunk: '#7a5a43', blooms: ['#f4a6b8', '#f7c948', '#8fb8f2', '#f29a6b', '#b9a3f2'], center: '#fff4c7', cactus: '#4f9a74', cactusDark: '#3b7e5d', succulent: '#8fbfa8', succulent2: '#b7dccb', tip: '#e79bb0', cap: '#e2574c', dot: '#fff4e8', stem: '#f1e4cf' },
-    afternoon: { leaf: '#7a9461', leaf2: '#a3b07a', pine: '#5f7a52', trunk: '#7d6047', blooms: ['#e7a96b', '#d98b8b', '#e6c26e', '#b9a07a', '#d6a3b0'], center: '#fbefd9', cactus: '#71926a', cactusDark: '#5a7954', succulent: '#a5b48e', succulent2: '#c8cfae', tip: '#d99a8a', cap: '#c9694f', dot: '#fbefd9', stem: '#efe0c6' },
-    sunset: { leaf: '#7d9a7e', leaf2: '#a0b896', pine: '#5f7a68', trunk: '#a0705a', blooms: ['#ffb38a', '#ff8f7a', '#ffd29a', '#f7a1c0', '#ffc46b'], center: '#3b2338', cactus: '#86a383', cactusDark: '#647f63', succulent: '#a9bfa3', succulent2: '#c8d8c0', tip: '#ff9f8a', cap: '#ff8f7a', dot: '#ffe3c8', stem: '#f2d8c8' },
-    night: { leaf: '#4f7f7a', leaf2: '#6b9a92', pine: '#3d6a66', trunk: '#5a6488', blooms: ['#c9d3ff', '#fff3b0', '#a6b6ff', '#e3c8ff', '#b8f0e0'], center: '#fff3b0', cactus: '#4f857a', cactusDark: '#3a6a61', succulent: '#6f9c95', succulent2: '#8fb8b0', tip: '#c9b6f7', cap: '#8f9bd6', dot: '#e8ebf7', stem: '#c7cde6' }
+    sunrise: { leaf: '#6e9e7e', leaf2: '#9cc59a', blooms: ['#f6b3c6', '#ffd29a', '#c9b6f7', '#ffb38a', '#f9c6d6'], center: '#fff4c7', cactus: '#6aa587', cactusDark: '#4f8a6c', succulent: '#9cc7b3', succulent2: '#c3e0d0', tip: '#f09ab5', cap: '#e8746c', dot: '#fff7ef', stem: '#f4e6d4' },
+    day: { leaf: '#5c9b6b', leaf2: '#86bf7f', blooms: ['#f4a6b8', '#f7c948', '#8fb8f2', '#f29a6b', '#b9a3f2'], center: '#fff4c7', cactus: '#4f9a74', cactusDark: '#3b7e5d', succulent: '#8fbfa8', succulent2: '#b7dccb', tip: '#e79bb0', cap: '#e2574c', dot: '#fff4e8', stem: '#f1e4cf' },
+    afternoon: { leaf: '#7a9461', leaf2: '#a3b07a', blooms: ['#e7a96b', '#d98b8b', '#e6c26e', '#b9a07a', '#d6a3b0'], center: '#fbefd9', cactus: '#71926a', cactusDark: '#5a7954', succulent: '#a5b48e', succulent2: '#c8cfae', tip: '#d99a8a', cap: '#c9694f', dot: '#fbefd9', stem: '#efe0c6' },
+    sunset: { leaf: '#7d9a7e', leaf2: '#a0b896', blooms: ['#ffb38a', '#ff8f7a', '#ffd29a', '#f7a1c0', '#ffc46b'], center: '#3b2338', cactus: '#86a383', cactusDark: '#647f63', succulent: '#a9bfa3', succulent2: '#c8d8c0', tip: '#ff9f8a', cap: '#ff8f7a', dot: '#ffe3c8', stem: '#f2d8c8' },
+    night: { leaf: '#4f7f7a', leaf2: '#6b9a92', blooms: ['#c9d3ff', '#fff3b0', '#a6b6ff', '#e3c8ff', '#b8f0e0'], center: '#fff3b0', cactus: '#4f857a', cactusDark: '#3a6a61', succulent: '#6f9c95', succulent2: '#8fb8b0', tip: '#c9b6f7', cap: '#8f9bd6', dot: '#e8ebf7', stem: '#c7cde6' }
   };
 
   var PLANTS = [
     { id: 'mix', name: 'mix' },
     { id: 'flower', name: 'flower', gap: 22, layer: 2 },
     { id: 'tulip', name: 'tulip', gap: 18, layer: 2 },
-    { id: 'tree', name: 'tree', gap: 56, layer: 0 },
     { id: 'succulent', name: 'succulent', gap: 30, layer: 3 },
     { id: 'cactus', name: 'cactus', gap: 34, layer: 1 },
     { id: 'grass', name: 'grass', gap: 12, layer: 3 },
@@ -395,43 +275,6 @@
       ctx.lineTo(hx - w * 0.45, hy - w * 0.35);
       ctx.closePath();
       ctx.fill();
-    },
-
-    tree: function (ctx, x, y0, r, C, g, k) {
-      var trunkH = (44 + r() * 46) * k * g;
-      var trunkW = (4.5 + r() * 2.5) * k;
-      var top = y0 - trunkH;
-      ctx.fillStyle = C.trunk;
-      ctx.beginPath();
-      ctx.moveTo(x - trunkW / 2, y0);
-      ctx.lineTo(x - trunkW * 0.3, top);
-      ctx.lineTo(x + trunkW * 0.3, top);
-      ctx.lineTo(x + trunkW / 2, y0);
-      ctx.fill();
-      if (r() < 0.3) {
-        // a little pine
-        ctx.fillStyle = C.pine;
-        var layers = 3, wBase = (16 + r() * 8) * k * g;
-        for (var i = 0; i < layers; i++) {
-          var ly = top + 10 * k * g - i * 15 * k * g;
-          var lw = wBase * (1 - i * 0.22);
-          ctx.beginPath();
-          ctx.moveTo(x - lw, ly + 6 * k * g);
-          ctx.lineTo(x, ly - 20 * k * g);
-          ctx.lineTo(x + lw, ly + 6 * k * g);
-          ctx.closePath();
-          ctx.fill();
-        }
-        return;
-      }
-      var blobs = 3 + Math.floor(r() * 3);
-      var R = (14 + r() * 9) * k * g;
-      for (var j = 0; j < blobs; j++) {
-        ctx.fillStyle = j % 2 ? C.leaf2 : C.leaf;
-        ctx.beginPath();
-        ctx.arc(x + (r() - 0.5) * R * 1.6, top - R * 0.5 + (r() - 0.5) * R, R * (0.7 + r() * 0.4), 0, Math.PI * 2);
-        ctx.fill();
-      }
     },
 
     succulent: function (ctx, x, y0, r, C, g, k) {
@@ -566,7 +409,8 @@
       try {
         var raw = local && local.getItem(GARDEN_KEY);
         var list = raw ? JSON.parse(raw) : [];
-        return Array.isArray(list) ? list.filter(function (p) { return DRAW[p.t]; }) : [];
+        // Only keep plants that still exist (trees were retired).
+        return Array.isArray(list) ? list.filter(function (p) { return DRAW[p.t] && BY_ID[p.t]; }) : [];
       } catch (err) { return []; }
     }
     function save() {
@@ -693,8 +537,8 @@
           return;
         }
         c.save();
-        var seeds = { flower: 3, tulip: 11, tree: 5, succulent: 9, cactus: 14, grass: 2, mushroom: 6 };
-        var scale = { flower: 0.45, tulip: 0.5, tree: 0.36, succulent: 0.95, cactus: 0.42, grass: 0.8, mushroom: 0.95 }[b.id];
+        var seeds = { flower: 3, tulip: 11, succulent: 9, cactus: 14, grass: 2, mushroom: 6 };
+        var scale = { flower: 0.45, tulip: 0.5, succulent: 0.95, cactus: 0.42, grass: 0.8, mushroom: 0.95 }[b.id];
         DRAW[b.id](c, 20, 37, rng(seeds[b.id]), C, 1, scale, 'day');
         c.restore();
       });
@@ -757,7 +601,6 @@
     setupWork();
     setupPreviews();
     setupPlot();
-    setupChat();
     setupGarden();
   }
 
