@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>After hours · Maggie Yan</title>
+  <meta name="description" content="Fine art, architecture sketches, and fabrication: the things Maggie Yan makes after hours.">
+
+  <script src="assets/js/sky-time.js"></script>
+
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,401,500,501,700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;display=swap">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="sky sky--short" data-sky aria-hidden="true"><div class="sky__gradient"></div></div>
+  <div class="lamp" data-lamp aria-hidden="true"></div>
+
+  <div class="layout">
+    <nav class="topnav" aria-label="Main">
+      <a href="index.html">research</a>
+      <a href="after-hours.html" aria-current="page">after hours</a>
+      <a href="about.html">about</a>
+      <a href="assets/Maggie_Yan_CV.pdf">cv&nbsp;&#8599;</a>
+    </nav>
+
+    <aside class="sidebar">
+      <a class="back-link" href="index.html">&larr; home</a>
+      <div class="side-block">
+        <p class="bio">This is the hobby side of me: drawing, painting, architecture sketches, and things I’ve built by hand over the years. No research questions here, just making.</p>
+      </div>
+      <div class="side-block">
+        <span class="label">How to look around</span>
+        <ul class="side-list" style="gap:4px">
+          <li><span class="when">drag</span><span>rearrange the wall</span></li>
+          <li><span class="when">click</span><span>see a piece up close</span></li>
+          <li><span class="when">night</span><span>the lights go off; your cursor is the lamp</span></li>
+        </ul>
+        <button type="button" class="text-btn" data-tidy hidden style="justify-self:start">tidy the wall</button>
+      </div>
+      <div data-daybar></div>
+      <p class="home-clock" data-home-clock></p>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="ah-header">
+        <h1 class="ah-title">after hours</h1>
+        <p class="ah-pron">/ˈaf·tər ou(ə)rz/</p>
+        <p class="ah-def"><i>noun.</i> the time after the work is done, when the making happens. Also: a pin-up wall of things I’ve drawn, painted, and built.</p>
+      </header>
+
+      <div class="chips" role="group" aria-label="Filter the wall">
+        <button type="button" class="chip" data-kind-filter="all" aria-pressed="true">everything</button>
+        <button type="button" class="chip" data-kind-filter="fine art" aria-pressed="false">fine art</button>
+        <button type="button" class="chip" data-kind-filter="architecture" aria-pressed="false">architecture sketches</button>
+        <button type="button" class="chip" data-kind-filter="fabrication" aria-pressed="false">fabrication</button>
+      </div>
+
+      <!-- The wall. Each piece: data-kind (for the filter), data-title, data-meta,
+           data-desc (shown up close). --r tilts it, --ratio sets the image shape.
+           Swap the placeholder div for <img src="assets/img/after-hours/..." alt="..."> -->
+      <div class="wall" data-wall>
+        <button type="button" class="piece" style="--r:-2.5deg;--ratio:4/5" data-kind="fabrication" data-title="3D-printed chainmail top" data-meta="Fabrication · PLA · year" data-desc="A wearable top made from interlocking 3D-printed links. Add a line about how you designed the link geometry and how many hours of printing it took.">
+          <div class="media"><div class="media__placeholder"><b>Chainmail top</b><span>photo</span></div></div>
+          <span class="piece__caption"><b>3D-printed chainmail top</b><span>fabrication</span></span>
+        </button>
+
+        <button type="button" class="piece" style="--r:1.8deg;--ratio:1/1" data-kind="fine art" data-title="Drawing &amp; illustration" data-meta="Fine art · medium · year" data-desc="Add a short note: what you were drawing and why.">
+          <div class="media"><div class="media__placeholder"><b>Illustration</b><span>scan</span></div></div>
+          <span class="piece__caption"><b>Drawing &amp; illustration</b><span>fine art</span></span>
+        </button>
+
+        <button type="button" class="piece" style="--r:-1deg;--ratio:3/4" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture · pen on paper · year" data-desc="Where you were, what you were looking at.">
+          <div class="media"><div class="media__placeholder"><b>Sketch</b><span>scan</span></div></div>
+          <span class="piece__caption"><b>Architecture sketch</b><span>architecture</span></span>
+        </button>
+
+        <button type="button" class="piece" style="--r:2.6deg;--ratio:4/3" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture · medium · year" data-desc="Where you were, what you were looking at.">
+          <div class="media"><div class="media__placeholder"><b>Sketch</b><span>scan</span></div></div>
+          <span class="piece__caption"><b>Architecture sketch</b><span>architecture</span></span>
+        </button>
+
+        <button type="button" class="piece" style="--r:-3deg;--ratio:4/5" data-kind="fine art" data-title="Painting" data-meta="Fine art · medium · year" data-desc="Add a short note about this piece.">
+          <div class="media"><div class="media__placeholder"><b>Painting</b><span>photo</span></div></div>
+          <span class="piece__caption"><b>Painting</b><span>fine art</span></span>
+        </button>
+
+        <button type="button" class="piece" style="--r:1.2deg;--ratio:1/1" data-kind="fabrication" data-title="Fabrication piece" data-meta="Fabrication · material · year" data-desc="What it is, how you made it, what tools you used (laser cutter, CNC, sewing machine…).">
+          <div class="media"><div class="media__placeholder"><b>Built thing</b><span>photo</span></div></div>
+          <span class="piece__caption"><b>Fabrication piece</b><span>fabrication</span></span>
+        </button>
+      </div>
+
+      <footer class="site-footer" style="padding-top:60px">
+        <div class="footer-bottom">
+          <span>&copy; <span data-year>2026</span> Maggie Yan</span>
+          <span>Last updated <span data-updated>recently</span></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <dialog class="lightbox" data-lightbox aria-labelledby="lb-title">
+    <div class="lightbox__body">
+      <div class="media" data-lb-media></div>
+      <div class="lightbox__text">
+        <span class="label" data-lb-meta></span>
+        <h2 id="lb-title" data-lb-title></h2>
+        <p data-lb-desc></p>
+      </div>
+    </div>
+    <button type="button" class="lightbox__close" data-lb-close aria-label="Close">&times;</button>
+  </dialog>
+
+  <script src="assets/js/site.js"></script>
+  <script src="assets/js/after-hours.js"></script>
+</body>
+</html>
