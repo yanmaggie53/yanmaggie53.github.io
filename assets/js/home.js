@@ -2,7 +2,6 @@
    - research interests word cloud
    - research / practice switch + filters
    - video previews on project cards
-   - the sneak-peek plot: drag things around
    - the garden: build one before you go (saved for next visit) */
 (function () {
   'use strict';
@@ -257,43 +256,6 @@
       }, { threshold: 0.75 });
       cards.forEach(function (c) { io.observe(c); });
     }
-  }
-
-  /* ---------- sneak peek plot ---------- */
-
-  function setupPlot() {
-    var plot = document.querySelector('[data-plot]');
-    if (!plot) return;
-    var chips = plot.querySelectorAll('.chip-sticker');
-    var reset = document.querySelector('[data-plot-reset]');
-
-    chips.forEach(function (chip) {
-      chip.dataset.x0 = chip.style.getPropertyValue('--x');
-      chip.dataset.y0 = chip.style.getPropertyValue('--y');
-      var start;
-      Site.draggable(chip, {
-        onStart: function () {
-          var box = plot.getBoundingClientRect();
-          start = { x: parseFloat(chip.style.getPropertyValue('--x')) / 100 * box.width, y: parseFloat(chip.style.getPropertyValue('--y')) / 100 * box.height, box: box };
-        },
-        onMove: function (dx, dy) {
-          var b = start.box;
-          var x = Math.max(4, Math.min(b.width - 4, start.x + dx)) / b.width * 100;
-          var y = Math.max(4, Math.min(b.height - 4, start.y + dy)) / b.height * 100;
-          chip.style.setProperty('--x', x.toFixed(2) + '%');
-          chip.style.setProperty('--y', y.toFixed(2) + '%');
-          if (reset) reset.hidden = false;
-        }
-      });
-    });
-
-    if (reset) reset.addEventListener('click', function () {
-      chips.forEach(function (chip) {
-        chip.style.setProperty('--x', chip.dataset.x0);
-        chip.style.setProperty('--y', chip.dataset.y0);
-      });
-      reset.hidden = true;
-    });
   }
 
   /* ---------- garden ---------- */
@@ -726,7 +688,6 @@
     setupWordCloud();
     setupWork();
     setupPreviews();
-    setupPlot();
     setupGarden();
   }
 

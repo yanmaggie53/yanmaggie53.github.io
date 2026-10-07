@@ -5,7 +5,7 @@
    3. Layout (sticky sidebar + main column)
    4. Sky
    5. Shared components (nav, day bar, buttons, tags, stickers)
-   6. Home (chat, work, explorations, sneak peek, garden)
+   6. Home (research interests, work, practice, garden)
    7. Case study
    8. After hours
    9. About
@@ -967,67 +967,6 @@ div.tile { cursor: default; }
 .tile__title { font-family: var(--font-display); font-size: 17px; font-weight: 700; letter-spacing: -0.005em; }
 .tile__desc { font-size: 14px; color: var(--ink-2); }
 
-/* Sneak peek: a scatter plot of what's on my mind */
-.peek__intro { margin-top: 10px; color: var(--ink-2); max-width: 56ch; }
-.plot {
-  position: relative;
-  margin-top: 28px;
-  height: 460px;
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  box-shadow: inset 0 0 0 1px var(--line);
-  touch-action: none;
-}
-.plot__axis {
-  position: absolute;
-  background: color-mix(in srgb, var(--ink-3) 50%, transparent);
-}
-.plot__axis--x { left: 24px; right: 24px; top: 50%; height: 1px; }
-.plot__axis--y { top: 24px; bottom: 24px; left: 50%; width: 1px; }
-.plot__label {
-  position: absolute;
-  font-size: 12px;
-  color: var(--ink-3);
-  white-space: nowrap;
-}
-.plot__label--left { left: 24px; top: calc(50% + 6px); }
-.plot__label--right { right: 24px; top: calc(50% + 6px); }
-.plot__label--top { top: 22px; left: calc(50% + 10px); }
-.plot__label--bottom { bottom: 22px; left: calc(50% + 10px); }
-
-.chip-sticker {
-  position: absolute;
-  left: var(--x);
-  top: var(--y);
-  transform: translate(-50%, -50%) rotate(var(--r, -3deg));
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: var(--chip-bg, #fff);
-  color: var(--chip-ink, #15171c);
-  border: 2.5px solid #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
-  font-size: 13.5px;
-  font-weight: 500;
-  white-space: nowrap;
-  cursor: grab;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: none;
-  transition: transform 0.25s var(--ease), box-shadow 0.25s;
-}
-.chip-sticker:hover { transform: translate(-50%, -50%) rotate(0deg) scale(1.06); }
-.chip-sticker.is-held {
-  cursor: grabbing;
-  z-index: 5;
-  transition: none;
-  transform: translate(-50%, -50%) rotate(0deg) scale(1.1);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
-}
-.plot__hint { margin-top: 10px; font-size: 13px; color: var(--ink-3); display: flex; justify-content: space-between; gap: 12px; }
-
 /* Garden footer: plant something before you go */
 .site-footer { padding-top: 96px; padding-bottom: 36px; }
 .garden__prompt { display: grid; gap: 8px; }
@@ -1642,8 +1581,6 @@ dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-fi
   .garden-tools__end { margin-left: 0; width: 100%; justify-content: space-between; }
   .glance { grid-template-columns: 1fr; }
   .glance .wide { grid-column: auto; }
-  .plot { height: 520px; }
-  .chip-sticker { font-size: 12px; padding: 5px 10px; }
   .figure--pair { grid-template-columns: 1fr; }
   .methods td:first-child { width: 34%; }
   .cv-list li { grid-template-columns: 1fr; }
