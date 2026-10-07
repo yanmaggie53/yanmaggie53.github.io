@@ -1161,13 +1161,6 @@ div.tile { cursor: default; }
 
 .cs-hero { margin-top: 40px; aspect-ratio: 16 / 9; }
 
-/* A whole poster inside a card, mounted like a print instead of cropped */
-.media--poster img {
-  object-fit: contain;
-  padding: 5% 7%;
-  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
-}
-
 /* A paper citation block */
 .paper-cite {
   display: grid;
@@ -1220,9 +1213,10 @@ div.tile { cursor: default; }
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.12);
 }
-.pdf__page canvas { display: block; width: 100%; height: 100%; }
-:root[data-mode="night"] .pdf__page canvas { filter: brightness(0.86); }
-:root[data-mode="sunset"] .pdf__page canvas { filter: brightness(0.93) sepia(0.06); }
+.pdf__inner { position: absolute; left: 0; top: 0; }
+.pdf__inner canvas { display: block; width: 100%; height: 100%; }
+:root[data-mode="night"] .pdf__inner canvas { filter: brightness(0.86); }
+:root[data-mode="sunset"] .pdf__inner canvas { filter: brightness(0.93) sepia(0.06); }
 .pdf__link { position: absolute; border-radius: 2px; }
 .pdf__link:hover { background: rgba(43, 95, 217, 0.12); }
 .pdf__fallback { display: none; padding: 24px; color: var(--ink-2); }
@@ -1231,6 +1225,7 @@ div.tile { cursor: default; }
 
 /* Framed: the PDF scrolls inside its own window */
 .pdf--framed {
+  container-type: inline-size;
   overflow: hidden;
   border-radius: var(--radius-lg);
   box-shadow: 0 0 0 1px var(--line), var(--shadow);
@@ -1243,8 +1238,15 @@ div.tile { cursor: default; }
   padding: 16px;
   overscroll-behavior: contain;
 }
-/* One page tall (letter size), never taller than the window; scroll for the rest. */
-.pdf--one-page .pdf__pages { aspect-ratio: 8.5 / 11; max-height: calc(100vh - 110px); }
+/* One page tall (letter size), never taller than the window; scroll for the rest.
+   Height comes from the frame's width (cqw), so the width never shrinks to match. */
+.pdf--one-page .pdf__pages { height: calc(100vh - 110px); height: min(calc(100cqw * 11 / 8.5), calc(100vh - 110px)); max-height: none; }
+
+/* Seamless: pages joined into one continuous sheet, page-break margins trimmed. */
+.pdf--seamless .pdf__pages { padding: 0; gap: 0; justify-items: stretch; background: #fff; }
+.pdf--seamless .pdf__page { max-width: none; border-radius: 0; box-shadow: none; }
+:root[data-mode="night"] .pdf--seamless .pdf__pages { background: #dbdbdb; }
+:root[data-mode="sunset"] .pdf--seamless .pdf__pages { background: #eeebe6; }
 .pdf__bar [data-pdf-status] { color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .pdf__bar {
   display: flex;

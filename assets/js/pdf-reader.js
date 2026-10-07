@@ -39,13 +39,79 @@
     var renderedWidth = 0;
     var busy = false;
 
+    var seamless = el.classList.contains('pdf--seamless');
+
+    function contentWidth() {
+      var pad = el.classList.contains('pdf--framed') && !seamless ? 32 : 0;
+      return Math.floor(pagesEl.clientWidth - pad);
+    }
+
+    // Which rows of a drawn page have ink on them (anything darker than near-white).
+    function inkRows(canvas) {
+      var w = canvas.width, h = canvas.height;
+      var data = canvas.getContext('2d').getImageData(0, 0, w, h).data;
+      var rows = new Uint8Array(h);
+      for (var y = 0; y < h; y++) {
+        var start = y * w * 4;
+        for (var x = 0; x < w; x += 2) {
+          var i = start + x * 4;
+          if (data[i + 3] > 0 && data[i] + data[i + 1] + data[i + 2] < 690) { rows[y] = 1; break; }
+        }
+      }
+      return rows;
+    }
+
+    // First and last inked rows, and the blank gaps between lines in between.
+    function measure(rows) {
+      var first = -1, last = -1, run = 0, gaps = [];
+      for (var y = 0; y < rows.length; y++) {
+        if (rows[y]) {
+          if (first < 0) first = y;
+          else if (run > 1) gaps.push(run);
+          last = y;
+          run = 0;
+        } else if (first >= 0) {
+          run++;
+        }
+      }
+      return { first: first, last: last, gaps: gaps };
+    }
+
+    function median(list) {
+      if (!list.length) return 0;
+      var sorted = list.slice().sort(function (a, b) { return a - b; });
+      return sorted[Math.floor(sorted.length / 2)];
+    }
+
+    // Join the pages into one sheet: trim the blank margins at each page break
+    // so the last line of a page and the first line of the next sit exactly one
+    // ordinary line-gap apart, the same as any two lines of the CV.
+    function trim(pages, dpr) {
+      var gaps = [];
+      pages.forEach(function (p) { gaps = gaps.concat(p.gaps); });
+      var lineGap = median(gaps) / dpr;
+      var topMargin = pages[0].first > 0 ? pages[0].first : 0;
+      pages.forEach(function (p, i) {
+        if (p.first < 0) {
+          p.sheet.style.display = 'none';
+          return;
+        }
+        var top = i === 0 ? 0 : Math.max(0, p.first - lineGap / 2);
+        var isLast = i === pages.length - 1;
+        var bottom = Math.min(p.height, p.last + (isLast ? topMargin : lineGap / 2));
+        p.sheet.style.height = (bottom - top) + 'px';
+        p.inner.style.top = -top + 'px';
+      });
+    }
+
     function render() {
       if (!doc || busy) return;
-      var width = Math.floor(pagesEl.clientWidth - (el.classList.contains('pdf--framed') ? 32 : 0));
+      var width = contentWidth();
       if (!width || Math.abs(width - renderedWidth) < 30) return;
       busy = true;
       renderedWidth = width;
       var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+      var drawn = [];
       pagesEl.innerHTML = '';
 
       var chain = Promise.resolve();
@@ -57,15 +123,21 @@
             var view = page.getViewport({ scale: cssScale });
             var hiRes = page.getViewport({ scale: cssScale * dpr });
 
+            // sheet = what shows (can be trimmed); inner = the whole page, shifted up as needed
             var sheet = document.createElement('div');
             sheet.className = 'pdf__page';
             sheet.style.width = view.width + 'px';
             sheet.style.height = view.height + 'px';
+            var inner = document.createElement('div');
+            inner.className = 'pdf__inner';
+            inner.style.width = view.width + 'px';
+            inner.style.height = view.height + 'px';
             var canvas = document.createElement('canvas');
             canvas.width = Math.floor(hiRes.width);
             canvas.height = Math.floor(hiRes.height);
             canvas.setAttribute('aria-hidden', 'true');
-            sheet.appendChild(canvas);
+            inner.appendChild(canvas);
+            sheet.appendChild(inner);
             pagesEl.appendChild(sheet);
 
             // Clickable links, laid over the drawing where the PDF has them.
@@ -83,7 +155,7 @@
                 link.style.width = Math.abs(r[2] - r[0]) + 'px';
                 link.style.height = Math.abs(r[3] - r[1]) + 'px';
                 link.setAttribute('aria-label', a.url.replace(/^mailto:/, 'Email '));
-                sheet.appendChild(link);
+                inner.appendChild(link);
               });
             });
 
@@ -92,19 +164,31 @@
               var text = document.createElement('div');
               text.className = 'visually-hidden';
               text.textContent = content.items.map(function (i) { return i.str; }).join(' ');
-              sheet.appendChild(text);
+              inner.appendChild(text);
             });
 
-            return page.render({ canvasContext: canvas.getContext('2d'), viewport: hiRes }).promise;
+            return page.render({ canvasContext: canvas.getContext('2d'), viewport: hiRes }).promise.then(function () {
+              if (!seamless) return;
+              var m = measure(inkRows(canvas));
+              drawn.push({
+                sheet: sheet,
+                inner: inner,
+                height: view.height,
+                first: m.first < 0 ? -1 : m.first / dpr,
+                last: m.last / dpr,
+                gaps: m.gaps
+              });
+            });
           });
         })(n);
       }
       chain.then(function () {
+        if (seamless && drawn.length) trim(drawn, dpr);
         busy = false;
         el.classList.add('is-ready');
         updateStatus();
         // The window may have changed size while we were drawing.
-        if (Math.abs(Math.floor(pagesEl.clientWidth - (el.classList.contains('pdf--framed') ? 32 : 0)) - renderedWidth) >= 30) render();
+        if (Math.abs(contentWidth() - renderedWidth) >= 30) render();
       }).catch(function () {
         busy = false;
         showFallback(el);
@@ -114,11 +198,13 @@
     // "Page 2 of 5" for framed readers that scroll inside their own window.
     function updateStatus() {
       if (!status || !doc) return;
-      var sheets = pagesEl.querySelectorAll('.pdf__page');
+      var sheets = pagesEl.querySelectorAll('.pdf__page:not([style*="display: none"])');
       var mark = pagesEl.scrollTop + pagesEl.clientHeight / 3;
       var current = 1;
       for (var i = 0; i < sheets.length; i++) if (sheets[i].offsetTop <= mark) current = i + 1;
-      status.textContent = 'Page ' + current + ' of ' + doc.numPages + (current < doc.numPages ? ' · scroll for more' : '');
+      // Scrolled all the way down: that's the last page, however short it is.
+      if (pagesEl.scrollTop + pagesEl.clientHeight >= pagesEl.scrollHeight - 2) current = sheets.length;
+      status.textContent = 'Page ' + current + ' of ' + sheets.length + (current < sheets.length ? ' · scroll for more' : '');
     }
     pagesEl.addEventListener('scroll', updateStatus, { passive: true });
 
