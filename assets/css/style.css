@@ -1222,6 +1222,25 @@ div.tile { cursor: default; }
 
 .cs-hero { margin-top: 40px; aspect-ratio: 16 / 9; }
 
+/* A poster you can click through to the full PDF */
+.poster-link { display: block; background: #fff; }
+.poster-link img { object-fit: contain; }
+.poster-link__open {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  background: rgba(0, 0, 0, 0.62);
+  color: #fff;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: background 0.2s;
+}
+.poster-link:hover .poster-link__open { background: rgba(0, 0, 0, 0.8); }
+
 /* A live site embedded in a little browser window */
 .browser {
   overflow: hidden;
