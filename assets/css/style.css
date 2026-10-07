@@ -1161,6 +1161,13 @@ div.tile { cursor: default; }
 
 .cs-hero { margin-top: 40px; aspect-ratio: 16 / 9; }
 
+/* A whole poster inside a card, mounted like a print instead of cropped */
+.media--poster img {
+  object-fit: contain;
+  padding: 5% 7%;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.18));
+}
+
 /* A paper citation block */
 .paper-cite {
   display: grid;
