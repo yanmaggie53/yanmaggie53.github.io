@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>“What-If” Financial Decision-Making Simulation · Maggie Yan</title>
-  <meta name="description" content="A what-if financial decision-making simulation that pairs gamification with explainable AI feedback.">
+  <meta name="description" content="How narrative vs. factual AI-generated feedback shapes college students’ understanding of financial literacy concepts in a “what-if” decision simulation. ACM SIGDOC 2026.">
 
   <script src="../assets/js/sky-time.js"></script>
 
@@ -18,20 +18,11 @@
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="sky sky--short" data-sky aria-hidden="true"><div class="sky__gradient"></div></div>
 
-  <!--
-    CASE STUDY TEMPLATE
-    Every project page follows the same shape, because it's the shape a PhD
-    committee reads for: what question you asked, why you chose your methods,
-    what you actually did (including what didn't work), what you found, and
-    what you'd do next. Anything in <span class="todo"> is a prompt to replace.
-  -->
-
   <div class="layout">
     <nav class="topnav" aria-label="Main">
       <a href="../index.html">research</a>
       <a href="../after-hours.html">after hours</a>
-      <a href="../about.html">about</a>
-      <a href="../assets/Maggie_Yan_CV.pdf">cv&nbsp;&#8599;</a>
+      <a href="../about.html">about + CV</a>
     </nav>
 
     <aside class="sidebar">
@@ -68,26 +59,29 @@
         <p class="cs-summary">The “What-If” Financial Decision-Making Simulation is a research-driven interactive game that helps college students build financial literacy by combining gamification with explainable AI: players work through simulated scenarios like budgeting, saving, and borrowing, and get immediate AI-generated feedback on their choices. It began as a group research project in MAS 366 Human–AI Interaction at Wellesley College in Fall 2025, and that version was accepted to ACM SIGDOC 2026. In Spring 2026 I continued the work with the professor as an independent study, taking it in a different direction.</p>
       </header>
 
-      <div class="media cs-hero">
-        <div class="media__placeholder"><b>Hero image</b><span>the finished work, ideally in use</span></div>
-      </div>
+      <figure class="figure" style="margin-top:40px">
+        <div class="media" style="aspect-ratio:611/381;background:#000">
+          <img src="../assets/img/projects/xai-scenario.png" alt="The simulation on a laptop: Scenario 1, a first week on campus with a $1,200 financial aid refund, asks whether to buy textbooks at the campus bookstore or look for used copies online.">
+        </div>
+        <figcaption>One scenario and its answer choices in the narrative condition (Figma prototype).</figcaption>
+      </figure>
 
       <dl class="glance">
-        <div><dt class="label">My role</dt><dd><span class="todo">e.g. Designer &amp; front-end developer</span></dd></div>
-        <div><dt class="label">Timeline</dt><dd><span class="todo">e.g. Jun–Aug 2025 (10 weeks)</span></dd></div>
-        <div><dt class="label">Context</dt><dd>Group research project, MAS 366 Human–AI Interaction, Wellesley College (Fall 2025). Continued as an independent study in the Human-Computer Interaction Lab (Spring 2026).</dd></div>
-        <div><dt class="label">Team</dt><dd><span class="todo">Your class group, and the professor you continued with</span></dd></div>
-        <div class="wide"><dt class="label">Methods</dt><dd><span class="todo">e.g. data audit, stakeholder interviews, sketching, iterative prototyping, think-aloud feedback sessions</span></dd></div>
-        <div><dt class="label">Tools</dt><dd><span class="todo">e.g. Figma, Python, Arduino</span></dd></div>
-        <div class="wide"><dt class="label">Participants</dt><dd><span class="todo">Who tested it, how many, and how you recruited them.</span></dd></div>
+        <div><dt class="label">My role</dt><dd><span class="todo">Your part in the group project, and in the independent study</span></dd></div>
+        <div><dt class="label">Timeline</dt><dd>Fall 2025 (class project) · Spring 2026 (independent study)</dd></div>
+        <div><dt class="label">Context</dt><dd>Group research project, MAS 366 Human–AI Interaction, Wellesley College. Continued as an independent study in the Human-Computer Interaction Lab.</dd></div>
+        <div class="wide"><dt class="label">Team</dt><dd>Maggie Yan, Wendian Wang, and Emily Regan, advised by Prof. Orit Shaer with teaching fellow Becky Chen</dd></div>
+        <div><dt class="label">Tools</dt><dd>Custom GPT-4 models (ChatGPT), Figma</dd></div>
+        <div class="wide"><dt class="label">Methods</dt><dd>Two-condition quasi-experimental study, pre- and post-study knowledge quizzes, mid-study comprehension surveys, verbal debriefs, thematic analysis</dd></div>
+        <div><dt class="label">Participants</dt><dd>20 college students, randomly assigned to one of two conditions</dd></div>
       </dl>
 
       <section class="cs-section" id="question">
         <span class="label">01 · Research question</span>
         <h2>What were we trying to find out?</h2>
         <blockquote class="question">
-          <span class="todo">How do narrative vs. factual explanations from AI shape the financial decisions college students make?</span>
-          <cite>Write the one question this project answers. It’s the single most useful sentence on the page.</cite>
+          How does narrative versus factual framing in AI-generated feedback affect how college students comprehend and internalize financial literacy concepts?
+          <cite>And what does that suggest about how the form of an explanation shapes a learner’s relationship to the content?</cite>
         </blockquote>
       </section>
 
@@ -95,23 +89,25 @@
         <span class="label">02 · Context</span>
         <h2>Why this mattered</h2>
         <div class="prose">
-          <p><span class="todo">Why financial literacy for college students? What do they struggle with, and what’s missing from existing tools?</span></p>
-          <p><span class="todo">Why explainable AI specifically? What does the literature say about explanations and trust or learning?</span></p>
+          <p>Students with limited financial literacy often face barriers to practical, relatable financial education. Traditional programs lean on abstract concepts and one-size-fits-all curricula, so students struggle to connect what they learn to everyday decisions like budgeting, saving, and weighing spending against investing.</p>
+          <p>Serious games can help by letting people experiment with consequences without real-world risk, and AI can give immediate feedback on each choice. But the form that feedback takes is itself a communication design decision. The same outcome can be explained as a story or as a set of numbers, and prior work on explainable AI shows that narrative framing can improve comprehension and trust. What hadn’t been studied was how those explanation styles work in a serious game for non-expert learners.</p>
         </div>
       </section>
 
       <section class="cs-section" id="methods">
         <span class="label">03 · Methods</span>
-        <h2>How I approached it, and why</h2>
+        <h2>How we approached it, and why</h2>
         <div class="prose">
-          <p><span class="todo">One short paragraph on your overall approach (e.g. participatory, iterative, data-first) and why it fit this problem.</span></p>
+          <p>We held everything constant except the explanation style. Both versions of the game deliver the same scenarios, the same consequences, and the same underlying financial principles; only the surface language changes.</p>
         </div>
         <table class="methods" style="margin-top:24px">
-          <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave me</th></tr></thead>
+          <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave us</th></tr></thead>
           <tbody>
-            <tr><td><span class="todo">e.g. Literature review</span></td><td><span class="todo">To learn what’s already known and where the gap is.</span></td><td><span class="todo">The framing for your question.</span></td></tr>
-            <tr><td><span class="todo">e.g. Interviews or a user study</span></td><td><span class="todo">Why talking to people (vs. guessing) was necessary here.</span></td><td><span class="todo">What people actually needed or did.</span></td></tr>
-            <tr><td><span class="todo">e.g. Iterative prototyping</span></td><td><span class="todo">Why you went low-fi → high-fi, and how many rounds.</span></td><td><span class="todo">What changed between rounds.</span></td></tr>
+            <tr><td>Two explanation conditions</td><td>To isolate explanation style. Factual feedback uses balances, interest calculations, and financial terms; narrative feedback tells the same thing as a story in everyday language.</td><td>Two versions of the game that differ only in how feedback is phrased.</td></tr>
+            <tr><td>Custom GPT-4 models, finalized in advance</td><td>To generate both styles from the same content, then lock every explanation before data collection so live prompting couldn’t introduce variance.</td><td>Identical content within each condition, delivered through a high-fidelity, visual novel–style Figma prototype.</td></tr>
+            <tr><td>Pre- and post-study quizzes</td><td>To track how well participants acquired and retained key financial principles.</td><td>Knowledge gains for each condition.</td></tr>
+            <tr><td>Mid-study comprehension surveys</td><td>To capture how participants understood the concepts while playing, not just afterward.</td><td>Open-ended responses for thematic analysis.</td></tr>
+            <tr><td>Verbal debrief</td><td>To ask whether the scenarios made sense, whether the concepts felt like common sense, and whether participants would have known them without being told.</td><td>The pattern that became our main finding.</td></tr>
           </tbody>
         </table>
       </section>
@@ -123,17 +119,17 @@
           <li>
             <h3>Framing the question</h3>
             <span class="when">Fall 2025 · MAS 366</span>
-            <p><span class="todo">What your group read first, and why you landed on narrative vs. factual explanations.</span></p>
+            <p>We grounded the project in communication design, which treats learners as active readers whose understanding depends on how information is framed, and in XAI research comparing narrative and feature-based explanations. <span class="todo">Your part in framing it.</span></p>
           </li>
           <li>
             <h3>Building the simulation</h3>
             <span class="when">Fall 2025 · MAS 366</span>
-            <p><span class="todo">How the game works, how the AI feedback is generated, and which part you built. Show an idea you threw away and why.</span></p>
+            <p>Players work through budgeting, saving, and borrowing scenarios across three levels. Two custom GPT-4 models, one per condition, generated the feedback, which we finalized and built into an interactive Figma prototype styled like a visual novel. <span class="todo">Which parts you built, and an idea you threw away.</span></p>
           </li>
           <li>
             <h3>Running the study</h3>
             <span class="when">Fall 2025 · MAS 366</span>
-            <p><span class="todo">Who took part, what they did, and how you compared the two kinds of explanation. This is the version that went to SIGDOC.</span></p>
+            <p>Twenty college students were randomly assigned to the narrative or factual version. Each took a pre-study quiz, played through the levels with a mid-study comprehension survey, then took a post-study quiz and a short verbal debrief. <span class="todo">Your part in running and analyzing the sessions.</span></p>
           </li>
           <li>
             <h3>Taking it further as an independent study</h3>
@@ -142,33 +138,36 @@
           </li>
         </ol>
         <figure class="figure figure--pair">
-          <div class="media"><div class="media__placeholder"><b>Early sketch</b><span>image</span></div></div>
-          <div class="media"><div class="media__placeholder"><b>Later iteration</b><span>image</span></div></div>
-          <figcaption><span class="todo">Caption: what changed between these two versions, and what prompted the change.</span></figcaption>
+          <div class="media" style="aspect-ratio:611/381;background:#000"><img src="../assets/img/projects/xai-scenario.png" alt="Scenario 1 with two answer choices, A and B." loading="lazy"></div>
+          <div class="media" style="aspect-ratio:611/381;background:#000"><img src="../assets/img/projects/xai-explanation.png" alt="The narrative explanation after choosing to compare prices: finding the textbook bundle for $120, less than a third of the campus store price." loading="lazy"></div>
+          <figcaption>Left: a scenario and its answer choices. Right: the feedback a player sees in the narrative condition after choosing to compare prices.</figcaption>
         </figure>
       </section>
 
       <section class="cs-section" id="findings">
         <span class="label">05 · Findings</span>
-        <h2>What I learned</h2>
+        <h2>What we learned</h2>
         <ul class="findings">
-          <li><h3><span class="todo">Insight, stated as a claim</span></h3><p><span class="todo">The evidence behind it: a quote, an observation, a number.</span></p></li>
-          <li><h3><span class="todo">Insight, stated as a claim</span></h3><p><span class="todo">The evidence behind it.</span></p></li>
-          <li><h3><span class="todo">Insight, stated as a claim</span></h3><p><span class="todo">The evidence behind it.</span></p></li>
-          <li><h3><span class="todo">Something that didn’t work</span></h3><p><span class="todo">Negative results count. What you tried, why it failed, what that taught you.</span></p></li>
+          <li><h3>Explanation style changed how “obvious” finance felt</h3><p>In the debrief, participants in the factual condition were less likely to describe the financial concepts as “common sense.” Data-centered feedback may make financial concepts feel less self-evident, even on first encounter.</p></li>
+          <li><h3>Style shapes a learner’s stance, not just the information</h3><p>Since both conditions delivered identical information, the explanation’s form is the most likely reason for the difference. It may shape how learners position themselves relative to the content, and what they perceive as new knowledge.</p></li>
+          <li><h3>Delayed gratification came up everywhere</h3><p>Across both conditions, mid-study surveys surfaced budgeting and prioritization, debt avoidance, and interest rate mechanics, with delayed gratification appearing at all three levels. The simulation’s structure supported reflection regardless of style.</p></li>
+          <li><h3>No difference in measured knowledge gains</h3><p>Quiz scores didn’t differ significantly between conditions. With 20 participants from one selective college, a ceiling effect may have hidden short-term differences.</p></li>
         </ul>
       </section>
 
       <section class="cs-section" id="outcome">
         <span class="label">06 · Outcome</span>
         <h2>Where it landed</h2>
-        <div class="prose">
-          <p>The class version of this work was accepted to ACM SIGDOC 2026, the 44th ACM International Conference on Design of Communication, and appears in the conference proceedings. <span class="todo">Add the paper link or DOI once it’s live, and what the independent study found.</span></p>
+        <div class="paper-cite">
+          <span class="label">Extended abstract · ACM SIGDOC 2026, Student Research Competition</span>
+          <p class="paper-cite__title">Framing Financial Feedback: Narrative vs. Factual AI Explanation in an Educational Simulation</p>
+          <p class="paper-cite__authors"><b>Maggie Yan</b>, Wendian Wang, Emily Regan</p>
+          <p class="paper-cite__venue">In <i>Proceedings of the 44th ACM International Conference on Design of Communication</i> (SIGDOC ’26), St. Paul, MN. To appear after October 24, 2026.</p>
+          <ul class="paper-cite__links">
+            <li><a href="https://doi.org/10.1145/3772063.3841690">DOI: 10.1145/3772063.3841690</a></li>
+            <li><a href="https://github.com/yanmaggie53/financial-literacy-xai-simulation">Research materials on GitHub</a></li>
+          </ul>
         </div>
-        <figure class="figure" style="margin-top:28px">
-          <div class="media"><div class="media__placeholder"><b>Final result</b><span>image or video</span></div></div>
-          <figcaption><span class="todo">Caption</span></figcaption>
-        </figure>
       </section>
 
       <section class="cs-section" id="reflection">
@@ -176,8 +175,8 @@
         <h2>Looking back</h2>
         <div class="reflect">
           <div><h3>What worked</h3><p><span class="todo">One or two things you’d do the same way again.</span></p></div>
-          <div><h3>Limitations</h3><p><span class="todo">Be honest: sample size, time, access to users, data quality.</span></p></div>
-          <div><h3>What I’d study next</h3><p><span class="todo">The open question this left you with. This is where you connect to the research you want to do in a PhD.</span></p></div>
+          <div><h3>Limitations</h3><p>A small sample (N = 20) from a single private liberal arts college, where students may have more baseline financial exposure, which could produce a ceiling effect.</p></div>
+          <div><h3>What’s next</h3><p>Expanding the simulation into a web app with a live financial dashboard, a conversational AI advisor, and a what-if toggle; recruiting more broadly; measuring need for cognition and narrative transportation as moderators; and testing retention after a week.</p></div>
         </div>
       </section>
 

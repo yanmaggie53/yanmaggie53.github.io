@@ -1,7 +1,7 @@
 /* site.js — shared by every page.
    - the sky (sun, moon, stars, clouds) drawn for the visitor's real time
    - the day bar: drag through the day to change the mode
-   - Maggie's own clock in Boston
+   - Maggie's own clock in Wellesley
    - stickers you can pick up and toss
    - table-of-contents highlighting on case studies */
 (function () {
@@ -10,7 +10,7 @@
   var S = window.SkyTime;
   if (!S) return;
 
-  // What the sidebar says Maggie is probably doing, based on the sky in Boston.
+  // What the sidebar says Maggie is probably doing, based on the sky in Wellesley.
   var HOME_STATUS = {
     sunrise: 'so I’m probably just waking up.',
     day: 'so I’m probably in class or at my desk.',

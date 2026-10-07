@@ -22,8 +22,8 @@
   var KEY_MODE = 'maggie:mode';
   var KEY_MINUTE = 'maggie:minute';
 
-  // Maggie's own sky, for the "in Boston it's…" line.
-  var HOME = { name: 'Boston', lat: 42.36, lng: -71.06, tz: 'America/New_York' };
+  // Maggie's own sky, for the "in Wellesley it's…" line.
+  var HOME = { name: 'Wellesley', lat: 42.2965, lng: -71.2924, tz: 'America/New_York' };
 
   // Rough coordinates for common time zones. We never ask for the visitor's
   // location; their time zone is close enough to get sunset within a few minutes.

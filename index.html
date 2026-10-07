@@ -26,8 +26,7 @@
     <nav class="topnav" aria-label="Main">
       <a href="index.html" aria-current="page">research</a>
       <a href="after-hours.html">after hours</a>
-      <a href="about.html">about</a>
-      <a href="assets/Maggie_Yan_CV.pdf">cv&nbsp;&#8599;</a>
+      <a href="about.html">about + CV</a>
     </nav>
 
     <!-- ================= Sidebar ================= -->
@@ -62,7 +61,7 @@
         <ul class="news">
           <li>
             <time datetime="2026-10-23">Oct 23–24, 2026</time>
-            <span>Our paper on <a href="projects/xai-financial-literacy.html">XAI for financial literacy</a> appears at <a href="https://sigdoc.acm.org/conference/2026/">ACM SIGDOC 2026</a> in St. Paul, MN.</span>
+            <span>Presenting our extended abstract on <a href="projects/xai-financial-literacy.html">AI explanations for financial literacy</a> in the <a href="https://sigdoc.acm.org/conference/2026/">ACM SIGDOC 2026</a> Student Research Competition, St. Paul, MN.</span>
           </li>
           <li>
             <time datetime="2026-10-22">Oct 22, 2026</time>
@@ -77,7 +76,7 @@
 
       <ul class="links">
         <li><a href="mailto:yanmaggie53@gmail.com">Email</a></li>
-        <li><a href="assets/Maggie_Yan_CV.pdf">CV</a></li>
+        <li><a href="about.html#cv">CV</a></li>
         <li><a href="https://www.linkedin.com/in/maggiesyan/">LinkedIn</a></li>
         <li><a href="https://github.com/yanmaggie53">GitHub</a></li>
       </ul>
@@ -89,58 +88,35 @@
     <!-- ================= Main ================= -->
     <main class="main" id="main">
 
-      <!-- Research interests, as a small typographic tree.
-           Size = scope: field (largest) → theme → focus area (smallest).
-           Linked focus areas lead to related projects. -->
+      <!-- Research interests as a word cloud.
+           data-w = how big the category is (1 + the number of topics inside it),
+           which sets the word's size. data-group ties focus areas to their theme.
+           Wrap a word in a link to tie it to a project. -->
       <section class="interests" aria-labelledby="interests-title">
         <span class="label" id="interests-title">Research interests</span>
-        <figure class="imap">
-          <p class="imap__root">Human–computer <span class="imap__amp">&amp;</span> human–AI interaction</p>
-          <ul class="imap__branches">
-            <li class="imap__branch">
-              <span class="imap__theme">AI trust</span>
-              <ul class="imap__leaves">
-                <li>transparency</li>
-                <li>adoption</li>
-                <li><a href="projects/xai-financial-literacy.html">explainable AI</a></li>
-                <li><a href="projects/neurafutures.html">anthropomorphic systems</a></li>
-              </ul>
-            </li>
-            <li class="imap__branch">
-              <span class="imap__theme">co-creation</span>
-              <ul class="imap__leaves">
-                <li>human–AI co-creation</li>
-                <li>collaborative design</li>
-              </ul>
-            </li>
-            <li class="imap__branch">
-              <span class="imap__theme">usability</span>
-              <ul class="imap__leaves">
-                <li>accessible &amp; inclusive design</li>
-                <li>research &amp; maker environments</li>
-              </ul>
-            </li>
-            <li class="imap__branch">
-              <span class="imap__theme">health</span>
-              <ul class="imap__leaves">
-                <li>mental health technology</li>
-                <li><a href="projects/zzalign.html">medical devices</a></li>
-              </ul>
-            </li>
-            <li class="imap__branch">
-              <span class="imap__theme">decision-making</span>
-              <ul class="imap__leaves">
-                <li><a href="projects/washu-i2db.html">AI-assisted decision support</a></li>
-                <li>clinician- &amp; patient-facing systems</li>
-              </ul>
-            </li>
+        <figure class="wc" data-wordcloud>
+          <ul class="wc__words">
+            <li data-w="18" data-level="1">human–computer interaction</li>
+            <li data-w="12" data-level="1">human–AI interaction</li>
+            <li data-w="5" data-level="2" data-group="trust">AI trust</li>
+            <li data-w="3" data-level="2" data-group="cocreation">co-creation</li>
+            <li data-w="3" data-level="2" data-group="usability">usability</li>
+            <li data-w="3" data-level="2" data-group="health">health</li>
+            <li data-w="3" data-level="2" data-group="decisions">decision-making</li>
+            <li data-w="1" data-level="3" data-group="trust">transparency</li>
+            <li data-w="1" data-level="3" data-group="trust">adoption</li>
+            <li data-w="1" data-level="3" data-group="trust"><a href="projects/xai-financial-literacy.html">explainable AI</a></li>
+            <li data-w="1" data-level="3" data-group="trust"><a href="projects/neurafutures.html">anthropomorphic systems</a></li>
+            <li data-w="1" data-level="3" data-group="cocreation">human–AI co-creation</li>
+            <li data-w="1" data-level="3" data-group="cocreation">collaborative design</li>
+            <li data-w="1" data-level="3" data-group="usability">accessible &amp; inclusive design</li>
+            <li data-w="1" data-level="3" data-group="usability">maker environments</li>
+            <li data-w="1" data-level="3" data-group="health">mental health technology</li>
+            <li data-w="1" data-level="3" data-group="health"><a href="projects/zzalign.html">medical devices</a></li>
+            <li data-w="1" data-level="3" data-group="decisions"><a href="projects/washu-i2db.html">AI-assisted decision support</a></li>
+            <li data-w="1" data-level="3" data-group="decisions">clinician- &amp; patient-facing systems</li>
           </ul>
-          <figcaption class="imap__key">
-            <span><i class="k k1"></i>field</span>
-            <span><i class="k k2"></i>theme</span>
-            <span><i class="k k3"></i>focus area</span>
-            <span class="imap__hint">Underlined terms lead to projects.</span>
-          </figcaption>
+          <figcaption class="wc__key">Bigger words are bigger categories. Point at a theme to light up what’s inside it. Underlined words lead to projects.</figcaption>
         </figure>
       </section>
 
@@ -187,7 +163,7 @@
             <article class="project" data-methods="prototyping, game design" data-domains="AI, finance, decision-making">
               <a class="project__link" href="projects/xai-financial-literacy.html">
                 <div class="media">
-                  <div class="media__placeholder"><b>XAI in Financial Literacy</b><span>hero image or preview clip</span></div>
+                  <img src="assets/img/projects/xai-scenario.png" alt="The what-if simulation on a laptop, showing Scenario 1 and its two choices" loading="lazy" style="object-fit:contain;background:#000">
                 </div>
                 <div class="project__info">
                   <h3 class="project__title">“What-If” Financial Decision-Making Simulation Informed by Narrative vs. Factual XAI Explanations</h3>

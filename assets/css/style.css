@@ -739,93 +739,32 @@ p { margin: 0; }
 .main > section { padding-top: 96px; }
 .main > section:first-child { padding-top: 40px; }
 
-/* Research interests: a small typographic tree. Size = scope. */
-.interests { display: grid; gap: 18px; padding-bottom: 8px; container-type: inline-size; }
-.imap { margin: 0; display: grid; gap: 22px; }
-.imap__root {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(26px, 3vw, 36px);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-}
-.imap__amp { color: var(--ink-3); font-weight: 500; }
-.imap__branches {
+/* Research interests: a word cloud. Size = how big the category is. */
+.interests { display: grid; gap: 14px; padding-bottom: 8px; }
+.wc { margin: 0; display: grid; gap: 18px; }
+.wc__words {
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, auto));
-  justify-content: space-between;
-  gap: 22px 20px;
-}
-.imap__branch {
-  position: relative;
-  display: grid;
-  align-content: start;
-  gap: 8px;
-  padding-top: 16px;
-  border-top: 1.5px solid var(--line);
-  transition: opacity 0.25s ease;
-}
-.imap__branch::before {
-  /* the node where this theme hangs off the tree */
-  content: '';
-  position: absolute;
-  top: -4.5px;
-  left: 0;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-.imap__theme {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(19px, 1.8vw, 23px);
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-  color: var(--accent);
-  white-space: nowrap;
-}
-.imap__leaves {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 4px;
-  font-size: 13.5px;
-  line-height: 1.35;
-  color: var(--ink-2);
-  max-width: 17ch;
-}
-.imap__leaves a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent); }
-.imap__leaves a:hover { color: var(--accent); }
-/* Point at a theme and the others step back. */
-.imap__branches:has(.imap__branch:hover) .imap__branch:not(:hover),
-.imap__branches:has(.imap__branch:focus-within) .imap__branch:not(:focus-within) { opacity: 0.3; }
-.imap__key {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 6px 16px;
-  font-size: 12px;
-  color: var(--ink-3);
 }
-.imap__key span { display: inline-flex; align-items: baseline; gap: 6px; }
-.imap__key .k { font-style: normal; font-family: var(--font-display); font-weight: 700; color: var(--ink-2); }
-.imap__key .k::before { content: 'Aa'; }
-.imap__key .k1 { font-size: 20px; }
-.imap__key .k2 { font-size: 15px; color: var(--accent); }
-.imap__key .k3 { font-size: 11px; font-family: var(--font-sans); font-weight: 400; }
-.imap__hint { margin-left: auto; }
-/* Fewer columns when the chart itself is narrow, whatever the window size. */
-@container (max-width: 760px) {
-  .imap__branches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .imap__hint { margin-left: 0; }
-}
-@container (max-width: 460px) {
-  .imap__branches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.wc__words > li { line-height: 1.1; white-space: nowrap; transition: opacity 0.25s ease, color 0.25s ease; }
+.wc__words > li[data-level="1"] { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.03em; color: var(--ink); font-size: 34px; }
+.wc__words > li[data-level="2"] { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; color: var(--accent); font-size: 24px; }
+.wc__words > li[data-level="3"] { font-weight: 500; color: var(--ink-2); font-size: 14px; }
+.wc__words a { color: inherit; text-decoration-color: color-mix(in srgb, var(--accent) 65%, transparent); }
+.wc.is-cloud .wc__words { display: block; position: relative; }
+/* 'backwards' so the entrance doesn't pin opacity once it's done (hover dimming needs it). */
+.wc.is-cloud .wc__words > li { position: absolute; animation: wc-in 0.6s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 35ms); }
+.wc.is-focused .wc__words > li:not(.is-lit) { opacity: 0.18; }
+.wc__words > li.is-lit[data-level="3"] { color: var(--accent); }
+.wc__key { font-size: 12.5px; color: var(--ink-3); }
+@keyframes wc-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to { opacity: 1; transform: none; }
 }
 
 .focus { display: grid; gap: 12px; }
@@ -1222,6 +1161,24 @@ div.tile { cursor: default; }
 
 .cs-hero { margin-top: 40px; aspect-ratio: 16 / 9; }
 
+/* A paper citation block */
+.paper-cite {
+  display: grid;
+  gap: 8px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  max-width: 70ch;
+}
+.paper-cite__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.15; letter-spacing: -0.015em; }
+.paper-cite__authors { color: var(--ink-2); }
+.paper-cite__authors b { color: var(--ink); font-weight: 500; }
+.paper-cite__venue { color: var(--ink-2); font-size: 15px; }
+.paper-cite__links { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14.5px; }
+.paper-cite__links a { color: var(--accent); text-decoration: none; font-weight: 500; }
+.paper-cite__links a::after { content: ' \2197'; font-size: 0.85em; }
+
 /* A poster you can click through to the full PDF */
 .poster-link { display: block; background: #fff; }
 .poster-link img { object-fit: contain; }
@@ -1240,6 +1197,71 @@ div.tile { cursor: default; }
   transition: background 0.2s;
 }
 .poster-link:hover .poster-link__open { background: rgba(0, 0, 0, 0.8); }
+
+/* PDFs shown as paper pages (CV, papers) */
+.pdf { position: relative; }
+.pdf__pages { display: grid; gap: 18px; justify-items: center; min-height: 240px; }
+.pdf:not(.is-ready) .pdf__pages {
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(-45deg, var(--surface), var(--surface) 12px, transparent 12px, transparent 24px);
+}
+.pdf__page {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 12px 32px rgba(0, 0, 0, 0.12);
+}
+.pdf__page canvas { display: block; width: 100%; height: 100%; }
+:root[data-mode="night"] .pdf__page canvas { filter: brightness(0.86); }
+:root[data-mode="sunset"] .pdf__page canvas { filter: brightness(0.93) sepia(0.06); }
+.pdf__link { position: absolute; border-radius: 2px; }
+.pdf__link:hover { background: rgba(43, 95, 217, 0.12); }
+.pdf__fallback { display: none; padding: 24px; color: var(--ink-2); }
+.pdf.is-failed .pdf__fallback { display: block; }
+.pdf.is-failed .pdf__pages { display: none; }
+
+/* Framed: the PDF scrolls inside its own window */
+.pdf--framed {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 0 1px var(--line), var(--shadow);
+  background: var(--surface);
+}
+.pdf--framed .pdf__pages {
+  max-height: min(82vh, 900px);
+  overflow-y: auto;
+  padding: 16px;
+  overscroll-behavior: contain;
+}
+.pdf__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-solid);
+  font-size: 13.5px;
+}
+.pdf__bar b { font-weight: 500; }
+.pdf__bar a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+/* CV on the About page */
+.cv-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px 24px;
+  padding-bottom: 20px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+.cv-head h2 { font-size: clamp(28px, 3vw, 36px); letter-spacing: -0.02em; }
+.cv-head p { color: var(--ink-3); font-size: 14px; margin-top: 4px; }
 
 /* A live site embedded in a little browser window */
 .browser {
