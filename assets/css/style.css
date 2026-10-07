@@ -1230,11 +1230,15 @@ div.tile { cursor: default; }
   background: var(--surface);
 }
 .pdf--framed .pdf__pages {
+  position: relative;
   max-height: min(82vh, 900px);
   overflow-y: auto;
   padding: 16px;
   overscroll-behavior: contain;
 }
+/* One page tall (letter size), never taller than the window; scroll for the rest. */
+.pdf--one-page .pdf__pages { aspect-ratio: 8.5 / 11; max-height: calc(100vh - 110px); }
+.pdf__bar [data-pdf-status] { color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .pdf__bar {
   display: flex;
   flex-wrap: wrap;

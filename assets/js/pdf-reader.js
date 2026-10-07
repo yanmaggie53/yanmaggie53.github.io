@@ -33,6 +33,7 @@
 
   function setup(el) {
     var pagesEl = el.querySelector('.pdf__pages');
+    var status = el.querySelector('[data-pdf-status]');
     var url = el.getAttribute('data-pdf');
     var doc = null;
     var renderedWidth = 0;
@@ -101,6 +102,7 @@
       chain.then(function () {
         busy = false;
         el.classList.add('is-ready');
+        updateStatus();
         // The window may have changed size while we were drawing.
         if (Math.abs(Math.floor(pagesEl.clientWidth - (el.classList.contains('pdf--framed') ? 32 : 0)) - renderedWidth) >= 30) render();
       }).catch(function () {
@@ -108,6 +110,17 @@
         showFallback(el);
       });
     }
+
+    // "Page 2 of 5" for framed readers that scroll inside their own window.
+    function updateStatus() {
+      if (!status || !doc) return;
+      var sheets = pagesEl.querySelectorAll('.pdf__page');
+      var mark = pagesEl.scrollTop + pagesEl.clientHeight / 3;
+      var current = 1;
+      for (var i = 0; i < sheets.length; i++) if (sheets[i].offsetTop <= mark) current = i + 1;
+      status.textContent = 'Page ' + current + ' of ' + doc.numPages + (current < doc.numPages ? ' · scroll for more' : '');
+    }
+    pagesEl.addEventListener('scroll', updateStatus, { passive: true });
 
     function start() {
       loadLib(function () {
