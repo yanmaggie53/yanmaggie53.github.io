@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Space Between · Maggie Yan</title>
+  <meta name="description" content="An EEG-guided embroidery machine where head movement steers the fabric and attention sets the stitching speed. Final project for MAS.S60 Critical Matter at the MIT Media Lab, with two mini projects that led up to it.">
+
+  <script src="../assets/js/sky-time.js"></script>
+
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,401,500,501,700&amp;display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&amp;display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="sky sky--short" data-sky aria-hidden="true"><div class="sky__gradient"></div></div>
+
+  <div class="layout">
+    <nav class="topnav" aria-label="Main">
+      <a href="../index.html">research</a>
+      <a href="../after-hours.html">after hours</a>
+      <a href="../about.html">about + CV</a>
+    </nav>
+
+    <aside class="sidebar">
+      <a class="back-link" href="../index.html#practice">&larr; all practice</a>
+      <div>
+        <span class="label">Practice · class project</span>
+        <p class="cs-side-title">The Space Between</p>
+      </div>
+      <nav class="toc" aria-label="On this page">
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#question">Design question</a></li>
+          <li><a href="#context">Context</a></li>
+          <li><a href="#leadup">Lead-up</a></li>
+          <li><a href="#methods">Methods</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#findings">Findings</a></li>
+          <li><a href="#outcome">Outcome</a></li>
+          <li><a href="#reflection">Reflection</a></li>
+        </ol>
+      </nav>
+      <div data-daybar></div>
+      <p class="home-clock" data-home-clock></p>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="cs-header" id="overview">
+        <div class="cs-kicker">
+          <span class="label">Fall 2025</span>
+          <span class="label">MIT Media Lab</span>
+          <span class="label">MAS.S60 Critical Matter</span>
+          <span class="label">Biosignals · digital craft</span>
+        </div>
+        <h1 class="cs-title cs-title--long">The Space Between: <em>an EEG-guided embroidery machine</em></h1>
+        <p class="cs-summary">A sewing machine you steer with your head and your attention. A BrainCo EEG headband tracks the wearer’s head movement and attention level; head movement drives a two-axis plotter that moves the fabric hoop under a Brother embroidery machine, and attention sets the stitching speed. The person and the machine end up co-steering the same line of thread. It was our team’s final project for MAS.S60 Critical Matter: Emotive Design from Fashion to Urban Scale, and it grew out of two mini projects earlier in the semester: one that turned brainwaves into crochet patterns, and one that gave embroidered geometry a physical behavior.</p>
+      </header>
+
+      <div class="media cs-hero">
+        <img src="../assets/img/projects/eeg-hero.jpg" alt="Maggie wearing a BrainCo EEG headband, seated in front of a Brother embroidery machine and a monitor showing the digital trace of the stitch path" style="object-position:center 40%">
+      </div>
+
+      <dl class="glance">
+        <div><dt class="label">My role</dt><dd><span class="todo">What you owned on the team, e.g. the plotter and hoop mount, the EEG-to-motion mapping, the embroidery tests, the video</span></dd></div>
+        <div><dt class="label">Timeline</dt><dd>October to December 2025 (two mini projects, then a three-week final build)</dd></div>
+        <div><dt class="label">Context</dt><dd>MAS.S60 Critical Matter: Emotive Design from Fashion to Urban Scale, taught by Behnaz Farahi, MIT Media Lab</dd></div>
+        <div><dt class="label">Team</dt><dd>Annie Xing, Yao Wang, Giacomo Puri Purini, Awu Chen, and me</dd></div>
+        <div class="wide"><dt class="label">Methods</dt><dd>Literature review on EEG and craft, biosignal mapping and rapid prototyping, material experiments with heat-reactive thread, digital fabric simulation, hardware modification, an interview with a master embroiderer, and in-lab demos</dd></div>
+        <div><dt class="label">Tools</dt><dd>BrainCo EEG headband and Zenlite SDK, Python, p5.js, Brother embroidery machine, two-axis plotter, Chizimi shrink thread and LCE fiber, FLIR thermal camera</dd></div>
+        <div><dt class="label">Presented</dt><dd>Final presentation, December 15, 2025</dd></div>
+        <div><dt class="label">Input and output</dt><dd>Input: head movement and attention level from EEG. Output: a stitched line on fabric, and a digital twin of the same line on screen.</dd></div>
+      </dl>
+
+      <section class="cs-section" id="question">
+        <span class="label">01 · Design question</span>
+        <h2>What were we trying to find out?</h2>
+        <blockquote class="question">
+          Where does creativity live: in the hand, in the machine, or in the space between? And what happens to a craft when the tool it depends on shifts from the hand to the mind?
+          <cite>The semester kept returning to this. Each project answered a smaller version of it before the final one put a person and a machine on the same thread.</cite>
+        </blockquote>
+      </section>
+
+      <section class="cs-section" id="context">
+        <span class="label">02 · Context</span>
+        <h2>Why this mattered</h2>
+        <div class="prose">
+          <p>Craft has always been a story about the human hand. But the hand trembles, the eye loses focus, the body tires. The craftsperson whose hands are no longer steady, or whose sight is going, is quietly written out of that story. We wanted to ask who gets to be a maker if the primary tool of craft can shift from manual dexterity to attention.</p>
+          <p>One person anchored that question for us. Kiyomi Osawa is a master of yokoburi, the horizontal swing embroidery of Kiryu, Japan, where she has sewn since she was seventeen. She lost half her eyesight at 73 and continues to embroider; her line is that thread is paint and the needle a brush. Our team interviewed her about how the industry treated the people who did its most skilled work, and why she decided to change it. Her practice became the reference point for a machine that would share authorship rather than replace the hand.</p>
+          <p>We also borrowed a frame from neuroscience: creative flow as a sustained tension between the default mode network (imagination, association, daydreaming) and the executive control network (evaluation, focus, decision). Let one dominate and you get work that is either novel but impractical or feasible but predictable. That idea runs through all three projects.</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="leadup">
+        <span class="label">03 · Lead-up</span>
+        <h2>Two mini projects that pointed the way</h2>
+        <div class="prose">
+          <p><strong>Mini Project 1, October: the mirror.</strong> We built a tool to observe creativity. A BrainCo EEG headset streamed brainwave band powers through a small Python bridge (Welch power spectral density over the raw signal, then a WebSocket) into a p5.js crochet pattern visualizer. Each band drove a parameter of a radial crochet motif: theta set the petal radius, alpha the number of petal buds, low beta the petal ring, high beta the spacing of the links between neighbors. A simple score weighed alpha and theta against beta and gamma to show whether the wearer was drifting toward the default mode or the executive side. Then one of us crocheted the pattern the brain had generated. It worked, and it taught us the limit of observation: a mirror cannot dance with you. Flow needs a counterforce, not just a display.</p>
+        </div>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:2000/413"><img src="../assets/img/projects/eeg-mp1-strip.jpg" alt="Four panels: a crochet stitch diagram, a hand crocheting in front of the p5.js visualizer, the generated radial pattern, and the finished crocheted motif" loading="lazy"></div>
+          <figcaption>Mini Project 1, left to right: a crochet chart, the EEG-driven visualizer in use, the generated motif, and the crocheted result.</figcaption>
+        </figure>
+        <div class="prose" style="margin-top:36px">
+          <p><strong>Mini Project 2, November: geometry and tension become controllable variables.</strong> We moved from the hand to the machine and from a screen to material. Using a Brother embroidery machine we stitched geometric patterns (a lattice of circles and octagons, parallel waves) in two heat-reactive threads, Chizimi shrink thread and liquid crystal elastomer fiber. Applying heat with a heat gun, and watching it with a thermal camera, made the stitched geometry contract and pucker the fabric into a three-dimensional texture. We ran a digital simulation of the same patterns alongside the physical samples to see how well the geometry predicted the behavior. The takeaway was that geometry plus tension plus heat gives you behavior, and that the machine’s stitch-by-stitch controls could be handed back to the person at the hoop.</p>
+        </div>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:16/9"><img src="../assets/img/projects/eeg-mp2-compare.jpg" alt="Three side-by-side panels labeled Chizimi Thread, LCE Fiber, and Simulation, showing a stitched lattice pattern being heated and its simulated counterpart" loading="lazy"></div>
+          <figcaption>Mini Project 2: the same lattice stitched in Chizimi thread and LCE fiber, with the digital simulation alongside.</figcaption>
+        </figure>
+        <figure class="figure figure--pair">
+          <div class="media" style="aspect-ratio:3/4"><img src="../assets/img/projects/eeg-mp2-heat.jpg" alt="Thermal camera view of a heat gun warming an embroidered square of fabric, reading 33.2 degrees" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:3/4"><img src="../assets/img/projects/eeg-mp2-grid.jpg" alt="Grey fabric embroidered with a lattice of circles that has contracted into a raised, puckered texture" loading="lazy" style="object-position:center 40%"></div>
+          <figcaption>Left: heating a sample under the thermal camera. Right: the lattice after heating, contracted into a raised texture.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="methods">
+        <span class="label">04 · Methods</span>
+        <h2>How we approached the final project, and why</h2>
+        <div class="prose">
+          <p>The mini projects gave us an input we trusted (EEG band powers and head motion from the headband), a machine we knew (the Brother embroidery machine), and a reason to put them together: technology that participates rather than observes. The final project moved from a sequential loop, think then make, to a simultaneous one where the person and the machine act on the fabric at the same time and control is distributed between them.</p>
+        </div>
+        <table class="methods" style="margin-top:24px">
+          <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave us</th></tr></thead>
+          <tbody>
+            <tr><td>Interview with a master craftsperson</td><td>We needed the question to come from a practice, not from the hardware. Osawa-san’s account of Kiryu’s embroidery industry and of continuing to sew with half her sight grounded the accessibility framing.</td><td>The reference point for what shared authorship should feel like, and the opening of our final video.</td></tr>
+            <tr><td>Biosignal to motion mapping</td><td>Head movement is a signal almost everyone can produce, and attention is the state we most wanted to make visible. Mapping one to position and the other to speed kept each legible.</td><td>Head movement drives the x and y of the plotter; attention level sets the stitching speed.</td></tr>
+            <tr><td>Hardware modification</td><td>A commercial embroidery machine follows its own file. To let a person steer it live we had to move the fabric ourselves and take over the pedal.</td><td>A two-axis plotter carrying the hoop under the needle, and programmable speed control in place of the foot pedal.</td></tr>
+            <tr><td>Digital twin</td><td>The stitch happens under the needle where you cannot see it well. A live trace on screen lets the person see the negotiation as it happens and lets us compare intention against outcome afterward.</td><td>A record of each session: the path the head drew, and where the machine drifted or resisted.</td></tr>
+            <tr><td>Two task modes</td><td>A pre-printed pattern tests following; a blank hoop tests exploring. We wanted both in the same system so deviation could read as conversation rather than error.</td><td>A maze pattern to trace, and a free-form mode with no pattern at all.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="cs-section" id="process">
+        <span class="label">05 · Process</span>
+        <h2>What we actually did</h2>
+        <ol class="process">
+          <li>
+            <h3>Deciding the path</h3>
+            <span class="when">Week of November 24</span>
+            <p>We met at the Media Lab twice a week. The first decision was to buy a plotter and build the system around moving the fabric rather than the needle. We split the work across the machine documentation, CAD and 3D printing, the programming, and replacing the pedal with speed control driven by the headband, and we looked into whether the headband could also pick up eye movement.</p>
+          </li>
+          <li>
+            <h3>Building the machine</h3>
+            <span class="when">Week of December 1</span>
+            <p>A second plotter order went in, and we settled on the Brother machine for the demo. The motor hack and the pedal replacement happened in parallel. We also argued about the why: were we building this for blind makers, for makers with motor impairments, or for the broader question of who gets to make? Osawa-san’s story kept the answer honest.</p>
+          </li>
+          <li>
+            <h3>Closing the loop</h3>
+            <span class="when">Week of December 8</span>
+            <p>Head movement from the headband was wired to the plotter’s x and y, attention level to the stitch speed, and the digital twin began recording what the fabric received. We stitched the maze pattern and then went free-form, watching where the machine followed and where it pulled.</p>
+          </li>
+          <li>
+            <h3>Presenting it</h3>
+            <span class="when">December 15</span>
+            <p>The final presentation framed the semester as a move from observation to negotiation: the mirror of Mini Project 1, the controllable material of Mini Project 2, and finally a partner. The claim we ended on was that when EEG starts pulling the fabric, authorship becomes shared.</p>
+          </li>
+        </ol>
+        <figure class="figure figure--pair">
+          <div class="media" style="aspect-ratio:3/4"><img src="../assets/img/projects/eeg-plotter-aerial.jpg" alt="Aerial view of the two-axis plotter carrying the embroidery hoop under the Brother machine, with a stitched maze visible on the fabric" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:3/4"><img src="../assets/img/projects/eeg-twin.jpg" alt="The digital twin on a dark screen: a thin line tracing a maze-like path, with a dot marking the current position of the needle" loading="lazy"></div>
+          <figcaption>Left: the plotter moving the hoop under the needle, seen from above. Right: the digital twin recording the same path.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="findings">
+        <span class="label">06 · Findings</span>
+        <h2>What we learned</h2>
+        <ul class="findings">
+          <li><h3>Observation is not enough</h3><p>Mini Project 1 made cognition visible and left the person in full control, and it felt inert. Flow needs a counterforce. The final system works because the machine pushes back.</p></li>
+          <li><h3>Deviation is conversation</h3><p>With a pre-printed maze, the gap between the printed line and the stitched one is where the negotiation shows. Following and drifting, intention and distraction, read as a record of attention rather than as mistakes.</p></li>
+          <li><h3>Material has agency too</h3><p>Mini Project 2 showed that thread, heat, and fabric tension actively shape outcomes. In the final system the fabric resists the plotter and the needle, so the artifact is negotiated three ways: mind, machine, material.</p></li>
+          <li><h3>The hardest part was the handoff</h3><p>Getting a commercial machine to accept live control meant replacing its pedal and moving the fabric ourselves. The interaction only became legible once speed and position were separated into two different signals.</p></li>
+        </ul>
+      </section>
+
+      <section class="cs-section" id="outcome">
+        <span class="label">07 · Outcome</span>
+        <h2>Where it landed</h2>
+        <div class="prose">
+          <p>A working system: a two-axis plotter and a Brother embroidery machine driven by a BrainCo EEG headband, with a digital twin on screen. It can stitch a pre-printed pattern or run free-form, and it works with different fabrics and patterns for people of different skill levels. The final video opens with our interview with Osawa-san and closes with the machine in use.</p>
+        </div>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:16/9">
+            <video controls preload="metadata" playsinline poster="../assets/img/projects/eeg-setup.jpg">
+              <source src="../assets/video/eeg-demo.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>The system demo from our final video: the setup, the headband mapping, the digital twin, and free-form stitching.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="reflection">
+        <span class="label">08 · Reflection</span>
+        <h2>Looking back</h2>
+        <div class="reflect">
+          <div><h3>What worked</h3><p>Building up through two mini projects meant the final one started with an input and a machine we already trusted, so the three weeks went into the handoff between them rather than into basics. Separating position from speed gave the interaction a shape people understood in seconds.</p></div>
+          <div><h3>Limitations</h3><p>Three weeks of build time, demoed by the team in the lab rather than with the makers the framing is about. We did not evaluate whether people can learn to modulate their attention to get the line they want, and the study design we sketched for novices, experienced makers, and blind or motor-impaired participants stayed a proposal.</p></div>
+          <div><h3>What I’d study next</h3><p>How makers experience the distribution of agency between cognitive state, manual control, and machine behavior; whether stable visual signatures of particular cognitive-machine states emerge in the stitching; whether people can learn to modulate their state to get the line they want; and, most of all, whether this gives makers with visual or motor impairments creative agency they would recognize as their own.</p></div>
+        </div>
+      </section>
+
+      <a class="next-project" href="../index.html#practice">
+        <span class="label">More practice</span>
+        <b>Back to practice &rarr;</b>
+      </a>
+
+      <footer class="site-footer" style="padding-top:40px">
+        <div class="footer-bottom">
+          <span>&copy; <span data-year>2026</span> Maggie Yan</span>
+          <span>Last updated <span data-updated>recently</span></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/site.js"></script>
+</body>
+</html>
