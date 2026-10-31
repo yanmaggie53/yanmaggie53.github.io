@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Understanding Psilocybin · Maggie Yan</title>
-  <meta name="description" content="A data visualization project about psilocybin research by Maggie Yan.">
+  <meta name="description" content="An open-source interactive matrix comparing eight psilocybin policy models across five U.S. states, designed and built in four weeks at GoInvo.">
 
   <script src="../assets/js/sky-time.js"></script>
 
@@ -17,14 +17,6 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="sky sky--short" data-sky aria-hidden="true"><div class="sky__gradient"></div></div>
-
-  <!--
-    CASE STUDY TEMPLATE
-    Every project page follows the same shape, because it's the shape a PhD
-    committee reads for: what question you asked, why you chose your methods,
-    what you actually did (including what didn't work), what you found, and
-    what you'd do next. Anything in <span class="todo"> is a prompt to replace.
-  -->
 
   <div class="layout">
     <nav class="topnav" aria-label="Main">
@@ -58,35 +50,36 @@
     <main class="main" id="main">
       <header class="cs-header" id="overview">
         <div class="cs-kicker">
-          <span class="label">2025</span>
+          <span class="label">July 2025</span>
           <span class="label">GoInvo</span>
           <span class="label">Data visualization</span>
+          <span class="label">Health policy</span>
         </div>
         <h1 class="cs-title">Understanding <em>Psilocybin</em></h1>
-        <p class="cs-summary"><span class="todo">Two or three sentences: what this visualization shows, who it’s for, and what someone should walk away understanding.</span></p>
+        <p class="cs-summary">An open-source, interactive matrix that lays out the eight policy models U.S. states are using to legalize or regulate psilocybin, from decriminalization to state-run sales, and shows where five states that have published official reports stand on each. I designed and built it in four weeks during my internship at GoInvo, a healthcare design studio, as the newest entry in its series of plain-language public health explainers. The goal was a page a legislator, clinician, or curious voter could read at a glance without the comparison losing its accuracy.</p>
       </header>
 
       <div class="media cs-hero">
-        <div class="media__placeholder"><b>Hero image</b><span>the finished work, ideally in use</span></div>
+        <img src="../assets/img/projects/psilo-hero.jpg" alt="The Understanding Psilocybin website: a title, a short introduction, and a color-coded matrix with eight policy models as rows and five states (CT, MN, VT, NV, WA) as columns, each cell reading Endorsed, Supported, Mixed, Opposed, or N/A" style="object-position:left top">
       </div>
 
       <dl class="glance">
-        <div><dt class="label">My role</dt><dd><span class="todo">e.g. Designer &amp; front-end developer</span></dd></div>
-        <div><dt class="label">Timeline</dt><dd><span class="todo">e.g. Jun–Aug 2025 (10 weeks)</span></dd></div>
+        <div><dt class="label">My role</dt><dd>UI designer and front-end developer</dd></div>
+        <div><dt class="label">Timeline</dt><dd>July 2025, four weeks</dd></div>
         <div><dt class="label">Context</dt><dd>Summer 2025 internship, GoInvo (healthcare design studio)</dd></div>
-        <div><dt class="label">Team</dt><dd><span class="todo">Who you worked with, and your advisor/PI</span></dd></div>
-        <div class="wide"><dt class="label">Methods</dt><dd><span class="todo">e.g. data audit, stakeholder interviews, sketching, iterative prototyping, think-aloud feedback sessions</span></dd></div>
-        <div><dt class="label">Project site</dt><dd><a href="https://understandingpsilocybin.org/">understandingpsilocybin.org &#8599;</a></dd></div>
-        <div><dt class="label">Tools</dt><dd><span class="todo">e.g. Figma, Python, Arduino</span></dd></div>
-        <div class="wide"><dt class="label">Data</dt><dd><span class="todo">Which studies or datasets you visualized, and where they came from.</span></dd></div>
+        <div><dt class="label">Team</dt><dd>GoInvo studio team <span class="todo">(add who directed the project and who did the policy research)</span></dd></div>
+        <div class="wide"><dt class="label">Methods</dt><dd>Reading state reports and a design-considerations brief, sketching, low-fidelity prototyping, iterative Figma exploration of grids, color, type, and icons, hand-coded front end</dd></div>
+        <div><dt class="label">Project site</dt><dd><a href="https://understandingpsilocybin.org/" target="_blank" rel="noopener">understandingpsilocybin.org &#8599;</a></dd></div>
+        <div><dt class="label">Tools</dt><dd>Figma, HTML and CSS, JavaScript, Three.js, GitHub Pages</dd></div>
+        <div><dt class="label">Data</dt><dd>Official state reports from Connecticut (2023), Minnesota (2024), Nevada (2024), Vermont (2024), and Washington (2023), the RAND Corporation’s <i>Current Models of Psilocybin Regulation</i> (2023), and BrainFutures’ <i>Psychedelic Pathways</i> report (2023). <a href="https://github.com/yanmaggie53/goinvo-understanding-psilocybin" target="_blank" rel="noopener">Source code on GitHub &#8599;</a></dd></div>
       </dl>
 
       <section class="cs-section" id="question">
         <span class="label">01 · Design question</span>
         <h2>What were we trying to find out?</h2>
         <blockquote class="question">
-          <span class="todo">What should a non-expert understand about psilocybin research, and what is the clearest way to show it?</span>
-          <cite>Write the one question this project answers. It’s the single most useful sentence on the page.</cite>
+          How do you let someone compare eight policy models across several states at a glance, without flattening the real differences between “endorsed,” “supported,” and “mixed”?
+          <cite>The data was a handful of long government reports. The design problem was compression without distortion.</cite>
         </blockquote>
       </section>
 
@@ -94,8 +87,9 @@
         <span class="label">02 · Context</span>
         <h2>Why this mattered</h2>
         <div class="prose">
-          <p><span class="todo">Why psilocybin? What’s the state of the research, and what makes it hard for people to understand?</span></p>
-          <p><span class="todo">Who is the audience, and what do they believe going in?</span></p>
+          <p>States are moving on psilocybin faster than the public conversation about it. Several have convened task forces and working groups and published their findings, but each report is long, each uses its own vocabulary, and none of them lines up against the others. A legislator in a state that has not acted yet has no easy way to see what the states ahead of them recommended.</p>
+          <p>GoInvo had already built plain-language explainers for coronavirus, Zika, and Ebola. This one extended the series into policy. The studio’s framing material included a design-considerations brief for state-level psychedelic legislation, organized around Bardach’s Eightfold Path to policy analysis, which gave me the question list a legislator would actually be working through: what problem the law solves, what the evidence shows, which models of access are on the table, and who bears the trade-offs.</p>
+          <p>The audience was deliberately broad: policy staff, clinicians, advocates, and voters. That ruled out jargon and ruled in a design that explains itself.</p>
         </div>
       </section>
 
@@ -103,14 +97,15 @@
         <span class="label">03 · Methods</span>
         <h2>How I approached it, and why</h2>
         <div class="prose">
-          <p><span class="todo">One short paragraph on your overall approach (e.g. participatory, iterative, data-first) and why it fit this problem.</span></p>
+          <p>Four weeks is short, so the process was front-loaded with cheap exploration: paper first, then many small Figma variants, then code only once the matrix form had settled. The content itself, the eight models and each state’s position, came from close reading of the reports.</p>
         </div>
         <table class="methods" style="margin-top:24px">
           <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave me</th></tr></thead>
           <tbody>
-            <tr><td><span class="todo">e.g. Literature review</span></td><td><span class="todo">To learn what’s already known and where the gap is.</span></td><td><span class="todo">The framing for your question.</span></td></tr>
-            <tr><td><span class="todo">e.g. Interviews or a user study</span></td><td><span class="todo">Why talking to people (vs. guessing) was necessary here.</span></td><td><span class="todo">What people actually needed or did.</span></td></tr>
-            <tr><td><span class="todo">e.g. Iterative prototyping</span></td><td><span class="todo">Why you went low-fi → high-fi, and how many rounds.</span></td><td><span class="todo">What changed between rounds.</span></td></tr>
+            <tr><td>Reading the source reports</td><td>The matrix is only as trustworthy as its cells. Each state’s stance on each model had to be traced to a specific recommendation in a specific report.</td><td>The eight-model taxonomy and a defensible label for every cell, including “N/A” where a report never addressed a model.</td></tr>
+            <tr><td>Sketching and low-fi prototyping</td><td>The first question was the shape of the thing: a table, a brochure that unfolds, a page with reveals. Paper let me try the form before committing to layout.</td><td>Two early concepts, including an unfolding matrix with a “you” column where visitors could vote. See Process for why that was cut.</td></tr>
+            <tr><td>Iterative Figma exploration</td><td>With the form fixed, the variables were grid, color system, typography, and whether cells should carry icons, words, or both. Laying dozens of variants side by side made the comparison honest.</td><td>A board of alternatives that settled the final choices: words over icons, a light five-color system, a typeface that stays readable at small sizes.</td></tr>
+            <tr><td>Hand-coded front end</td><td>GoInvo publishes its explainers as open source on GitHub Pages, so the page needed to be plain HTML, CSS, and JavaScript that anyone could fork.</td><td>A static site with a responsive matrix, a mobile layout that restacks each model with its five states, and one small Three.js flourish.</td></tr>
           </tbody>
         </table>
       </section>
@@ -121,29 +116,39 @@
         <ol class="process">
           <li>
             <h3>Getting oriented</h3>
-            <span class="when"><span class="todo">Weeks 1–2</span></span>
-            <p><span class="todo">What you read and looked at first, what surprised you, and what constraints you discovered.</span></p>
+            <span class="when">Week 1</span>
+            <p>I read the five state reports and the RAND and BrainFutures reviews and worked out each state’s position on each model. The hard part was not finding the positions but deciding how to label them consistently when one report says “recommend,” another “support,” and a third describes a model without taking a stance.</p>
           </li>
           <li>
-            <h3>Sketching and early concepts</h3>
-            <span class="when"><span class="todo">Weeks 3–4</span></span>
-            <p><span class="todo">The directions you explored. Show at least one idea you threw away and why. That’s the part advisors look for.</span></p>
+            <h3>Sketching the form</h3>
+            <span class="when">Week 1 to 2</span>
+            <p>My first sketches treated the matrix as something that unfolds: click a model and the row opens sideways to reveal ballot options and more states, like a wide brochure. One version added a “you” column so visitors could record their own position, submit, and then see how others had voted. Neither the unfolding nor the voting survived. The finished page is a single matrix that reads in one glance, which was the brief: easy to read and compare without sacrificing accuracy.</p>
           </li>
           <li>
-            <h3>Prototyping and feedback</h3>
-            <span class="when"><span class="todo">Weeks 5–8</span></span>
-            <p><span class="todo">Who gave feedback, how (sessions? think-alouds?), and what you changed because of it.</span></p>
+            <h3>Icons versus words</h3>
+            <span class="when">Week 2</span>
+            <p>I spent a page of sketches on an icon system: checks of different weights for strongly aligned, aligned, partially aligned, and not aligned, a circle for “unclear” or “not addressed,” a struck circle for “referenced but not endorsed.” My own notes on the sketch say it: the marks “look like getting graded,” and some would need extra notes to explain. Words in the cell with a background color behind them did the job with nothing to decode.</p>
           </li>
           <li>
-            <h3>The final version</h3>
-            <span class="when"><span class="todo">Weeks 9–10</span></span>
-            <p><span class="todo">Key design decisions in the final version and the reasoning behind each.</span></p>
+            <h3>Figma rounds</h3>
+            <span class="when">Week 2 to 3</span>
+            <p>Dozens of grid variants side by side: dark and light themes, saturated and muted palettes, cells with labels and cells with icons, different header treatments. The light palette won for legibility and for matching the rest of GoInvo’s explainer series, and a neutral white cell for “N/A” kept the eye on the states that had actually spoken.</p>
+          </li>
+          <li>
+            <h3>Building it</h3>
+            <span class="when">Week 3 to 4</span>
+            <p>I coded the page by hand: the matrix as a desktop grid and a restacked mobile layout, a references section linking every report as a PDF, a “help us make this real” call for feedback and funding, and a small 3D megaphone next to the title rendered in Three.js. It shipped as v0.1 to understandingpsilocybin.org, open source under Creative Commons Attribution.</p>
           </li>
         </ol>
         <figure class="figure figure--pair">
-          <div class="media"><div class="media__placeholder"><b>Early sketch</b><span>image</span></div></div>
-          <div class="media"><div class="media__placeholder"><b>Later iteration</b><span>image</span></div></div>
-          <figcaption><span class="todo">Caption: what changed between these two versions, and what prompted the change.</span></figcaption>
+          <div class="media" style="aspect-ratio:5/4"><img src="../assets/img/projects/psilo-sketch-brochure.jpg" alt="Pencil sketch of a state-by-model matrix with a 'you' column and a note that it unfolds like a super wide, long brochure" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:5/4"><img src="../assets/img/projects/psilo-sketch-unfold.jpg" alt="Pencil sketch showing the matrix unfolding sideways in both directions on click, revealing ballot options, with a submit button and a note about revealing other voters' results" loading="lazy"></div>
+          <figcaption>Early sketches: the matrix as something that unfolds, with a “you” column for visitors to vote. Both the unfolding and the voting were cut in favor of a page that reads in one glance.</figcaption>
+        </figure>
+        <figure class="figure figure--pair">
+          <div class="media" style="aspect-ratio:5/4"><img src="../assets/img/projects/psilo-sketch-icons.jpg" alt="Pencil sketch exploring an icon system: check marks of different weights for strongly aligned, aligned, partially aligned, and not aligned, plus a circle for unclear and a struck circle for referenced but not endorsed" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:5/4"><img src="../assets/img/projects/psilo-figma.jpg" alt="A Figma board of matrix variants side by side: dark and light themes, different color palettes, cells with icons and cells with text labels" loading="lazy" style="object-position:center top"></div>
+          <figcaption>Left: the icon system I tried and abandoned. Right: part of the Figma board where grids, palettes, and cell treatments were compared side by side.</figcaption>
         </figure>
       </section>
 
@@ -151,10 +156,10 @@
         <span class="label">05 · Findings</span>
         <h2>What I learned</h2>
         <ul class="findings">
-          <li><h3><span class="todo">Insight, stated as a claim</span></h3><p><span class="todo">The evidence behind it: a quote, an observation, a number.</span></p></li>
-          <li><h3><span class="todo">Insight, stated as a claim</span></h3><p><span class="todo">The evidence behind it.</span></p></li>
-          <li><h3><span class="todo">Insight, stated as a claim</span></h3><p><span class="todo">The evidence behind it.</span></p></li>
-          <li><h3><span class="todo">Something that didn’t work</span></h3><p><span class="todo">Negative results count. What you tried, why it failed, what that taught you.</span></p></li>
+          <li><h3>Words beat icons when the categories are not ordinal</h3><p>“Endorsed,” “Supported,” “Mixed,” and “Opposed” are not points on one scale, and “N/A” is not a lower score. Check marks of varying weight implied a ranking the reports did not make; a word with a color behind it did not.</p></li>
+          <li><h3>Interaction has to earn its place</h3><p>The unfolding brochure and the voting column were the most interesting ideas in the sketches and the first things cut. Each one asked the reader to do something before they could see the comparison, which was the whole point of the page.</p></li>
+          <li><h3>“Not addressed” is information</h3><p>Leaving N/A cells white, rather than hiding them or filling them in, shows where the states ahead have been silent. For a legislator that gap is as useful as any endorsement.</p></li>
+          <li><h3>Consistency is a sourcing problem</h3><p>The design settled quickly; the labels took longest. Agreeing on what counts as “supported” versus “endorsed” across five differently written reports was the real editorial work, and it is the part a reader never sees.</p></li>
         </ul>
       </section>
 
@@ -162,11 +167,11 @@
         <span class="label">06 · Outcome</span>
         <h2>Where it landed</h2>
         <div class="prose">
-          <p><span class="todo">What the final version does, who uses it, and any measurable result (an evaluation, a paper or poster it supported).</span></p>
+          <p>Understanding Psilocybin is live at <a href="https://understandingpsilocybin.org/" target="_blank" rel="noopener">understandingpsilocybin.org &#8599;</a> as an open-source GoInvo project, with the <a href="https://github.com/yanmaggie53/goinvo-understanding-psilocybin" target="_blank" rel="noopener">code on GitHub &#8599;</a>. It covers eight policy models and five states and is framed as v0.1, with an open call for feedback, funding, and collaborators to grow it into a comprehensive U.S. report. The design decisions carry over to the next states that publish: a new column, the same five labels.</p>
         </div>
         <figure class="figure" style="margin-top:28px">
-          <div class="media"><div class="media__placeholder"><b>Final result</b><span>image or video</span></div></div>
-          <figcaption><span class="todo">Caption</span></figcaption>
+          <div class="media"><img src="../assets/img/projects/psilo-matrix-bottom.jpg" alt="The lower half of the live matrix, rows 4 through 8, followed by the heading Help us make this real and a request for feedback and funding" loading="lazy" style="object-position:left top"></div>
+          <figcaption>The lower half of the matrix and the open call that closes the page: feedback, funding, and a few brave new allies.</figcaption>
         </figure>
       </section>
 
@@ -174,9 +179,9 @@
         <span class="label">07 · Reflection</span>
         <h2>Looking back</h2>
         <div class="reflect">
-          <div><h3>What worked</h3><p><span class="todo">One or two things you’d do the same way again.</span></p></div>
-          <div><h3>Limitations</h3><p><span class="todo">Be honest: sample size, time, access to users, data quality.</span></p></div>
-          <div><h3>What I’d study next</h3><p><span class="todo">The open question this left you with. This is where you connect to the research you want to do in a PhD.</span></p></div>
+          <div><h3>What worked</h3><p>Front-loading the cheap exploration. Paper and Figma absorbed the bad ideas so that the code only had to be written once, and laying variants side by side made the choice between icons and words obvious instead of argued.</p></div>
+          <div><h3>Limitations</h3><p>Five states and a four-week window. The matrix reflects the reports as published, so it ages as states act, and it has not been evaluated with its intended readers.</p></div>
+          <div><h3>What I’d study next</h3><p>Whether a comparison like this changes how policy staff read the underlying reports, and how to represent uncertainty in a cell honestly when a report is ambivalent rather than silent. Both questions follow me into my work on explanation and decision support in clinical settings.</p></div>
         </div>
       </section>
 
