@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MEmento · Maggie Yan</title>
+  <meta name="description" content="MEmento is a hand-cranked music box that turns heart rate and skin response into a short song. Built in 48 hours at the HARD MODE Hardware × AI Hackathon, MIT Media Lab.">
+
+  <script src="../assets/js/sky-time.js"></script>
+
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,401,500,501,700&amp;display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&amp;display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="sky sky--short" data-sky aria-hidden="true"><div class="sky__gradient"></div></div>
+
+  <div class="layout">
+    <nav class="topnav" aria-label="Main">
+      <a href="../index.html">research</a>
+      <a href="../after-hours.html">after hours</a>
+      <a href="../about.html">about + CV</a>
+    </nav>
+
+    <aside class="sidebar">
+      <a class="back-link" href="../index.html#practice">&larr; all practice</a>
+      <div>
+        <span class="label">Practice · hackathon</span>
+        <p class="cs-side-title">MEmento</p>
+      </div>
+      <nav class="toc" aria-label="On this page">
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#question">Design question</a></li>
+          <li><a href="#context">Context</a></li>
+          <li><a href="#methods">Methods</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#findings">Findings</a></li>
+          <li><a href="#outcome">Outcome</a></li>
+          <li><a href="#reflection">Reflection</a></li>
+        </ol>
+      </nav>
+      <div data-daybar></div>
+      <p class="home-clock" data-home-clock></p>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="cs-header" id="overview">
+        <div class="cs-kicker">
+          <span class="label">March 2026</span>
+          <span class="label">MIT Media Lab</span>
+          <span class="label">HARD MODE: Hardware × AI Hackathon</span>
+          <span class="label">Biosignals · physical computing</span>
+        </div>
+        <h1 class="cs-title">MEmento: <em>hear what you carry</em></h1>
+        <p class="cs-summary">MEmento is a hand-cranked music box that turns two physiological signals, galvanic skin response and heart rate, into a short musical composition. Turn the handle and it plays; stop turning and it pauses. We built it in 48 hours at the HARD MODE Hardware × AI Hackathon at the MIT Media Lab as an answer to a question we kept returning to: what if your body’s signal data could become a ritual, not a dashboard?</p>
+      </header>
+
+      <div class="media cs-hero">
+        <img src="../assets/img/projects/memento-hero.jpg" alt="The MEmento music box: a white 3D-printed cube with a speaker grille on top and a small hand crank on the side, glowing warm orange from inside as a hand turns the crank" style="object-position:center 55%">
+      </div>
+
+      <dl class="glance">
+        <div><dt class="label">My role</dt><dd><span class="todo">What you owned on the team, e.g. physical form and the crank mechanism, sensing hardware, or the music mapping</span></dd></div>
+        <div><dt class="label">Timeline</dt><dd>March 6–8, 2026 (48-hour hackathon)</dd></div>
+        <div><dt class="label">Context</dt><dd>HARD MODE: Hardware × AI Hackathon, hosted by the MIT Media Lab</dd></div>
+        <div><dt class="label">Team</dt><dd>Shreya K, Andrea Paola Gómez Jaime, Marina Kosovski, Harvie C, and me</dd></div>
+        <div class="wide"><dt class="label">Methods</dt><dd>Biosignal preprocessing and feature extraction, LSTM encoder–decoder representation learning, rule-based MIDI composition, 3D-printed physical prototyping</dd></div>
+        <div><dt class="label">Devpost</dt><dd><a href="https://devpost.com/software/memento-mlqs2o" target="_blank" rel="noopener">Project submission &#8599;</a></dd></div>
+        <div><dt class="label">Tools</dt><dd>Arduino, GSR and heart rate sensors, Python, Jupyter, MIDI generation and audio synthesis, PLA 3D printing</dd></div>
+        <div><dt class="label">Input and output</dt><dd>Input: galvanic skin response (GSR) and heart rate (HR). Output: a roughly 30-second piece generated as MIDI and synthesized to audio.</dd></div>
+      </dl>
+
+      <section class="cs-section" id="question">
+        <span class="label">01 · Design question</span>
+        <h2>What were we trying to find out?</h2>
+        <blockquote class="question">
+          Can a tangible object translate a person’s physiological traces into something they would want to listen to and reflect on, rather than a number to optimize?
+          <cite>The hackathon brief asked for hardware and AI together. We used it to test whether personal data could be made for reflection and connection instead of productivity.</cite>
+        </blockquote>
+      </section>
+
+      <section class="cs-section" id="context">
+        <span class="label">02 · Context</span>
+        <h2>Why this mattered</h2>
+        <div class="prose">
+          <p>We are surrounded by data and systems designed to optimize us. Wearables and dashboards count steps, score sleep, and chart heart rate, and far fewer tools help us slow down, reflect, or connect with ourselves and with others through that same data.</p>
+          <p>Galvanic skin response and heart rate are both linked to emotional arousal, which made them a natural pair for this: they carry something about how a stretch of time felt, not just what the body was doing. MEmento takes those traces and gives them back as a short piece of music you have to physically crank to hear. The tagline we landed on was “hear what you carry.”</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="methods">
+        <span class="label">03 · Methods</span>
+        <h2>How we approached it, and why</h2>
+        <div class="prose">
+          <p>The build was an end-to-end pipeline: biosignals in, features out, a learned representation of each signal’s dynamics over time, and finally a composition engine that turns those representations into notes. We treated physiology as a story over time rather than a set of independent readings, which is why the sequence model sits at the center of the pipeline.</p>
+        </div>
+        <table class="methods" style="margin-top:24px">
+          <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave us</th></tr></thead>
+          <tbody>
+            <tr><td>Biosensing and preprocessing</td><td>Raw GSR and HR live on different scales and are noisy. Cleaning and normalizing both to a 0–1 range made them comparable, and a sliding window (20 samples) let small changes register without swamping the signal.</td><td>A sequence of 4D feature vectors over time: mean, standard deviation, slope, and peaks.</td></tr>
+            <tr><td>LSTM encoder–decoder</td><td>We wanted a representation of how each signal moved over time (stability vs. variability), not a snapshot. Training the decoder to reconstruct the signal forced the encoder to learn a meaningful latent vector.</td><td>Two trained models, one per signal, and latent values we could use as musical control signals: GSR shaping melody, HR shaping tempo and rhythm.</td></tr>
+            <tr><td>Rule-based MIDI composition</td><td>Physiology had to modulate the music without breaking it. Pitch steps stay within a C-major scale for smoothness while the body shapes pitch, velocity, and timing on top of that structure.</td><td>A roughly 30-second timeline of about 128 notes in phrases, with two instruments chosen automatically from the full MIDI set based on combined physiological state, written to MIDI tracks and synthesized to audio.</td></tr>
+            <tr><td>3D-printed physical prototyping</td><td>The interaction had to be legible in one gesture. A hand crank gives the object a single, familiar affordance: turn to play, stop to pause.</td><td>A PLA-printed music box housing the electronics, speaker, and a hand-cranked mechanism.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="cs-section" id="process">
+        <span class="label">04 · Process</span>
+        <h2>What we actually did</h2>
+        <ol class="process">
+          <li>
+            <h3>Sensing the body</h3>
+            <span class="when">Signal capture and cleaning</span>
+            <p>We wired GSR and heart rate sensors to an Arduino and read both signals from the wrist and fingers. The first work was unglamorous: cleaning the streams, normalizing them so they could be compared, and syncing them so a small bodily change could shape the music without breaking it.</p>
+          </li>
+          <li>
+            <h3>Learning the shape of a signal</h3>
+            <span class="when">Feature extraction and the LSTM</span>
+            <p>A sliding window turned each stream into features (mean, standard deviation, slope, peaks). We then trained two LSTM encoder–decoders, one for GSR and one for heart rate, so each encoder compressed its feature sequence into a latent vector that captured the signal’s dynamics. Reconstruction error was the training signal; the latent values became our musical controls.</p>
+          </li>
+          <li>
+            <h3>Turning features into notes</h3>
+            <span class="when">Composition engine</span>
+            <p>The generator picks two instruments from the full MIDI set (0–127) based on the combined physiological state, then builds a timeline of phrases. GSR shapes melody; heart rate influences note duration and rhythmic density. Keeping pitch steps inside a C-major scale was the decision that made the output listenable rather than a noisy sonification.</p>
+          </li>
+          <li>
+            <h3>Building the box</h3>
+            <span class="when">Physical form</span>
+            <p>We designed and printed a PLA enclosure with a speaker on top, a crank on the side, and a warm light inside, and connected the crank so that turning plays the piece and stopping pauses it. The form was deliberately plain: a small object you hold and turn, with nothing on it that looks like a dashboard.</p>
+          </li>
+        </ol>
+        <figure class="figure figure--pair">
+          <div class="media"><img src="../assets/img/projects/memento-sensors.jpg" alt="A forearm with a breadboard, Arduino, and a tangle of jumper wires strapped to it, with a finger sensor on the hand" loading="lazy" style="object-position:center 40%"></div>
+          <div class="media"><img src="../assets/img/projects/memento-workbench.jpg" alt="Hackathon workbench seen from above: laptop, cutting mat, pliers, microcontroller boards, and wires spread across white paper" loading="lazy"></div>
+          <figcaption>Left: the sensing rig on the arm during testing. Right: the bench partway through the 48 hours.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="findings">
+        <span class="label">05 · Findings</span>
+        <h2>What we learned</h2>
+        <ul class="findings">
+          <li><h3>The translation layer is everything</h3><p>Preprocessing, feature design, and the musical mapping determine whether the output feels like <em>you</em> or just like data. The sensors and the model mattered less to the experience than the decisions made between them.</p></li>
+          <li><h3>Treat physiology as a story over time</h3><p>LSTMs shine when a signal is handled as a sequence rather than as independent moments. Stability versus variability over a window is more expressive than any single reading.</p></li>
+          <li><h3>Structure makes variability legible</h3><p>Constraining pitch to a scale while letting physiology modulate velocity, timing, and density gave the music enough coherence to sound intentional and enough variability to feel alive.</p></li>
+          <li><h3>Our mapping is one of many</h3><p>There are multiple defensible ways to translate bodily signals into musical ones, and ours produced inconsistent outputs at times. Deeper grounding in a musical framework is needed before the mapping can be called principled.</p></li>
+        </ul>
+      </section>
+
+      <section class="cs-section" id="outcome">
+        <span class="label">06 · Outcome</span>
+        <h2>Where it landed</h2>
+        <div class="prose">
+          <p>By the end of the weekend we had a full working pipeline, biosignals to features to LSTM latent representations to MIDI composition to audio, housed in a hand-cranked box with a single legible interaction. The concept reframes personal data as material for reflection and connection rather than optimization. The full write-up, build list, and gallery are on <a href="https://devpost.com/software/memento-mlqs2o" target="_blank" rel="noopener">our Devpost submission &#8599;</a>.</p>
+        </div>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:16/9">
+            <iframe src="https://www.youtube.com/embed/qiTC4MlOkbk?rel=0" title="MEmento demo video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+          </div>
+          <figcaption>Demo video from the hackathon submission.</figcaption>
+        </figure>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media"><img src="../assets/img/projects/memento-team.jpg" alt="The MEmento team smiling around laptops at a crowded hackathon table" loading="lazy" style="object-position:center 30%"></div>
+          <figcaption>The team at the Media Lab during HARD MODE.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="reflection">
+        <span class="label">07 · Reflection</span>
+        <h2>Looking back</h2>
+        <div class="reflect">
+          <div><h3>What worked</h3><p>Committing early to one gesture, crank to play and stop to pause, kept the hardware scope small enough to finish and gave the object a clear identity. Building the pipeline end to end, even roughly, meant we could hear the result and tune the mapping by ear.</p></div>
+          <div><h3>Limitations</h3><p>Forty-eight hours, sensors tested on ourselves, and a composition engine tuned by listening rather than by study. The outputs were not always consistent, and we have no evidence yet about whether listeners recognize themselves in the music.</p></div>
+          <div><h3>What I’d study next</h3><p>Connecting to data from wearables; a richer composition engine with stronger mappings between latent features and musical structure, possibly drawing on Terry Riley’s phrase-based framework; refining the physical form and embodied interaction; and exploring sharing, where people exchange “musical traces” with each other.</p></div>
+        </div>
+      </section>
+
+      <a class="next-project" href="../index.html#practice">
+        <span class="label">More practice</span>
+        <b>Back to practice &rarr;</b>
+      </a>
+
+      <footer class="site-footer" style="padding-top:40px">
+        <div class="footer-bottom">
+          <span>&copy; <span data-year>2026</span> Maggie Yan</span>
+          <span>Last updated <span data-updated>recently</span></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/site.js"></script>
+</body>
+</html>
