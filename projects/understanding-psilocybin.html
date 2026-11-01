@@ -172,7 +172,9 @@
               <span class="browser__url">understandingpsilocybin.org</span>
               <a class="browser__open" href="https://understandingpsilocybin.org/" target="_blank" rel="noopener">Open full size &#8599;</a>
             </div>
-            <iframe src="https://understandingpsilocybin.org/" title="Understanding Psilocybin: the live site" loading="lazy"></iframe>
+            <div class="browser__viewport" style="overflow:hidden;height:min(72vh,660px);background:#fff">
+              <iframe src="https://understandingpsilocybin.org/" title="Understanding Psilocybin: the live site" loading="lazy" data-scaled-width="1060" style="width:1060px;height:min(72vh,660px);transform-origin:0 0"></iframe>
+            </div>
           </div>
           <figcaption>The live site, embedded. Scroll inside the window to see all eight models, the references, and the open call for feedback.</figcaption>
         </figure>
@@ -203,5 +205,22 @@
   </div>
 
   <script src="../assets/js/site.js"></script>
+  <script>
+    // Render the embedded site at a wider virtual width and scale it to fit,
+    // so its speech bubble (which opens to the right of the title) stays in view.
+    (function () {
+      var frame = document.querySelector('iframe[data-scaled-width]');
+      if (!frame) return;
+      var box = frame.parentElement;
+      var w = parseInt(frame.dataset.scaledWidth, 10);
+      function fit() {
+        var s = Math.min(1, box.clientWidth / w);
+        frame.style.transform = 'scale(' + s + ')';
+        frame.style.height = (box.clientHeight / s) + 'px';
+      }
+      fit();
+      window.addEventListener('resize', fit);
+    })();
+  </script>
 </body>
 </html>
