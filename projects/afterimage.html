@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>afterimage · Maggie Yan</title>
+  <meta name="description" content="afterimage is a photogram camera game built on cyanotype printing: players arrange patterned filters on light-sensitive paper, expose and wash it, and compare how differently they saw the same prompt. MIT 4.031 Objects and Interaction, with Natalie Tan and Shelly Yang.">
+
+  <script src="../assets/js/sky-time.js"></script>
+
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,401,500,501,700&amp;display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@500,700,800&amp;display=swap">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="sky sky--short" data-sky aria-hidden="true"><div class="sky__gradient"></div></div>
+
+  <div class="layout">
+    <nav class="topnav" aria-label="Main">
+      <a href="../index.html">research</a>
+      <a href="../after-hours.html">after hours</a>
+      <a href="../about.html">about + CV</a>
+    </nav>
+
+    <aside class="sidebar">
+      <a class="back-link" href="../index.html#practice">&larr; all practice</a>
+      <div>
+        <span class="label">Practice · class project</span>
+        <p class="cs-side-title">afterimage</p>
+      </div>
+      <nav class="toc" aria-label="On this page">
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#question">Design question</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#object">The object</a></li>
+          <li><a href="#prints">The prints</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#lessons">Lessons learned</a></li>
+          <li><a href="#reflection">Reflection</a></li>
+        </ol>
+      </nav>
+      <div data-daybar></div>
+      <p class="home-clock" data-home-clock></p>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="cs-header" id="overview">
+        <div class="cs-kicker">
+          <span class="label">Fall 2026</span>
+          <span class="label">MIT 4.031 Objects and Interaction</span>
+          <span class="label">Analog camera · game design</span>
+        </div>
+        <h1 class="cs-title cs-title--long">afterimage: <em>a cyanotype game about seeing the same thing differently</em></h1>
+        <p class="cs-summary">afterimage is a photogram camera game. There’s no lens: players arrange patterned filters directly on light-sensitive cyanotype paper, expose it to UV light, and wash it, and only then see the print they made. Each round starts with a card. Sometimes you try to recreate a reference image as closely as you can; sometimes you get a single word and interpret it however you like. Two people can start with the same prompt and the same filters and still end up with completely different prints, and afterimage makes that difference visible. Natalie Tan, Shelly Yang, and I designed and built it as an analog camera project for MIT 4.031 Objects and Interaction.</p>
+      </header>
+
+      <div class="media cs-hero">
+        <img src="../assets/img/projects/afterimage-hero.jpg" alt="The afterimage kit on a white table: a wooden box with afterimage written across the lid in blue script, a camera box on each side holding stacked filter frames, and two hands in front, one fanning a card back, a CONNECTION theme card, and a grid reference card, the other holding three blue cyanotype prints">
+      </div>
+
+      <dl class="glance">
+        <div><dt class="label">My role</dt><dd><span class="todo">What you owned on the team, e.g. the card and filter system, the CAD drawings, the box build, the documentation</span></dd></div>
+        <div><dt class="label">Timeline</dt><dd>Fall 2026</dd></div>
+        <div><dt class="label">Context</dt><dd>Analog camera project, MIT 4.031 Objects and Interaction</dd></div>
+        <div><dt class="label">Team</dt><dd>Natalie Tan, Shelly Yang, and me</dd></div>
+        <div class="wide"><dt class="label">Methods</dt><dd>Concept sketching, a low-fidelity mockup, dimensioned CAD drawings, a Blender exploded render, digital pattern design for the filters and reference images, card and rulebook design, woodworking, and product photography and video</dd></div>
+        <div><dt class="label">Players</dt><dd>1–2, in three modes: recreate, interpret, and solo</dd></div>
+        <div class="wide"><dt class="label">The kit</dt><dd>Two camera-box workstations, two matching sets of ten pattern filters, a 112-card deck, fresh cyanotype paper, an instruction booklet, and an answer key, plus a UV light for exposing</dd></div>
+      </dl>
+
+      <section class="cs-section" id="question">
+        <span class="label">01 · Design question</span>
+        <h2>What were we trying to make?</h2>
+        <blockquote class="question">
+          Creating art is often an individual experience. What if making an image together, and revealing it together, could start a conversation about how differently two people see?
+          <cite>“You start with the same tools. The interesting part is seeing where you take them.” From our rulebook.</cite>
+        </blockquote>
+        <div class="prose" style="margin-top:28px">
+          <p>Cyanotypes are made with light, shadow, and a little bit of unpredictability. You arrange things on the paper, expose it, wash it, and only then find out how it turned out. We wanted to turn that process into a game. Two people can look at the same image and notice completely different things, or hear the same word and picture completely different scenes. afterimage makes those differences visible: recreating an image tests how closely you can observe and rebuild it, and interpreting a word shows how differently two people translate the same idea.</p>
+        </div>
+      </section>
+
+      <section class="cs-section" id="how">
+        <span class="label">02 · How it works</span>
+        <h2>Same tools, two prints</h2>
+        <div class="prose">
+          <p>Two cyanotype workstations sit side by side. Each player gets a fresh sheet of cyanotype paper and an identical set of ten pattern filters, black ink printed on clear film. Black blocks the UV light and the clear film lets it through, so wherever a filter’s pattern sits, the paper stays pale, and everywhere else it develops into deep blue.</p>
+          <ol>
+            <li><strong>Draw a card.</strong> A reference card shows an image made with the same filters you have; a theme card shows a single word.</li>
+            <li><strong>Compose.</strong> Rotate, overlap, and stack filters on the paper, place them partly off the page, or leave parts of it empty. Small changes in position or spacing can completely change the final image.</li>
+            <li><strong>Expose.</strong> Put the composition under UV light. Too little exposure gives a faint print; too much can make some of the contrast disappear. You learn to judge it, but there is always some uncertainty.</li>
+            <li><strong>Wash and reveal.</strong> Washing brings out the print: the blue deepens and the shapes sharpen. It may or may not match what you imagined. Either way, the reveal is part of the game.</li>
+          </ol>
+        </div>
+        <ul class="modes">
+          <li>
+            <span class="label">Mode 1</span>
+            <h3>Recreate</h3>
+            <p class="modes__tag">Same image. Same tools. Who gets closer?</p>
+            <p>Both players work out how a reference card was made (which shapes overlap, which are rotated, where the light and dark areas fall) and build their own version. The print closest to the reference wins the round and keeps the card.</p>
+          </li>
+          <li>
+            <span class="label">Mode 2</span>
+            <h3>Interpret</h3>
+            <p class="modes__tag">Same prompt. Completely different ideas.</p>
+            <p>Both players respond to the same theme word, like <em>balance</em>, which could become a symmetrical composition or two shapes that seem to hold each other up. There’s no right answer; you reveal the prints together and talk about why you made your choices.</p>
+          </li>
+          <li>
+            <span class="label">Mode 3</span>
+            <h3>Solo</h3>
+            <p class="modes__tag">Keep experimenting.</p>
+            <p>Recreate a reference card and note what you got right, what shifted, and what you’d change, then try the same card again. Or draw a theme card and make whatever comes to mind, with no score at all.</p>
+          </li>
+        </ul>
+        <figure class="figure figure--pair" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-reference-cards.jpg" alt="Overlapping reference cards, each with a deep blue square showing white filter patterns such as zigzag blocks, dashed rings, and a fine grid, and a small numbered point badge in the corner" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-theme-cards.jpg" alt="A fan of white theme cards; the top one reads MOVEMENT in serif capitals under a concentric target icon" loading="lazy"></div>
+          <figcaption>Reference cards for recreating, each carrying a point value, and theme cards for interpreting, one word each.</figcaption>
+        </figure>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:16/9">
+            <video controls preload="metadata" playsinline poster="../assets/img/projects/afterimage-poster.jpg">
+              <source src="../assets/video/afterimage-demo.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>Our demo video.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="object">
+        <span class="label">03 · The object</span>
+        <h2>One box, two workstations</h2>
+        <div class="prose">
+          <p>Everything packs into a single hinged box, 12.5 by 5 inches. Inside, a divided middle caddy holds the cards and blank cyanotype paper, and it’s flanked by two camera boxes, one per player. Each camera box is roughly a 4-inch cube (4.25 × 4.125 × 4.125 inches) with an open 0.75-inch tray on top and ten stacked slots below that hold the filter frames. The frames’ pull tabs step diagonally so you can grab any filter on its own, and the tabs are marked with filter codes, like F06 below.</p>
+        </div>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-kit.jpg" alt="The full kit laid out on a white table: the open wooden box with its slotted middle caddy, two camera boxes with filters, blue cyanotype prints, an instruction booklet and a navy answer key, and stacks of reference and theme cards" loading="lazy"></div>
+          <figcaption>The full kit: the box, two workstations, the card decks, the instructions and answer key, and finished prints.</figcaption>
+        </figure>
+        <figure class="figure figure--pair" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-camerabox.jpg" alt="A wooden camera box with an open tray on top and ten white filter frames stacked in slots below, their pull tabs stepping diagonally across the front" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-filter.jpg" alt="Close-up of one filter: a white frame holding clear film printed with black wavy lines, its tab marked F06" loading="lazy"></div>
+          <figcaption>A camera box, with ten filter frames in stacked slots under its top tray, and filter F06, a printed wave pattern in its frame.</figcaption>
+        </figure>
+        <figure class="figure figure--pair" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-packed.jpg" alt="The wooden box open with everything packed inside: the two camera-box trays hold the instruction booklet and answer key, and the middle caddy holds green cyanotype paper and card decks" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-inside.jpg" alt="An angled close-up into the packed box: dividers separate a stack of green cyanotype paper from thick stacks of blue-backed cards, between the instruction booklet and the answer key" loading="lazy"></div>
+          <figcaption>Packed for storage: the camera-box trays double as booklet storage, and the divided caddy keeps paper and decks apart.</figcaption>
+        </figure>
+        <figure class="figure" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:16/10"><img src="../assets/img/projects/afterimage-render.jpg" alt="An exploded 3D render of the kit on grey: the lid with the afterimage wordmark at the top, the middle caddy filled with cards and paper, two camera boxes, the outer box at the bottom, and a tower of filter frames on each side" loading="lazy"></div>
+          <figcaption>Exploded render (Blender): lid, outer box, the two camera boxes, the card caddy, and both filter sets.</figcaption>
+        </figure>
+        <figure class="figure drawings">
+          <a class="media media--drawing" href="../assets/img/projects/afterimage-drawing-assembly.png" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-drawing-assembly.png" alt="Assembly drawing with top, isometric, side, and front views of the box without its lid, showing the two camera boxes and middle caddy nested inside" loading="lazy"></a>
+          <a class="media media--drawing" href="../assets/img/projects/afterimage-drawing-camera-box.png" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-drawing-camera-box.png" alt="Dimensioned drawing of the camera box: 4.25 inches wide, a 0.75 inch top tray, and ten filter slots at 0.325 inch pitch" loading="lazy"></a>
+          <a class="media media--drawing" href="../assets/img/projects/afterimage-drawing-middle-box.png" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-drawing-middle-box.png" alt="Dimensioned drawing of the middle caddy: 3.25 by 4.5 by 3.125 inches, split into five compartments" loading="lazy"></a>
+          <a class="media media--drawing" href="../assets/img/projects/afterimage-drawing-outer-box.png" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-drawing-outer-box.png" alt="Dimensioned drawing of the outer box: 12.5 by 5 by 3.5 inches, with three hinges and a one inch thumb notch" loading="lazy"></a>
+          <figcaption>Technical drawings: the assembly; the camera box (ten slots at 0.325 in pitch under a 0.75 in tray); the middle caddy (five compartments for the cards and cyanotype paper); and the outer box (12.5 × 5 × 3.5 in, with a 1 in thumb notch in the front wall). Click any drawing to open it full size.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="prints">
+        <span class="label">04 · The prints</span>
+        <h2>Ten filters, 112 cards</h2>
+        <div class="prose">
+          <p>The game runs on a small visual system. We designed ten filters (fine pinstripes, offset pinstripes, an almost-horizontal set, echo rings, growing dots, ripple lines, chevron folds, a broken checker, radial spokes, and diagonal dashes), each a 4-inch square printed on transparency film. From those we generated every reference image a player could be asked to recreate: all ten singles and all 45 two-filter pairings, plus twelve optical variants that overlap filters at small rotations (up to 20 degrees) for moiré, interference, and tilt illusions, and twelve timed exposures.</p>
+          <p>In the timed cards you switch the arrangement halfway through the exposure (conceptually five minutes, then five more). A filter that sits on the paper for only one half blocks the light for half the time, so its pattern prints as a lighter blue, while anything covered for the whole exposure stays white. Whatever you take away or add partway leaves a pale trace in the final print, a kind of afterimage.</p>
+        </div>
+        <figure class="figure prints-sheets">
+          <a class="media media--sheet" href="../assets/img/projects/afterimage-filter-library.jpg" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-filter-library.jpg" width="900" height="1722" alt="Spec sheet titled Ten reusable filters, showing the ten black-on-white patterns F01 to F10 with their names" loading="lazy"></a>
+          <a class="media media--sheet" href="../assets/img/projects/afterimage-pairing-matrix.jpg" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-pairing-matrix.jpg" width="1300" height="1390" alt="Combination matrix: a 10 by 10 grid with the ten single-filter prints on the diagonal and all 45 two-filter pairings above it, white patterns on a simulated cyanotype blue" loading="lazy"></a>
+          <figcaption>The ten filters, and the combination matrix with the ten singles on the diagonal and all 45 two-filter pairings above it. These are digital previews of the prints; click either to see it full size.</figcaption>
+        </figure>
+        <figure class="figure timed-sheet">
+          <a class="media media--sheet" href="../assets/img/projects/afterimage-timed-exposures.jpg" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-timed-exposures.jpg" width="1100" height="1293" alt="Sheet titled Midway switch experiments: twelve timed-exposure previews, T01 to T12, each switching from one filter arrangement to another halfway through; patterns present for only one half print lighter blue, and filters kept for the whole exposure stay white" loading="lazy"></a>
+          <figcaption>Timed exposures (digital previews): switch the arrangement halfway through, and anything on the paper for only half the time prints as a paler trace. Only what stays covered the whole time prints white.</figcaption>
+        </figure>
+        <div class="prose" style="margin-top:36px">
+          <p>Those images became a 112-card deck: 55 reference cards for the singles and pairings, 12 timed, 12 optical, and 33 theme words, from <em>balance</em> and <em>echo</em> to <em>threshold</em> and <em>afterimage</em> itself. Reference cards carry a point value, from 1 for a single filter up to 5 for a timed exposure.</p>
+        </div>
+        <ul class="card-grid" aria-label="A sample of the afterimage cards">
+          <li><img src="../assets/img/projects/afterimage-card-back.png" width="372" height="519" alt="The shared card back: deep cyanotype blue with a white viewfinder-like crosshair, concentric circles, and afterimage in white script" loading="lazy"><span>Card back</span></li>
+          <li><img src="../assets/img/projects/afterimage-card-001.png" width="372" height="519" alt="Reference card 001: fine vertical pinstripes on blue" loading="lazy"><span>001 · one filter</span></li>
+          <li><img src="../assets/img/projects/afterimage-card-004.png" width="372" height="519" alt="Reference card 004: five concentric rings on blue" loading="lazy"><span>004 · one filter</span></li>
+          <li><img src="../assets/img/projects/afterimage-card-024.png" width="372" height="519" alt="Reference card 024: slanted pinstripes crossing chevron folds into a herringbone lattice" loading="lazy"><span>024 · two filters</span></li>
+          <li><img src="../assets/img/projects/afterimage-card-056.png" width="372" height="519" alt="Timed reference card 056: bright vertical stripes over a paler set of slanted stripes" loading="lazy"><span>056 · timed</span></li>
+          <li><img src="../assets/img/projects/afterimage-card-064.png" width="372" height="519" alt="Timed reference card 064: rows of growing dots over pale ripple and chevron bands" loading="lazy"><span>064 · timed</span></li>
+          <li><img src="../assets/img/projects/afterimage-card-071.png" width="372" height="519" alt="Optical reference card 071: two sets of near-vertical pinstripes, one turned slightly, drifting in and out of step into a moiré pattern" loading="lazy"><span>071 · optical</span></li>
+          <li><img src="../assets/img/projects/afterimage-card-106.png" width="372" height="519" alt="Theme card 106: the word AFTERIMAGE in navy serif capitals" loading="lazy"><span>106 · theme</span></li>
+        </ul>
+        <figure class="figure" style="margin-top:36px">
+          <div class="media media--paper" style="aspect-ratio:1586/1086"><img src="../assets/img/projects/afterimage-prints.jpg" alt="Six real cyanotype prints in two rows: a radial web, concentric rings, rings over a grid, a fading grid of squares, vertical stripes, and curved bands, all white on blue" loading="lazy"></div>
+          <figcaption>And the real thing: six cyanotype prints made with the game’s filter patterns.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="process">
+        <span class="label">05 · Process</span>
+        <h2>What we actually did</h2>
+        <ol class="process">
+          <li>
+            <h3>Sketching two kinds of camera</h3>
+            <p>We sketched a <em>lens version</em>, with a lens on the front of the box, and a <em>photogram version</em>, where the image is made by laying things directly on the paper. Around them we tried ways to start a round: dice, a spinning wheel of symbols, a card shuffler that ended up looking a lot like a slot machine. The photogram version won, and cards beat the dice and the wheel.</p>
+          </li>
+          <li>
+            <h3>Working out the pieces</h3>
+            <p>More sketches sized the filter frames, the stacked filter storage, and tabs on the filters for easy removal, which made it into the final camera boxes. A low-fidelity mockup in black board showed how a lidded box, a divided caddy, and two separate camera boxes could nest together.</p>
+          </li>
+          <li>
+            <h3>Drawing and rendering it</h3>
+            <p>We drew every part with dimensions (the outer box, the lid, the middle caddy, and the camera box with its ten slots at 0.325-inch pitch) and checked the fit: 4.25 + 3.25 + 4.25 inches of inner boxes inside a 12-inch interior. A Blender exploded render showed how it all comes apart.</p>
+          </li>
+          <li>
+            <h3>Designing the filters and cards</h3>
+            <p>We designed the ten filters, generated every single and two-filter combination, and added the optical and timed variants. The deck went through rounds of edits: removing point badges from the theme cards, cutting instructional hint text from the card fronts, and reordering the deck.</p>
+          </li>
+          <li>
+            <h3>Building it</h3>
+            <p>The boxes are wood with 45-degree mitered corners. <span class="todo">How you cut and assembled them, and how the filter frames and the lid graphics were made.</span></p>
+          </li>
+        </ol>
+        <figure class="figure sketches">
+          <a class="media media--sketch" href="../assets/img/projects/afterimage-sketch-versions.jpg" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-sketch-versions.jpg" alt="Concept sketch comparing a lens version and a photogram version of the box, with dice, a spinning wheel of symbols, and stacks of cards rising out of their compartments, and a note that the lid to the camera can also open up" loading="lazy"></a>
+          <a class="media media--sketch" href="../assets/img/projects/afterimage-sketch-filters.jpg" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-sketch-filters.jpg" alt="Sketches of filter frames in plexiglass with dimensions, stacked filter racks, a box camera with a lens on a tripod, and a slotted filter holder" loading="lazy"></a>
+          <a class="media media--sketch" href="../assets/img/projects/afterimage-sketch-shuffler.jpg" target="_blank" rel="noopener"><img src="../assets/img/projects/afterimage-sketch-shuffler.jpg" alt="Sketches of playing-card sized cards, a drop-down tray with foldable tabs, and card shufflers turned by a hand crank, one noted as looking like a slot machine, with a spin-the-wheel alternative" loading="lazy"></a>
+          <figcaption>Early sketches, in order: a lens version vs. a photogram version, filter frames and storage, and ways to shuffle and deal the cards. Click a sketch to open it full size.</figcaption>
+        </figure>
+        <figure class="figure figure--pair" style="margin-top:28px">
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-prototype-open.jpg" alt="A black low-fidelity mockup of the box with its lid open, showing a divided interior" loading="lazy"></div>
+          <div class="media" style="aspect-ratio:3/2"><img src="../assets/img/projects/afterimage-prototype-parts.jpg" alt="The black mockup with its two camera boxes pulled out and set on either side of the open main box" loading="lazy"></div>
+          <figcaption>The low-fidelity mockup: the lidded box with its divided caddy, and the two camera boxes lifted out.</figcaption>
+        </figure>
+      </section>
+
+      <section class="cs-section" id="lessons">
+        <span class="label">06 · Lessons learned</span>
+        <h2>What we’d tell ourselves at the start</h2>
+        <ul class="findings findings--plain">
+          <li><h3>Sometimes, less is more</h3><p>At first we had too many components and complicated rules, which made the game difficult to explain.</p></li>
+          <li><h3>Clarity is a good indicator of decent design</h3><p>If the game can be explained in a short summary without confusing players, that’s a strong sign the design is intuitive. If not, there might be too much going on.</p></li>
+          <li><h3>Ambition vs. feasibility</h3><p>Prioritize the essential features that make the game engaging, intuitive, and enjoyable, rather than adding complexity that doesn’t meaningfully improve how it plays.</p></li>
+          <li><h3>Not with a bandsaw</h3><p>Do not use a bandsaw to cut 45-degree angles for corner joints (rip Shelly).</p></li>
+        </ul>
+      </section>
+
+      <section class="cs-section" id="reflection">
+        <span class="label">07 · Reflection</span>
+        <h2>Looking back</h2>
+        <div class="reflect">
+          <div><h3>What worked</h3><p><span class="todo">One or two things you’d do the same way again.</span></p></div>
+          <div><h3>Limitations</h3><p><span class="todo">e.g. how much the game was playtested, and the gap between the digital previews and real cyanotypes.</span></p></div>
+          <div><h3>What I’d explore next</h3><p><span class="todo">The open question this left you with, e.g. what the differences between two players’ prints say about how they see.</span></p></div>
+        </div>
+      </section>
+
+      <a class="next-project" href="../index.html#practice">
+        <span class="label">More practice</span>
+        <b>Back to practice &rarr;</b>
+      </a>
+
+      <footer class="site-footer" style="padding-top:40px">
+        <div class="footer-bottom">
+          <span>&copy; <span data-year>2026</span> Maggie Yan</span>
+          <span>Last updated <span data-updated>recently</span></span>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="../assets/js/site.js"></script>
+</body>
+</html>
