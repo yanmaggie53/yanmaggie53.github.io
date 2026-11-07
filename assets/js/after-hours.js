@@ -52,6 +52,8 @@
 
   /* ---------- up close ---------- */
 
+  // Pieces with a <template class="piece__story"> open into a longer view:
+  // the piece up top, then the process photos and notes underneath.
   var box = document.querySelector('[data-lightbox]');
   function open(piece) {
     if (!box || typeof box.showModal !== 'function') return;
@@ -60,11 +62,25 @@
     box.querySelector('[data-lb-desc]').textContent = piece.getAttribute('data-desc');
     var media = box.querySelector('[data-lb-media]');
     media.innerHTML = piece.querySelector('.media').innerHTML;
+
+    var tpl = piece.querySelector('template.piece__story');
+    var story = box.querySelector('[data-lb-story]');
+    var jump = box.querySelector('[data-lb-jump]');
+    story.innerHTML = '';
+    if (tpl) story.appendChild(document.importNode(tpl.content, true));
+    story.hidden = !tpl;
+    jump.hidden = !tpl;
+    box.classList.toggle('is-story', !!tpl);
+
     box.showModal();
+    box.querySelector('[data-lb-scroll]').scrollTop = 0;
   }
   if (box) {
     box.querySelector('[data-lb-close]').addEventListener('click', function () { box.close(); });
     box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
+    box.querySelector('[data-lb-jump]').addEventListener('click', function () {
+      box.querySelector('[data-lb-story]').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 
   /* ---------- the lamp ---------- */

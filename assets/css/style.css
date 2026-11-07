@@ -1564,6 +1564,22 @@ div.tile { cursor: default; }
 .piece__caption { display: grid; gap: 1px; padding: 0 2px; }
 .piece__caption b { font-weight: 500; font-size: 14.5px; }
 .piece__caption span { font-size: 12.5px; color: var(--ink-3); }
+/* "process" tag: a little paper label stuck on pieces that open into a making-of */
+.piece__flag {
+  position: absolute;
+  top: 24px;
+  right: -10px;
+  padding: 3px 10px 4px;
+  border-radius: 2px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
+  transform: rotate(calc(4deg - var(--r, 0deg)));
+  pointer-events: none;
+}
 
 /* At night the lights are off: the cursor becomes a desk lamp. */
 .lamp {
@@ -1592,11 +1608,64 @@ dialog.lightbox {
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
 }
 dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+/* The content scrolls inside the box, so the close button stays put. */
+dialog.lightbox[open] { display: flex; flex-direction: column; overflow: hidden; }
+dialog.lightbox.is-story { width: min(1080px, calc(100vw - 32px)); }
+.lightbox__scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .lightbox__body { display: grid; grid-template-columns: 1.4fr 1fr; }
 .lightbox__body .media { border-radius: 0; min-height: 420px; }
 .lightbox__text { padding: 28px; display: grid; gap: 12px; align-content: start; }
 .lightbox__text h2 { font-size: 30px; letter-spacing: -0.02em; }
 .lightbox__text p { color: var(--ink-2); font-size: 15.5px; }
+.lightbox__jump {
+  justify-self: start;
+  margin-top: 6px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.lightbox__jump:hover { filter: brightness(1.08); }
+.lightbox__jump[hidden] { display: none; }
+
+.lightbox__story {
+  display: grid;
+  gap: 12px;
+  padding: 34px 28px 40px;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 0;
+}
+.lightbox__story[hidden] { display: none; }
+.lightbox__story h3 { font-family: var(--font-display); font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+.lightbox__story > p { max-width: 64ch; color: var(--ink-2); font-size: 15.5px; }
+.story-steps {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 22px;
+  counter-reset: step;
+}
+.story-steps li { display: grid; gap: 10px; align-content: start; counter-increment: step; }
+.story-steps li.wide { grid-column: 1 / -1; }
+.story-steps .media { aspect-ratio: var(--ratio, 4 / 3); border-radius: var(--radius); }
+.story-steps .media__placeholder b { font-size: 20px; }
+.story-steps p { color: var(--ink-2); font-size: 15px; }
+.story-steps p::before {
+  content: counter(step, decimal-leading-zero);
+  display: block;
+  margin-bottom: 2px;
+  color: var(--ink-3);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+.story-steps p b { color: var(--ink); font-weight: 500; }
 .lightbox__close {
   position: absolute;
   top: 12px;
@@ -1648,6 +1717,11 @@ dialog.lightbox::backdrop { background: rgba(5, 8, 18, 0.6); -webkit-backdrop-fi
   .piece:nth-child(2n) { margin-top: 28px; }
   .lightbox__body { grid-template-columns: 1fr; }
   .lightbox__body .media { min-height: 260px; }
+}
+
+@media (max-width: 600px) {
+  .story-steps { grid-template-columns: 1fr; }
+  .lightbox__story { padding: 28px 20px 32px; }
 }
 
 @media (max-width: 600px) {
