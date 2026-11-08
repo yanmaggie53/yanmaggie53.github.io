@@ -65,6 +65,8 @@
            Artwork: <div class="media media--art"> shows the whole image, never cropped.
            src is the small wall copy (800px wide, with its width/height); data-full is
            the big one shown up close. Pieces with images don't need --ratio.
+           data-details (medium · size) and data-award show up close under the title;
+           leave any of them out, or leave data-title/data-desc empty, and that line is skipped.
            Note: data-kind="figures &amp; portraits" must match its filter chip exactly.
 
            To give a piece a process story (like the chainmail top): add
@@ -72,18 +74,18 @@
            <template class="piece__story">…</template> holding the story. It shows
            under the piece when it's opened. Copy the chainmail one as a starting point. -->
       <div class="wall" data-wall>
-        <button type="button" class="piece" style="--r:-2.5deg" data-kind="still life" data-title="Still life" data-meta="Still life · National Scholastic Gold · high school art portfolio" data-desc="Add a short note: the idea behind it and the medium.">
-          <div class="media media--art"><img src="assets/img/after-hours/still-life-1-thumb.jpg" data-full="assets/img/after-hours/still-life-1.jpg" width="800" height="514" alt="Still life: three painted nesting dolls, each with a razor blade jutting from its base. The middle doll lies on its side with its top half off, and a tiny woman crawls out of it onto a glossy dark floor marked with chalky circles and the dolls’ reflections." decoding="async"></div>
-          <span class="piece__caption"><b>Still life</b><span>still life · high school</span></span>
-          <span class="piece__flag piece__flag--award">National Scholastic Gold</span>
+        <button type="button" class="piece" style="--r:-2.5deg" data-kind="still life" data-title="Fallen Doll" data-meta="Still life · 2022" data-details="Color pencil on charcoal paper · 16 × 20 in" data-award="Gold, National Scholastic Art &amp; Writing Awards" data-desc="Upon reading news articles surrounding Kamila Valieva, the Russian figure skater, I felt upset that she was being portrayed as a villain. For the drawing, the still life was built completely from scratch using clay and drawn from life. This piece was done in class.">
+          <div class="media media--art"><img src="assets/img/after-hours/still-life-1-thumb.jpg" data-full="assets/img/after-hours/still-life-1.jpg" width="800" height="514" alt="Fallen Doll, a color pencil still life: three painted Russian nesting dolls, each with a blade jutting from its base like an ice skate. The middle doll has fallen on its side with its top half off, and a tiny woman crawls out of it onto a glossy, ice-like floor traced with circular marks and the dolls’ reflections." decoding="async"></div>
+          <span class="piece__caption"><b>Fallen Doll</b><span>still life · 2022</span></span>
+          <span class="piece__flag piece__flag--award">Gold, National Scholastic Art &amp; Writing Awards</span>
         </button>
-        <button type="button" class="piece" style="--r:1.8deg" data-kind="figures &amp; portraits" data-title="Figure drawing" data-meta="Figure drawing · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
-          <div class="media media--art"><img src="assets/img/after-hours/figure-drawing-1-thumb.jpg" data-full="assets/img/after-hours/figure-drawing-1.jpg" width="800" height="1126" alt="Figure drawing in light tones on black paper: a young woman with long hair sits with one knee raised, wearing a slip dress, her head bowed and one hand at her chest." decoding="async"></div>
-          <span class="piece__caption"><b>Figure drawing</b><span>figures · high school</span></span>
+        <button type="button" class="piece" style="--r:1.8deg" data-kind="figures &amp; portraits" data-title="Crystal" data-meta="Figure drawing · 2022" data-details="Charcoal pencil and pastel on toned paper · 16 × 23 in" data-desc="In this figure drawing, I used the paper as my shadow and only added light to create a more dramatic appearance. To create this piece, I had my friend Crystal model for six weeks, and she would model for a three-hour session once every week. This piece was done in class.">
+          <div class="media media--art"><img src="assets/img/after-hours/figure-drawing-1-thumb.jpg" data-full="assets/img/after-hours/figure-drawing-1.jpg" width="800" height="1126" alt="Crystal, a figure drawing in light tones on black paper: a young woman with long hair sits with one knee raised, wearing a slip dress, her head bowed and one hand at her chest." decoding="async"></div>
+          <span class="piece__caption"><b>Crystal</b><span>figure drawing · 2022</span></span>
         </button>
-        <button type="button" class="piece" style="--r:-1deg" data-kind="architecture" data-title="Architecture sketchbook" data-meta="Architecture sketchbook · high school art portfolio" data-desc="Add a short note: what these sketches were exploring.">
-          <div class="media media--art"><img src="assets/img/after-hours/sketchbook-1-thumb.jpg" data-full="assets/img/after-hours/sketchbook-1.jpg" width="800" height="1035" alt="Nine architecture sketchbook pages in a grid, each filled with sketches of imagined buildings: houses with swooping roofs, platforms among trees, crystal and mushroom-shaped forms, towers, domed hills, clusters of hexagonal rooms, and a city of domes." decoding="async"></div>
-          <span class="piece__caption"><b>Architecture sketchbook</b><span>sketchbook · high school</span></span>
+        <button type="button" class="piece" style="--r:-1deg" data-kind="architecture" data-title="Various Sketchbook Pages" data-meta="Architecture sketchbook · 2022" data-details="Micron pen on paper · 11 × 17 in pages" data-desc="In this compilation of sketchbook pages, I wanted to explore different ways of constructing buildings by using various shapes and integrating them into the surrounding landscape. I tried to think of designs that were unique and even strange, and I was also inspired by the various parts of a natural environment. These pages were done on my own.">
+          <div class="media media--art"><img src="assets/img/after-hours/sketchbook-1-thumb.jpg" data-full="assets/img/after-hours/sketchbook-1.jpg" width="800" height="1035" alt="Nine architecture sketchbook pages in a grid, each filled with pen sketches of imagined buildings: houses with swooping roofs, platforms among trees, crystal and mushroom-shaped forms, towers, domed hills, clusters of hexagonal rooms, and a city of domes." decoding="async"></div>
+          <span class="piece__caption"><b>Various Sketchbook Pages</b><span>architecture sketchbook · 2022</span></span>
         </button>
         <button type="button" class="piece" style="--r:2.6deg;--ratio:4/5" data-kind="fabrication" data-title="Chainmail top" data-meta="Made by hand · MIT Gala 2025" data-desc="The chainmail top I made to wear to the MIT Gala in 2025. Add a sentence on what it's made of and what you were going for.">
           <div class="media"><div class="media__placeholder"><b>Chainmail top</b><span>photo</span></div></div>
@@ -118,30 +120,30 @@
             </ol>
           </template>
         </button>
-        <button type="button" class="piece" style="--r:-3deg" data-kind="still life" data-title="Still life" data-meta="Still life · National Scholastic Gold · high school art portfolio" data-desc="Add a short note: the idea behind it and the medium.">
-          <div class="media media--art"><img src="assets/img/after-hours/still-life-2-thumb.jpg" data-full="assets/img/after-hours/still-life-2.jpg" width="800" height="910" alt="Still life in black and white: a cracked clay hand reaching upward behind a crumpled clay figure with a face, wire running through both, and two curved fragments lying on the table beside them." loading="lazy" decoding="async"></div>
-          <span class="piece__caption"><b>Still life</b><span>still life · high school</span></span>
-          <span class="piece__flag piece__flag--award">National Scholastic Gold</span>
+        <button type="button" class="piece" style="--r:-3deg" data-kind="still life" data-title="Infidelity" data-meta="Still life · 2022" data-details="Conte on newsprint · 17 × 19 in" data-award="Gold, National Scholastic Art &amp; Writing Awards" data-desc="This piece was a commentary on domestic abuse. The sculpture of the person is being threatened by a looming hand. To make the final drawing of this piece, I first created an assemblage of found objects, and then I drew this still life from observation. This piece was done in class.">
+          <div class="media media--art"><img src="assets/img/after-hours/still-life-2-thumb.jpg" data-full="assets/img/after-hours/still-life-2.jpg" width="800" height="910" alt="Infidelity, a black-and-white still life drawing: a cracked, sculpted hand looms over a crumpled sculpted figure with a face, wire running through both, and two curved fragments lying on the table beside them." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Infidelity</b><span>still life · 2022</span></span>
+          <span class="piece__flag piece__flag--award">Gold, National Scholastic Art &amp; Writing Awards</span>
         </button>
-        <button type="button" class="piece" style="--r:1.2deg" data-kind="figures &amp; portraits" data-title="Self portrait" data-meta="Self portrait · high school art portfolio" data-desc="Add a short note: what you were going for and the medium.">
-          <div class="media media--art"><img src="assets/img/after-hours/self-portrait-1-thumb.jpg" data-full="assets/img/after-hours/self-portrait-1.jpg" width="800" height="1074" alt="Self portrait in black and white on gray: a face looking straight out with a green tear running down one cheek, surrounded by crushed plastic bottles tinted green." loading="lazy" decoding="async"></div>
-          <span class="piece__caption"><b>Self portrait</b><span>self portrait · high school</span></span>
+        <button type="button" class="piece" style="--r:1.2deg" data-kind="figures &amp; portraits" data-title="Plastic Rain" data-meta="Self portrait · 2022" data-details="Charcoal pencil and pastel on toned paper · 18 × 24 in" data-desc="I wanted to show the overwhelming amounts of plastic in the environment. When drawing, I held up each bottle in front of the mirror and drew from life, which was challenging. I used charcoal and a little pastel to show a toxic type of green to imply its effect on us and the environment. This piece was done on my own.">
+          <div class="media media--art"><img src="assets/img/after-hours/self-portrait-1-thumb.jpg" data-full="assets/img/after-hours/self-portrait-1.jpg" width="800" height="1074" alt="Plastic Rain, a self portrait in charcoal on gray paper: a face looking straight out with a green tear running down one cheek, surrounded by crushed plastic bottles tinted green." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Plastic Rain</b><span>self portrait · 2022</span></span>
         </button>
-        <button type="button" class="piece" style="--r:-1.6deg" data-kind="figures &amp; portraits" data-title="Figure drawing" data-meta="Figure drawing · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
-          <div class="media media--art"><img src="assets/img/after-hours/figure-drawing-2-thumb.jpg" data-full="assets/img/after-hours/figure-drawing-2.jpg" width="800" height="1085" alt="Figure drawing in black line with yellow, pink, and orange color: a young woman with her hair tied back sits on the floor hugging her knees, barefoot, looking off to the side." loading="lazy" decoding="async"></div>
-          <span class="piece__caption"><b>Figure drawing</b><span>figures · high school</span></span>
+        <button type="button" class="piece" style="--r:-1.6deg" data-kind="figures &amp; portraits" data-title="Square" data-meta="Figure drawing · 2022" data-details="Charcoal pencil and pastel on toned paper · 18 × 24 in" data-desc="For this piece, I was trying a different technique where I’m hatching lines around the edges of the figure. Rather than creating shapes with mark making, as I’ve done in other works, I blended some of the pastels to allow for smoother transitions, since the hatched lines have a little rigidity. This piece was done on my own.">
+          <div class="media media--art"><img src="assets/img/after-hours/figure-drawing-2-thumb.jpg" data-full="assets/img/after-hours/figure-drawing-2.jpg" width="800" height="1085" alt="Square, a figure drawing in charcoal with yellow, pink, and orange pastel: a young woman with her hair tied back sits on the floor hugging her knees, barefoot, looking off to the side." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Square</b><span>figure drawing · 2022</span></span>
         </button>
-        <button type="button" class="piece" style="--r:2.2deg" data-kind="architecture" data-title="Architecture sketchbook" data-meta="Architecture sketchbook · high school art portfolio" data-desc="Add a short note: what these sketches were exploring.">
-          <div class="media media--art"><img src="assets/img/after-hours/sketchbook-2-thumb.jpg" data-full="assets/img/after-hours/sketchbook-2.jpg" width="800" height="1037" alt="Nine architecture sketchbook pages in a grid, each filled with sketches of imagined buildings: stacked-box houses on hills, wave-like landforms, cabins built into redwood trees, houses on cliffs above the water, and long, low terraced buildings." loading="lazy" decoding="async"></div>
-          <span class="piece__caption"><b>Architecture sketchbook</b><span>sketchbook · high school</span></span>
+        <button type="button" class="piece" style="--r:2.2deg" data-kind="architecture" data-title="Various Sketchbook Pages" data-meta="Architecture sketchbook · 2022" data-details="Micron pen on paper · 11 × 17 in pages" data-desc="In this compilation of sketchbook pages, I was experimenting with the arrangement of shapes to make larger shapes, as seen with the cube buildings. I was also trying to see how structures can adapt to different types of landscapes. These pages were done on my own.">
+          <div class="media media--art"><img src="assets/img/after-hours/sketchbook-2-thumb.jpg" data-full="assets/img/after-hours/sketchbook-2.jpg" width="800" height="1037" alt="Nine architecture sketchbook pages in a grid, each filled with pen sketches of imagined buildings: stacked-box houses on hills, wave-like landforms, cabins built into redwood trees, houses on cliffs above the water, and long, low terraced buildings." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Various Sketchbook Pages</b><span>architecture sketchbook · 2022</span></span>
         </button>
         <button type="button" class="piece" style="--r:-2deg;--ratio:3/4" data-kind="fabrication" data-title="Prom dress" data-meta="Made by hand · materials · high school" data-desc="The prom dress I made in high school. Add the materials, how long it took, and anything you’d do differently.">
           <div class="media"><div class="media__placeholder"><b>Prom dress</b><span>photo</span></div></div>
           <span class="piece__caption"><b>Prom dress</b><span>made by hand · high school</span></span>
         </button>
-        <button type="button" class="piece" style="--r:1.5deg" data-kind="figures &amp; portraits" data-title="Self portrait" data-meta="Self portrait · high school art portfolio" data-desc="Add a short note: what you were going for and the medium.">
-          <div class="media media--art"><img src="assets/img/after-hours/self-portrait-2-thumb.jpg" data-full="assets/img/after-hours/self-portrait-2.jpg" width="800" height="1076" alt="Self portrait painted in thick, knife-like strokes of brown and cream: a close-up of a face turned slightly to one side, with rough unpainted edges around it." loading="lazy" decoding="async"></div>
-          <span class="piece__caption"><b>Self portrait</b><span>self portrait · high school</span></span>
+        <button type="button" class="piece" style="--r:1.5deg" data-kind="figures &amp; portraits" data-title="Antiquity" data-meta="Self portrait · 2022" data-details="Oil on canvas · 18 × 24 in" data-desc="In this self-portrait painting, I wanted to try a technique where I’m using only a palette knife to create smaller shapes as marks and build my portrait using those intricate marks. This piece was done on my own.">
+          <div class="media media--art"><img src="assets/img/after-hours/self-portrait-2-thumb.jpg" data-full="assets/img/after-hours/self-portrait-2.jpg" width="800" height="1076" alt="Antiquity, a self portrait painted with a palette knife in thick strokes of brown and cream: a close-up of a face turned slightly to one side, with rough unpainted edges around it." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Antiquity</b><span>self portrait · 2022</span></span>
         </button>
       </div>
 
@@ -161,6 +163,8 @@
         <div class="lightbox__text">
           <span class="label" data-lb-meta></span>
           <h2 id="lb-title" data-lb-title></h2>
+          <p class="lightbox__details" data-lb-details hidden></p>
+          <p class="lightbox__award" data-lb-award hidden></p>
           <p data-lb-desc></p>
           <button type="button" class="lightbox__jump" data-lb-jump hidden>see how I made it <span aria-hidden="true">&darr;</span></button>
         </div>

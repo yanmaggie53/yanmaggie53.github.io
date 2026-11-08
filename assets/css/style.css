@@ -1634,6 +1634,17 @@ dialog.lightbox.is-story { width: min(1080px, calc(100vw - 32px)); }
 .lightbox__text > .label { margin-right: 30px; } /* clear the close button */
 .lightbox__text h2 { font-size: 30px; letter-spacing: -0.02em; }
 .lightbox__text p { color: var(--ink-2); font-size: 15.5px; }
+.lightbox__text .lightbox__details { margin-top: -6px; color: var(--ink-3); font-size: 14px; }
+.lightbox__text .lightbox__award {
+  justify-self: start;
+  padding: 4px 10px 5px;
+  border-radius: 2px;
+  background: #e8c35a;
+  color: #3a2a04;
+  font-size: 13px;
+  font-weight: 500;
+}
+.lightbox__text [hidden] { display: none; }
 .lightbox__jump {
   justify-self: start;
   margin-top: 6px;

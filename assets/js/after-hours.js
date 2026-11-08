@@ -64,9 +64,14 @@
   var box = document.querySelector('[data-lightbox]');
   function open(piece) {
     if (!box || typeof box.showModal !== 'function') return;
-    box.querySelector('[data-lb-title]').textContent = piece.getAttribute('data-title');
-    box.querySelector('[data-lb-meta]').textContent = piece.getAttribute('data-meta');
-    box.querySelector('[data-lb-desc]').textContent = piece.getAttribute('data-desc');
+    // Each line shows only if the piece has it (a blank title or note is fine).
+    [['title', 'data-title'], ['meta', 'data-meta'], ['details', 'data-details'],
+     ['award', 'data-award'], ['desc', 'data-desc']].forEach(function (pair) {
+      var el = box.querySelector('[data-lb-' + pair[0] + ']');
+      var text = piece.getAttribute(pair[1]) || '';
+      el.textContent = text;
+      el.hidden = !text;
+    });
     // Same picture, but the full-size version (data-full) instead of the wall copy.
     var media = box.querySelector('[data-lb-media]');
     var from = piece.querySelector('.media');
