@@ -29,6 +29,13 @@
       }
     });
     piece.addEventListener('click', function () { open(piece); });
+    // Start fetching the full-size image as soon as someone shows interest.
+    function warm() {
+      var img = piece.querySelector('img[data-full]');
+      if (img && !img._warmed) { img._warmed = true; new Image().src = img.getAttribute('data-full'); }
+    }
+    piece.addEventListener('pointerenter', warm);
+    piece.addEventListener('focus', warm);
   });
 
   if (tidy) tidy.addEventListener('click', function () {
@@ -60,8 +67,16 @@
     box.querySelector('[data-lb-title]').textContent = piece.getAttribute('data-title');
     box.querySelector('[data-lb-meta]').textContent = piece.getAttribute('data-meta');
     box.querySelector('[data-lb-desc]').textContent = piece.getAttribute('data-desc');
+    // Same picture, but the full-size version (data-full) instead of the wall copy.
     var media = box.querySelector('[data-lb-media]');
-    media.innerHTML = piece.querySelector('.media').innerHTML;
+    var from = piece.querySelector('.media');
+    media.className = from.className;
+    media.innerHTML = from.innerHTML;
+    var img = media.querySelector('img[data-full]');
+    if (img) {
+      img.removeAttribute('loading');
+      img.src = img.getAttribute('data-full');
+    }
 
     var tpl = piece.querySelector('template.piece__story');
     var story = box.querySelector('[data-lb-story]');

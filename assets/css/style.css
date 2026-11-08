@@ -1520,6 +1520,7 @@ div.tile { cursor: default; }
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
   gap: 40px 30px;
   padding: 44px 6px 20px;
 }
@@ -1561,25 +1562,31 @@ div.tile { cursor: default; }
   opacity: 0.85;
 }
 .piece .media { aspect-ratio: var(--ratio, 4 / 5); border-radius: 2px; }
+/* Artwork shows whole, at its own shape: never cropped. */
+.piece .media--art { aspect-ratio: auto; background: none; }
+.media--art img { position: static; display: block; width: 100%; height: auto; object-fit: contain; }
+.piece img { pointer-events: none; -webkit-user-drag: none; }
 .piece__caption { display: grid; gap: 1px; padding: 0 2px; }
 .piece__caption b { font-weight: 500; font-size: 14.5px; }
 .piece__caption span { font-size: 12.5px; color: var(--ink-3); }
-/* "process" tag: a little paper label stuck on pieces that open into a making-of */
+/* Little paper labels under the caption ("process", awards). They sit below
+   the picture, never on it, so the whole artwork stays visible. */
 .piece__flag {
-  position: absolute;
-  top: 24px;
-  right: -10px;
-  padding: 3px 10px 4px;
+  justify-self: start;
+  margin: -2px 0 0 2px;
+  padding: 3px 9px 4px;
   border-radius: 2px;
   background: var(--accent);
   color: var(--accent-ink);
   font-size: 12px;
   font-weight: 500;
+  line-height: 1.3;
   letter-spacing: 0.02em;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.16);
-  transform: rotate(calc(4deg - var(--r, 0deg)));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+  transform: rotate(-1.5deg);
   pointer-events: none;
 }
+.piece__flag--award { background: #e8c35a; color: #3a2a04; }
 
 /* At night the lights are off: the cursor becomes a desk lamp. */
 .lamp {
@@ -1614,7 +1621,17 @@ dialog.lightbox.is-story { width: min(1080px, calc(100vw - 32px)); }
 .lightbox__scroll { min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .lightbox__body { display: grid; grid-template-columns: 1.4fr 1fr; }
 .lightbox__body .media { border-radius: 0; min-height: 420px; }
+/* A mat around the artwork, so the box's rounded corners never clip it. */
+.lightbox__body .media--art {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 18px;
+  background: color-mix(in srgb, var(--ink) 6%, var(--surface-solid));
+}
+.lightbox__body .media--art img { width: auto; max-width: 100%; height: auto; max-height: calc(100vh - 32px - 36px); }
 .lightbox__text { padding: 28px; display: grid; gap: 12px; align-content: start; }
+.lightbox__text > .label { margin-right: 30px; } /* clear the close button */
 .lightbox__text h2 { font-size: 30px; letter-spacing: -0.02em; }
 .lightbox__text p { color: var(--ink-2); font-size: 15.5px; }
 .lightbox__jump {
@@ -1717,6 +1734,8 @@ dialog.lightbox.is-story { width: min(1080px, calc(100vw - 32px)); }
   .piece:nth-child(2n) { margin-top: 28px; }
   .lightbox__body { grid-template-columns: 1fr; }
   .lightbox__body .media { min-height: 260px; }
+  .lightbox__body .media--art { min-height: 0; padding: 60px 16px 16px; } /* clears the close button */
+  .lightbox__body .media--art img { max-height: 72vh; }
 }
 
 @media (max-width: 600px) {

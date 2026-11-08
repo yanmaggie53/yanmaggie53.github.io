@@ -23,7 +23,7 @@ Visitors can drag through their day on the bar in the sidebar to change the mode
 ```
 index.html                 home: research interests word cloud, work (research / practice), garden
 projects/*.html            case studies (one shared structure, see below)
-after-hours.html           figure drawings, portraits, architecture sketches, made by hand
+after-hours.html           figure drawings, self portraits, still lifes, architecture sketches, made by hand
 about.html                 short intro + the full CV, readable on the page
 assets/css/style.css       all styles; mode colors are at the top
 assets/js/sky-time.js      sun math + picks the mode (loads first, in <head>)
@@ -40,7 +40,7 @@ assets/js/after-hours.js   pin-up wall + night lamp
 - **Research:** each `<article class="project">` in `index.html`, newest first. The `data-methods` and `data-domains` lists feed the filter dropdowns automatically. Add `data-preview="assets/video/clip.mp4"` to play a muted clip on hover.
 - **Practice** (internship + class work): the `.tile`s in the `data-panel="practice"` block. Use `<a class="tile" href="…">` once a project has its own page.
 - **Research interests word cloud:** the `<figure data-wordcloud>` at the top of `index.html`. Each word's `data-w` (1 + the number of topics inside it) sets its size; `data-group` ties focus areas to their theme so they cluster and light up together. Wrap a word in a link to tie it to a project.
-- **After hours:** each `.piece` on the wall. `data-kind` must match one of the filter chips. To give a piece a process story, add `<span class="piece__flag">process</span>` and a `<template class="piece__story">` inside it (copy the chainmail top's); it shows under the piece when it's opened.
+- **After hours:** each `.piece` on the wall. `data-kind` must match one of the filter chips. Artwork goes in `<div class="media media--art">` so it's never cropped: `src` is the 800px-wide wall copy (with its `width`/`height`), `data-full` is the big one shown up close. To give a piece a process story, add `<span class="piece__flag">process</span>` and a `<template class="piece__story">` inside it (copy the chainmail top's); it shows under the piece when it's opened.
 - **New case study:** copy `projects/zzalign.html`, then update the title, the sidebar table of contents, and the next-project link. Research pages link in a loop, newest to oldest.
 - **Images:** swap a `<div class="media__placeholder">…</div>` for `<img src="assets/img/…" alt="…">` (keep it inside the `.media` box).
 - **CV:** replace `assets/Maggie_Yan_CV.pdf` (keep the file name) and update the "Updated" date on `about.html`. The About page draws it as pages and offers a download.

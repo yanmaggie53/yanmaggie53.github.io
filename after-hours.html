@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>After hours · Maggie Yan</title>
-  <meta name="description" content="Figure drawings, portraits, architecture sketches, and things made by hand: what Maggie Yan makes after hours.">
+  <meta name="description" content="Figure drawings, self portraits, still lifes, architecture sketches, and things made by hand: what Maggie Yan makes after hours.">
 
   <script src="assets/js/sky-time.js"></script>
 
@@ -29,7 +29,7 @@
     <aside class="sidebar">
       <a class="back-link" href="index.html">&larr; home</a>
       <div class="side-block">
-        <p class="bio">The hobby side of me: figure drawings, portraits, and architecture sketches from my high school art portfolio, and things I’ve made on my own, like the chainmail top I wore to the MIT Gala. No research questions here, just making.</p>
+        <p class="bio">The hobby side of me: figure drawings, self portraits, still lifes, and architecture sketches from my high school art portfolio, and things I’ve made on my own, like the chainmail top I wore to the MIT Gala. No research questions here, just making.</p>
       </div>
       <div class="side-block">
         <span class="label">How to look around</span>
@@ -55,13 +55,16 @@
       <div class="chips" role="group" aria-label="Filter the wall">
         <button type="button" class="chip" data-kind-filter="all" aria-pressed="true">everything</button>
         <button type="button" class="chip" data-kind-filter="figures &amp; portraits" aria-pressed="false">figures &amp; portraits</button>
+        <button type="button" class="chip" data-kind-filter="still life" aria-pressed="false">still life</button>
         <button type="button" class="chip" data-kind-filter="architecture" aria-pressed="false">architecture sketchbook</button>
         <button type="button" class="chip" data-kind-filter="fabrication" aria-pressed="false">made by hand</button>
       </div>
 
       <!-- The wall. Each piece: data-kind (for the filter), data-title, data-meta,
            data-desc (shown up close). --r tilts it, --ratio sets the image shape.
-           Swap the placeholder div for <img src="assets/img/after-hours/..." alt="...">
+           Artwork: <div class="media media--art"> shows the whole image, never cropped.
+           src is the small wall copy (800px wide, with its width/height); data-full is
+           the big one shown up close. Pieces with images don't need --ratio.
            Note: data-kind="figures &amp; portraits" must match its filter chip exactly.
 
            To give a piece a process story (like the chainmail top): add
@@ -69,7 +72,20 @@
            <template class="piece__story">…</template> holding the story. It shows
            under the piece when it's opened. Copy the chainmail one as a starting point. -->
       <div class="wall" data-wall>
-        <button type="button" class="piece" style="--r:-2.5deg;--ratio:4/5" data-kind="fabrication" data-title="Chainmail top" data-meta="Made by hand · MIT Gala 2025" data-desc="The chainmail top I made to wear to the MIT Gala in 2025. Add a sentence on what it's made of and what you were going for.">
+        <button type="button" class="piece" style="--r:-2.5deg" data-kind="still life" data-title="Still life" data-meta="Still life · National Scholastic Gold · high school art portfolio" data-desc="Add a short note: the idea behind it and the medium.">
+          <div class="media media--art"><img src="assets/img/after-hours/still-life-1-thumb.jpg" data-full="assets/img/after-hours/still-life-1.jpg" width="800" height="514" alt="Still life: three painted nesting dolls, each with a razor blade jutting from its base. The middle doll lies on its side with its top half off, and a tiny woman crawls out of it onto a glossy dark floor marked with chalky circles and the dolls’ reflections." decoding="async"></div>
+          <span class="piece__caption"><b>Still life</b><span>still life · high school</span></span>
+          <span class="piece__flag piece__flag--award">National Scholastic Gold</span>
+        </button>
+        <button type="button" class="piece" style="--r:1.8deg" data-kind="figures &amp; portraits" data-title="Figure drawing" data-meta="Figure drawing · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
+          <div class="media media--art"><img src="assets/img/after-hours/figure-drawing-1-thumb.jpg" data-full="assets/img/after-hours/figure-drawing-1.jpg" width="800" height="1126" alt="Figure drawing in light tones on black paper: a young woman with long hair sits with one knee raised, wearing a slip dress, her head bowed and one hand at her chest." decoding="async"></div>
+          <span class="piece__caption"><b>Figure drawing</b><span>figures · high school</span></span>
+        </button>
+        <button type="button" class="piece" style="--r:-1deg" data-kind="architecture" data-title="Architecture sketchbook" data-meta="Architecture sketchbook · high school art portfolio" data-desc="Add a short note: what these sketches were exploring.">
+          <div class="media media--art"><img src="assets/img/after-hours/sketchbook-1-thumb.jpg" data-full="assets/img/after-hours/sketchbook-1.jpg" width="800" height="1035" alt="Nine architecture sketchbook pages in a grid, each filled with sketches of imagined buildings: houses with swooping roofs, platforms among trees, crystal and mushroom-shaped forms, towers, domed hills, clusters of hexagonal rooms, and a city of domes." decoding="async"></div>
+          <span class="piece__caption"><b>Architecture sketchbook</b><span>sketchbook · high school</span></span>
+        </button>
+        <button type="button" class="piece" style="--r:2.6deg;--ratio:4/5" data-kind="fabrication" data-title="Chainmail top" data-meta="Made by hand · MIT Gala 2025" data-desc="The chainmail top I made to wear to the MIT Gala in 2025. Add a sentence on what it's made of and what you were going for.">
           <div class="media"><div class="media__placeholder"><b>Chainmail top</b><span>photo</span></div></div>
           <span class="piece__caption"><b>Chainmail top</b><span>made by hand · 2025</span></span>
           <span class="piece__flag">process</span>
@@ -102,37 +118,30 @@
             </ol>
           </template>
         </button>
-        <button type="button" class="piece" style="--r:1.8deg;--ratio:4/5" data-kind="figures &amp; portraits" data-title="Figure study" data-meta="Figures · medium · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
-          <div class="media"><div class="media__placeholder"><b>Figure study</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Figure study</b><span>figures · high school</span></span>
+        <button type="button" class="piece" style="--r:-3deg" data-kind="still life" data-title="Still life" data-meta="Still life · National Scholastic Gold · high school art portfolio" data-desc="Add a short note: the idea behind it and the medium.">
+          <div class="media media--art"><img src="assets/img/after-hours/still-life-2-thumb.jpg" data-full="assets/img/after-hours/still-life-2.jpg" width="800" height="910" alt="Still life in black and white: a cracked clay hand reaching upward behind a crumpled clay figure with a face, wire running through both, and two curved fragments lying on the table beside them." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Still life</b><span>still life · high school</span></span>
+          <span class="piece__flag piece__flag--award">National Scholastic Gold</span>
         </button>
-        <button type="button" class="piece" style="--r:-1deg;--ratio:3/4" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture sketchbook · pen on paper · high school" data-desc="Where you were, what building you were looking at.">
-          <div class="media"><div class="media__placeholder"><b>Sketch</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Architecture sketch</b><span>architecture sketchbook</span></span>
+        <button type="button" class="piece" style="--r:1.2deg" data-kind="figures &amp; portraits" data-title="Self portrait" data-meta="Self portrait · high school art portfolio" data-desc="Add a short note: what you were going for and the medium.">
+          <div class="media media--art"><img src="assets/img/after-hours/self-portrait-1-thumb.jpg" data-full="assets/img/after-hours/self-portrait-1.jpg" width="800" height="1074" alt="Self portrait in black and white on gray: a face looking straight out with a green tear running down one cheek, surrounded by crushed plastic bottles tinted green." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Self portrait</b><span>self portrait · high school</span></span>
         </button>
-        <button type="button" class="piece" style="--r:2.6deg;--ratio:3/4" data-kind="figures &amp; portraits" data-title="Portrait" data-meta="Portraits · medium · high school art portfolio" data-desc="Who or what it is, and the medium.">
-          <div class="media"><div class="media__placeholder"><b>Portrait</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Portrait</b><span>portraits · high school</span></span>
+        <button type="button" class="piece" style="--r:-1.6deg" data-kind="figures &amp; portraits" data-title="Figure drawing" data-meta="Figure drawing · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
+          <div class="media media--art"><img src="assets/img/after-hours/figure-drawing-2-thumb.jpg" data-full="assets/img/after-hours/figure-drawing-2.jpg" width="800" height="1085" alt="Figure drawing in black line with yellow, pink, and orange color: a young woman with her hair tied back sits on the floor hugging her knees, barefoot, looking off to the side." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Figure drawing</b><span>figures · high school</span></span>
         </button>
-        <button type="button" class="piece" style="--r:-3deg;--ratio:3/4" data-kind="fabrication" data-title="Prom dress" data-meta="Made by hand · materials · high school" data-desc="The prom dress I made in high school. Add the materials, how long it took, and anything you’d do differently.">
+        <button type="button" class="piece" style="--r:2.2deg" data-kind="architecture" data-title="Architecture sketchbook" data-meta="Architecture sketchbook · high school art portfolio" data-desc="Add a short note: what these sketches were exploring.">
+          <div class="media media--art"><img src="assets/img/after-hours/sketchbook-2-thumb.jpg" data-full="assets/img/after-hours/sketchbook-2.jpg" width="800" height="1037" alt="Nine architecture sketchbook pages in a grid, each filled with sketches of imagined buildings: stacked-box houses on hills, wave-like landforms, cabins built into redwood trees, houses on cliffs above the water, and long, low terraced buildings." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Architecture sketchbook</b><span>sketchbook · high school</span></span>
+        </button>
+        <button type="button" class="piece" style="--r:-2deg;--ratio:3/4" data-kind="fabrication" data-title="Prom dress" data-meta="Made by hand · materials · high school" data-desc="The prom dress I made in high school. Add the materials, how long it took, and anything you’d do differently.">
           <div class="media"><div class="media__placeholder"><b>Prom dress</b><span>photo</span></div></div>
           <span class="piece__caption"><b>Prom dress</b><span>made by hand · high school</span></span>
         </button>
-        <button type="button" class="piece" style="--r:1.2deg;--ratio:4/3" data-kind="figures &amp; portraits" data-title="Figure drawing" data-meta="Figures · medium · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
-          <div class="media"><div class="media__placeholder"><b>Figure drawing</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Figure drawing</b><span>figures · high school</span></span>
-        </button>
-        <button type="button" class="piece" style="--r:-1.6deg;--ratio:4/5" data-kind="figures &amp; portraits" data-title="Figure study" data-meta="Figures · medium · high school art portfolio" data-desc="Add a short note: the pose, the medium, what you were practicing.">
-          <div class="media"><div class="media__placeholder"><b>Figure study</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Figure study</b><span>figures · high school</span></span>
-        </button>
-        <button type="button" class="piece" style="--r:2.2deg;--ratio:4/3" data-kind="architecture" data-title="Architecture sketch" data-meta="Architecture sketchbook · medium · high school" data-desc="Where you were, what building you were looking at.">
-          <div class="media"><div class="media__placeholder"><b>Sketch</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Architecture sketch</b><span>architecture sketchbook</span></span>
-        </button>
-        <button type="button" class="piece" style="--r:-2deg;--ratio:4/5" data-kind="figures &amp; portraits" data-title="Portrait" data-meta="Portraits · medium · high school art portfolio" data-desc="Who or what it is, and the medium.">
-          <div class="media"><div class="media__placeholder"><b>Portrait</b><span>scan</span></div></div>
-          <span class="piece__caption"><b>Portrait</b><span>portraits · high school</span></span>
+        <button type="button" class="piece" style="--r:1.5deg" data-kind="figures &amp; portraits" data-title="Self portrait" data-meta="Self portrait · high school art portfolio" data-desc="Add a short note: what you were going for and the medium.">
+          <div class="media media--art"><img src="assets/img/after-hours/self-portrait-2-thumb.jpg" data-full="assets/img/after-hours/self-portrait-2.jpg" width="800" height="1076" alt="Self portrait painted in thick, knife-like strokes of brown and cream: a close-up of a face turned slightly to one side, with rough unpainted edges around it." loading="lazy" decoding="async"></div>
+          <span class="piece__caption"><b>Self portrait</b><span>self portrait · high school</span></span>
         </button>
       </div>
 
