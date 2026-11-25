@@ -56,7 +56,7 @@
           <span class="label">Health policy</span>
         </div>
         <h1 class="cs-title">Understanding <em>Psilocybin</em></h1>
-        <p class="cs-summary">An open-source, interactive matrix that lays out the eight policy models U.S. states are using to legalize or regulate psilocybin, from decriminalization to state-run sales, and shows where five states that have published official reports stand on each. I designed and built it in four weeks during my internship at GoInvo, a healthcare design studio, as the newest entry in its series of plain-language public health explainers. The goal was a page a legislator, clinician, or curious voter could read at a glance without the comparison losing its accuracy.</p>
+        <p class="cs-summary">Understanding Psilocybin is an open-source, interactive matrix that lays out the eight policy models U.S. states are using to legalize or regulate psilocybin, from decriminalization to state-run sales, and shows where the five states that have published official reports stand on each one. I designed and built it in four weeks during my internship at GoInvo, a healthcare design studio, as the newest entry in its series of plain-language public health explainers. The goal was a page that a legislator, clinician, or curious voter could read and compare in one place without the comparison losing its accuracy.</p>
       </header>
 
       <dl class="glance">
@@ -74,8 +74,8 @@
         <span class="label">01 · Design question</span>
         <h2>What were we trying to find out?</h2>
         <blockquote class="question">
-          How do you let someone compare eight policy models across several states at a glance, without flattening the real differences between “endorsed,” “supported,” and “mixed”?
-          <cite>The data was a handful of long government reports. The design problem was compression without distortion.</cite>
+          How do you let someone compare eight policy models across several states on one page, without flattening the real differences between “endorsed,” “supported,” and “mixed”?
+          <cite>The data was a handful of long government reports, and the design problem was how to compress them without distorting them.</cite>
         </blockquote>
       </section>
 
@@ -83,9 +83,9 @@
         <span class="label">02 · Context</span>
         <h2>Why this mattered</h2>
         <div class="prose">
-          <p>States are moving on psilocybin faster than the public conversation about it. Several have convened task forces and working groups and published their findings, but each report is long, each uses its own vocabulary, and none of them lines up against the others. A legislator in a state that has not acted yet has no easy way to see what the states ahead of them recommended.</p>
-          <p>GoInvo had already built plain-language explainers for coronavirus, Zika, and Ebola. This one extended the series into policy. The studio’s framing material included a design-considerations brief for state-level psychedelic legislation, organized around Bardach’s Eightfold Path to policy analysis, which gave me the question list a legislator would actually be working through: what problem the law solves, what the evidence shows, which models of access are on the table, and who bears the trade-offs.</p>
-          <p>The audience was deliberately broad: policy staff, clinicians, advocates, and voters. That ruled out jargon and ruled in a design that explains itself.</p>
+          <p>States are moving on psilocybin faster than the public conversation about it. Several have convened task forces and working groups and published their findings, but each report is long, each uses its own vocabulary, and none of them lines up against the others. A legislator in a state that hasn’t acted yet has no easy way to see what the states ahead of them recommended.</p>
+          <p>GoInvo had already built plain-language explainers for coronavirus, Zika, and Ebola. This one extended the series into policy. The studio’s framing material included a design-considerations brief for state-level psychedelic legislation, organized around Bardach’s Eightfold Path to policy analysis, which gave me the list of questions a legislator would actually be working through, like what problem the law solves, what the evidence shows, which models of access are on the table, and who bears the trade-offs.</p>
+          <p>The audience was broad on purpose, with policy staff, clinicians, advocates, and voters all in mind, so that ruled out jargon and meant the design had to explain itself.</p>
         </div>
       </section>
 
@@ -93,15 +93,15 @@
         <span class="label">03 · Methods</span>
         <h2>How I approached it, and why</h2>
         <div class="prose">
-          <p>Four weeks is short, so the process was front-loaded with cheap exploration: paper first, then many small Figma variants, then code only once the matrix form had settled. The content itself, the eight models and each state’s position, came from close reading of the reports.</p>
+          <p>Four weeks is short, so I front-loaded the process with cheap exploration, paper first, then many small Figma variants, then code only once the form of the matrix had settled. The content itself, the eight models and each state’s position, came from reading the reports closely.</p>
         </div>
         <table class="methods" style="margin-top:24px">
           <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave me</th></tr></thead>
           <tbody>
-            <tr><td>Reading the source reports</td><td>The matrix is only as trustworthy as its cells. Each state’s stance on each model had to be traced to a specific recommendation in a specific report.</td><td>The eight-model taxonomy and a defensible label for every cell, including “N/A” where a report never addressed a model.</td></tr>
-            <tr><td>Sketching and low-fi prototyping</td><td>The first question was the shape of the thing: a table, a brochure that unfolds, a page with reveals. Paper let me try the form before committing to layout.</td><td>Two early concepts, including an unfolding matrix with a “you” column where visitors could vote. See Process for why that was cut.</td></tr>
-            <tr><td>Iterative Figma exploration</td><td>With the form fixed, the variables were grid, color system, typography, and whether cells should carry icons, words, or both. Laying dozens of variants side by side made the comparison honest.</td><td>A board of alternatives that settled the final choices: words over icons, a light five-color system, a typeface that stays readable at small sizes.</td></tr>
-            <tr><td>Hand-coded front end</td><td>GoInvo publishes its explainers as open source on GitHub Pages, so the page needed to be plain HTML, CSS, and JavaScript that anyone could fork.</td><td>A static site with a responsive matrix, a mobile layout that restacks each model with its five states, and one small Three.js flourish.</td></tr>
+            <tr><td>Reading the source reports</td><td>The matrix is only as trustworthy as its cells, so each state’s position on each model had to be traced to a specific recommendation in a specific report.</td><td>The eight-model taxonomy and a label for every cell that I could trace back to a report, including “N/A” where a report never addressed a model.</td></tr>
+            <tr><td>Sketching and low-fi prototyping</td><td>The first question was the shape of the thing, whether it was a table, a brochure that unfolds, or a page with reveals, and paper let me try the form before committing to a layout.</td><td>Two early concepts, including an unfolding matrix with a “you” column where visitors could vote. See Process for why that was cut.</td></tr>
+            <tr><td>Iterative Figma exploration</td><td>With the form fixed, the variables were the grid, the color system, the typography, and whether cells should carry icons, words, or both. Laying dozens of variants side by side made it an actual comparison rather than a guess.</td><td>A board of alternatives that settled the final choices, which were words over icons, a light five-color system, and a typeface that stays readable at small sizes.</td></tr>
+            <tr><td>Hand-coded front end</td><td>GoInvo publishes its explainers as open source on GitHub Pages, so the page needed to be plain HTML, CSS, and JavaScript that anyone could fork.</td><td>A static site with a responsive matrix, a mobile layout that restacks each model with its five states, and one small 3D element in Three.js.</td></tr>
           </tbody>
         </table>
       </section>
@@ -113,33 +113,33 @@
           <li>
             <h3>Getting oriented</h3>
             <span class="when">Week 1</span>
-            <p>I read the five state reports and the RAND and BrainFutures reviews and worked out each state’s position on each model. The hard part was not finding the positions but deciding how to label them consistently when one report says “recommend,” another “support,” and a third describes a model without taking a stance.</p>
+            <p>I read the five state reports and the RAND and BrainFutures reviews and worked out each state’s position on each model. The hard part wasn’t finding the positions but deciding how to label them consistently when one report says “recommend,” another says “support,” and a third describes a model without taking a position.</p>
           </li>
           <li>
             <h3>Sketching the form</h3>
             <span class="when">Week 1 to 2</span>
-            <p>My first sketches treated the matrix as something that unfolds: click a model and the row opens sideways to reveal ballot options and more states, like a wide brochure. One version added a “you” column so visitors could record their own position, submit, and then see how others had voted. Neither the unfolding nor the voting survived. The finished page is a single matrix that reads in one glance, which was the brief: easy to read and compare without sacrificing accuracy.</p>
+            <p>My first sketches treated the matrix as something that unfolds, where you click a model and the row opens sideways to reveal ballot options and more states, like a wide brochure. One version added a “you” column so visitors could record their own position, submit it, and then see how others had voted. Neither the unfolding nor the voting survived. The finished page is a single matrix you can take in all at once, which was the brief, easy to read and compare without sacrificing accuracy.</p>
           </li>
           <li>
             <h3>Icons versus words</h3>
             <span class="when">Week 2</span>
-            <p>I spent a page of sketches on an icon system: checks of different weights for strongly aligned, aligned, partially aligned, and not aligned, a circle for “unclear” or “not addressed,” a struck circle for “referenced but not endorsed.” My own notes on the sketch say it: the marks “look like getting graded,” and some would need extra notes to explain. Words in the cell with a background color behind them did the job with nothing to decode.</p>
+            <p>I spent a page of sketches on an icon system, with checks of different weights for strongly aligned, aligned, partially aligned, and not aligned, a circle for “unclear” or “not addressed,” and a struck circle for “referenced but not endorsed.” My own notes on the sketch say that the marks “look like getting graded,” and some would have needed extra notes to explain. Words in the cell with a background color behind them did the job with nothing to decode.</p>
           </li>
           <li>
             <h3>Figma rounds</h3>
             <span class="when">Week 2 to 3</span>
-            <p>Dozens of grid variants side by side: dark and light themes, saturated and muted palettes, cells with labels and cells with icons, different header treatments. The light palette won for legibility and for matching the rest of GoInvo’s explainer series, and a neutral white cell for “N/A” kept the eye on the states that had actually spoken.</p>
+            <p>I laid out dozens of grid variants side by side, with dark and light themes, saturated and muted palettes, cells with labels and cells with icons, and different header treatments. The light palette won for readability and for matching the rest of GoInvo’s explainer series, and a neutral white cell for “N/A” kept the eye on the states that had actually said something.</p>
           </li>
           <li>
             <h3>Building it</h3>
             <span class="when">Week 3 to 4</span>
-            <p>I coded the page by hand: the matrix as a desktop grid and a restacked mobile layout, a references section linking every report as a PDF, a “help us make this real” call for feedback and funding, and a small 3D megaphone next to the title rendered in Three.js. It shipped as v0.1 to understandingpsilocybin.org, open source under Creative Commons Attribution.</p>
+            <p>I coded the page by hand, with the matrix as a desktop grid and a restacked mobile layout, a references section linking every report as a PDF, a “help us make this real” call for feedback and funding, and a small 3D megaphone next to the title rendered in Three.js. It shipped as v0.1 to understandingpsilocybin.org, open source under Creative Commons Attribution.</p>
           </li>
         </ol>
         <figure class="figure figure--pair">
           <div class="media" style="aspect-ratio:5/4"><img src="../assets/img/projects/psilo-sketch-brochure.jpg" alt="Pencil sketch of a state-by-model matrix with a 'you' column and a note that it unfolds like a super wide, long brochure" loading="lazy"></div>
           <div class="media" style="aspect-ratio:5/4"><img src="../assets/img/projects/psilo-sketch-unfold.jpg" alt="Pencil sketch showing the matrix unfolding sideways in both directions on click, revealing ballot options, with a submit button and a note about revealing other voters' results" loading="lazy"></div>
-          <figcaption>Early sketches: the matrix as something that unfolds, with a “you” column for visitors to vote. Both the unfolding and the voting were cut in favor of a page that reads in one glance.</figcaption>
+          <figcaption>Early sketches of the matrix as something that unfolds, with a “you” column for visitors to vote. Both the unfolding and the voting were cut in favor of a page you can take in all at once.</figcaption>
         </figure>
         <figure class="figure figure--pair">
           <div class="media" style="aspect-ratio:5/4"><img src="../assets/img/projects/psilo-sketch-icons.jpg" alt="Pencil sketch exploring an icon system: check marks of different weights for strongly aligned, aligned, partially aligned, and not aligned, plus a circle for unclear and a struck circle for referenced but not endorsed" loading="lazy"></div>
@@ -152,18 +152,18 @@
         <span class="label">05 · Findings</span>
         <h2>What I learned</h2>
         <ul class="findings">
-          <li><h3>Words beat icons when the categories are not ordinal</h3><p>“Endorsed,” “Supported,” “Mixed,” and “Opposed” are not points on one scale, and “N/A” is not a lower score. Check marks of varying weight implied a ranking the reports did not make; a word with a color behind it did not.</p></li>
-          <li><h3>Interaction has to earn its place</h3><p>The unfolding brochure and the voting column were the most interesting ideas in the sketches and the first things cut. Each one asked the reader to do something before they could see the comparison, which was the whole point of the page.</p></li>
-          <li><h3>“Not addressed” is information</h3><p>Leaving N/A cells white, rather than hiding them or filling them in, shows where the states ahead have been silent. For a legislator that gap is as useful as any endorsement.</p></li>
-          <li><h3>Consistency is a sourcing problem</h3><p>The design settled quickly; the labels took longest. Agreeing on what counts as “supported” versus “endorsed” across five differently written reports was the real editorial work, and it is the part a reader never sees.</p></li>
+          <li><h3>Words beat icons when the categories aren’t ordinal</h3><p>“Endorsed,” “Supported,” “Mixed,” and “Opposed” aren’t points on one scale, and “N/A” isn’t a lower score. Check marks of varying weight implied a ranking the reports didn’t make, and a word with a color behind it didn’t.</p></li>
+          <li><h3>The interactive ideas were the first things cut</h3><p>The unfolding brochure and the voting column were the most interesting ideas in the sketches, and each one asked the reader to do something before they could see the comparison, which was the whole point of the page.</p></li>
+          <li><h3>“Not addressed” is information</h3><p>Leaving the N/A cells white, rather than hiding them or filling them in, shows where the states ahead have been silent, and for a legislator that gap is as useful as any endorsement.</p></li>
+          <li><h3>The labels took longer than the design</h3><p>The design settled quickly, but agreeing on what counts as “supported” versus “endorsed” across five differently written reports was the real editorial work, and it’s the part a reader never sees.</p></li>
         </ul>
       </section>
 
       <section class="cs-section" id="outcome">
         <span class="label">06 · Outcome</span>
-        <h2>Where it landed</h2>
+        <h2>What came out of it</h2>
         <div class="prose">
-          <p>Understanding Psilocybin is live at <a href="https://understandingpsilocybin.org/" target="_blank" rel="noopener">understandingpsilocybin.org &#8599;</a> as an open-source GoInvo project, with the <a href="https://github.com/yanmaggie53/goinvo-understanding-psilocybin" target="_blank" rel="noopener">code on GitHub &#8599;</a>. It covers eight policy models and five states and is framed as v0.1, with an open call for feedback, funding, and collaborators to grow it into a comprehensive U.S. report. The design decisions carry over to the next states that publish: a new column, the same five labels.</p>
+          <p>Understanding Psilocybin is live at <a href="https://understandingpsilocybin.org/" target="_blank" rel="noopener">understandingpsilocybin.org &#8599;</a> as an open-source GoInvo project, with the <a href="https://github.com/yanmaggie53/goinvo-understanding-psilocybin" target="_blank" rel="noopener">code on GitHub &#8599;</a>. It covers eight policy models and five states and is framed as v0.1, with an open call for feedback, funding, and collaborators to grow it into a comprehensive U.S. report. The design decisions carry over to the next states that publish, which just means a new column with the same five labels.</p>
         </div>
         <figure class="figure" style="margin-top:28px">
           <div class="browser">
@@ -182,11 +182,11 @@
 
       <section class="cs-section" id="reflection">
         <span class="label">07 · Reflection</span>
-        <h2>Looking back</h2>
+        <h2>What worked, what didn’t, what’s next</h2>
         <div class="reflect">
-          <div><h3>What worked</h3><p>Front-loading the cheap exploration. Paper and Figma absorbed the bad ideas so that the code only had to be written once, and laying variants side by side made the choice between icons and words obvious instead of argued.</p></div>
-          <div><h3>Limitations</h3><p>Five states and a four-week window. The matrix reflects the reports as published, so it ages as states act, and it has not been evaluated with its intended readers.</p></div>
-          <div><h3>What I’d study next</h3><p>Whether a comparison like this changes how policy staff read the underlying reports, and how to represent uncertainty in a cell honestly when a report is ambivalent rather than silent. Both questions follow me into my work on explanation and decision support in clinical settings.</p></div>
+          <div><h3>What worked</h3><p>Front-loading the cheap exploration worked. Paper and Figma absorbed the bad ideas so that the code only had to be written once, and laying variants side by side made the choice between icons and words obvious instead of something to argue about.</p></div>
+          <div><h3>Limitations</h3><p>I only had five states and a four-week window. The matrix reflects the reports as published, so it ages as states act, and it hasn’t been evaluated with the readers it was meant for.</p></div>
+          <div><h3>What I’d study next</h3><p>That left me asking whether a comparison like this changes how policy staff read the underlying reports, and how to show uncertainty in a cell when a report is ambivalent rather than silent. Both questions carry over into my work on explanation and decision support in clinical settings.</p></div>
         </div>
       </section>
 

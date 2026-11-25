@@ -56,7 +56,7 @@
           <span class="label">Human–AI interaction</span>
         </div>
         <h1 class="cs-title cs-title--long">Framing Financial Feedback: <em>Narrative vs. Factual AI Explanation</em> in an Educational Simulation</h1>
-        <p class="cs-summary">The “What-If” Financial Decision-Making Simulation is a research-driven interactive game that helps college students build financial literacy by combining gamification with explainable AI: players work through simulated scenarios like budgeting, saving, and borrowing, and get immediate AI-generated feedback on their choices. It began as a group research project in MAS 366 Human–AI Interaction at Wellesley College in Fall 2025, and that version was accepted to ACM SIGDOC 2026. In Spring 2026 I continued the work with the professor as an independent study, taking it in a different direction.</p>
+        <p class="cs-summary">The “What-If” Financial Decision-Making Simulation is a serious game that uses explainable AI to help college students build financial literacy. Players work through budgeting, saving, and borrowing scenarios, and after each choice a custom GPT-4 model, one per condition, explains what happened and why in either a narrative or a factual mode. It began as a group research project in MAS 366 Human–AI Interaction at Wellesley College in Fall 2025, and that version was accepted to ACM SIGDOC 2026. In Spring 2026 I continued the work with Professor Orit Shaer, my PI, as an independent study, taking it in a different direction.</p>
       </header>
 
       <figure class="figure" style="margin-top:40px">
@@ -82,7 +82,7 @@
         <h2>What were we trying to find out?</h2>
         <blockquote class="question">
           How does narrative versus factual framing in AI-generated feedback affect how college students comprehend and internalize financial literacy concepts?
-          <cite>And what does that suggest about how the form of an explanation shapes a learner’s relationship to the content?</cite>
+          <cite>And does the form an explanation takes change how people feel about the content, separately from what they learn from it?</cite>
         </blockquote>
       </section>
 
@@ -90,8 +90,8 @@
         <span class="label">02 · Context</span>
         <h2>Why this mattered</h2>
         <div class="prose">
-          <p>Students with limited financial literacy often face barriers to practical, relatable financial education. Traditional programs lean on abstract concepts and one-size-fits-all curricula, so students struggle to connect what they learn to everyday decisions like budgeting, saving, and weighing spending against investing.</p>
-          <p>Serious games can help by letting people experiment with consequences without real-world risk, and AI can give immediate feedback on each choice. But the form that feedback takes is itself a communication design decision. The same outcome can be explained as a story or as a set of numbers, and prior work on explainable AI shows that narrative framing can improve comprehension and trust. What hadn’t been studied was how those explanation styles work in a serious game for non-expert learners.</p>
+          <p>Traditional financial literacy programs teach abstract concepts with one curriculum for everyone, so students who don’t already know much about money have a hard time connecting what they learn to everyday decisions like budgeting, saving, and whether to spend or invest.</p>
+          <p>Serious games can help by letting people try out consequences without any real-world risk, and AI can give immediate feedback on each choice. However, the form that feedback takes is a communication design decision in itself. The same outcome can be explained in a narrative way or as a set of numbers, and prior work on explainable AI shows that narrative framing can improve comprehension and trust. What hadn’t been studied was how those explanation styles work in a serious game for learners who aren’t experts.</p>
         </div>
       </section>
 
@@ -99,16 +99,16 @@
         <span class="label">03 · Methods</span>
         <h2>How we approached it, and why</h2>
         <div class="prose">
-          <p>We held everything constant except the explanation style. Both versions of the game deliver the same scenarios, the same consequences, and the same underlying financial principles; only the surface language changes.</p>
+          <p>To find out whether one explanation mode works better than another, we needed to compare them under controlled conditions, so we held everything constant except the explanation style. Both versions of the game deliver the same scenarios, the same consequences, and the same underlying financial principles, and only the surface language changes.</p>
         </div>
         <table class="methods" style="margin-top:24px">
           <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave us</th></tr></thead>
           <tbody>
-            <tr><td>Two explanation conditions</td><td>To isolate explanation style. Factual feedback uses balances, interest calculations, and financial terms; narrative feedback tells the same thing as a story in everyday language.</td><td>Two versions of the game that differ only in how feedback is phrased.</td></tr>
-            <tr><td>Custom GPT-4 models, finalized in advance</td><td>To generate both styles from the same content, then lock every explanation before data collection so live prompting couldn’t introduce variance.</td><td>Identical content within each condition, delivered through a high-fidelity, visual novel–style Figma prototype.</td></tr>
-            <tr><td>Pre- and post-study quizzes</td><td>To track how well participants acquired and retained key financial principles.</td><td>Knowledge gains for each condition.</td></tr>
-            <tr><td>Mid-study comprehension surveys</td><td>To capture how participants understood the concepts while playing, not just afterward.</td><td>Open-ended responses for thematic analysis.</td></tr>
-            <tr><td>Verbal debrief</td><td>To ask whether the scenarios made sense, whether the concepts felt like common sense, and whether participants would have known them without being told.</td><td>The pattern that became our main finding.</td></tr>
+            <tr><td>Two explanation conditions</td><td>We needed to isolate the explanation style. Factual feedback uses balances, interest calculations, and financial terms, and narrative feedback tells the same thing as a story in everyday language.</td><td>Two versions of the game that differ only in how feedback is phrased.</td></tr>
+            <tr><td>Custom GPT-4 models, finalized in advance</td><td>We needed both modes to say the same thing, so two custom GPT-4 models wrote the explanations from the same content and we locked every one of them before data collection, since live prompting would have changed what each participant saw.</td><td>Identical content within each condition, delivered through a high-fidelity, visual novel–style Figma prototype.</td></tr>
+            <tr><td>Pre- and post-study quizzes</td><td>We needed to track how well participants learned and retained the key financial principles.</td><td>Knowledge gains for each condition.</td></tr>
+            <tr><td>Mid-study comprehension surveys</td><td>We wanted to capture how participants understood the concepts while they were playing and not just afterward.</td><td>Open-ended responses for thematic analysis.</td></tr>
+            <tr><td>Verbal debrief</td><td>We asked whether the scenarios made sense, whether the concepts felt like common sense, and whether participants would have known them without being told.</td><td>The pattern that became our main finding.</td></tr>
           </tbody>
         </table>
       </section>
@@ -149,16 +149,16 @@
         <span class="label">05 · Findings</span>
         <h2>What we learned</h2>
         <ul class="findings">
-          <li><h3>Explanation style changed how “obvious” finance felt</h3><p>In the debrief, participants in the factual condition were less likely to describe the financial concepts as “common sense.” Data-centered feedback may make financial concepts feel less self-evident, even on first encounter.</p></li>
-          <li><h3>Style shapes a learner’s stance, not just the information</h3><p>Since both conditions delivered identical information, the explanation’s form is the most likely reason for the difference. It may shape how learners position themselves relative to the content, and what they perceive as new knowledge.</p></li>
-          <li><h3>Delayed gratification came up everywhere</h3><p>Across both conditions, mid-study surveys surfaced budgeting and prioritization, debt avoidance, and interest rate mechanics, with delayed gratification appearing at all three levels. The simulation’s structure supported reflection regardless of style.</p></li>
-          <li><h3>No difference in measured knowledge gains</h3><p>Quiz scores didn’t differ significantly between conditions. With 20 participants from one selective college, a ceiling effect may have hidden short-term differences.</p></li>
+          <li><h3>The narrative group more often called the concepts common sense</h3><p>In the debrief, participants in the factual condition were less likely to describe the financial concepts as “common sense,” so feedback given as balances and interest calculations may make the same concept feel less like something you already knew, even the first time you see it.</p></li>
+          <li><h3>Phrasing changed how the concepts felt rather than what people learned</h3><p>Both conditions got identical information, so the way the feedback was phrased is the most likely reason for the difference. We think it changes what people count as new knowledge and what they feel they already knew.</p></li>
+          <li><h3>Delayed gratification came up everywhere</h3><p>Across both conditions, the mid-study surveys brought up budgeting and prioritization, debt avoidance, and how interest rates work, and delayed gratification came up at all three levels, so the structure of the simulation got people reflecting whichever mode they were in.</p></li>
+          <li><h3>We found no significant difference in what the two groups learned</h3><p>Quiz scores didn’t differ significantly between the two conditions. With twenty participants from one selective college, a lot of them may have already known the material, so a ceiling effect could have hidden a short-term difference.</p></li>
         </ul>
       </section>
 
       <section class="cs-section" id="outcome">
         <span class="label">06 · Outcome</span>
-        <h2>Where it landed</h2>
+        <h2>What came out of it</h2>
         <div class="paper-cite">
           <span class="label">Extended abstract · ACM SIGDOC 2026, Student Research Competition</span>
           <p class="paper-cite__title">Framing Financial Feedback: Narrative vs. Factual AI Explanation in an Educational Simulation</p>
@@ -173,11 +173,11 @@
 
       <section class="cs-section" id="reflection">
         <span class="label">07 · Reflection</span>
-        <h2>Looking back</h2>
+        <h2>What worked, what didn’t, what’s next</h2>
         <div class="reflect">
           <div><h3>What worked</h3><p><span class="todo">One or two things you’d do the same way again.</span></p></div>
-          <div><h3>Limitations</h3><p>A small sample (N = 20) from a single private liberal arts college, where students may have more baseline financial exposure, which could produce a ceiling effect.</p></div>
-          <div><h3>What’s next</h3><p>Expanding the simulation into a web app with a live financial dashboard, a conversational AI advisor, and a what-if toggle; recruiting more broadly; measuring need for cognition and narrative transportation as moderators; and testing retention after a week.</p></div>
+          <div><h3>Limitations</h3><p>We only had a small sample (N = 20), all from a single private liberal arts college, where students may already have more exposure to personal finance, which could produce a ceiling effect.</p></div>
+          <div><h3>What’s next</h3><p>Since then, I’ve continued the work as an independent study, where Professor Shaer pushed me to rethink the question itself, and coming back with counterfactual explanations and measures of individual differences, like need for cognition and narrative transportation, changed what we were asking, which is what type of explanation suits which person. What’s still next from the class version is expanding the simulation into a web app with a live financial dashboard, a conversational AI advisor, and a what-if toggle, recruiting more broadly, and testing retention after a week.</p></div>
         </div>
       </section>
 

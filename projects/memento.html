@@ -56,7 +56,7 @@
           <span class="label">Biosignals · physical computing</span>
         </div>
         <h1 class="cs-title">MEmento: <em>hear what you carry</em></h1>
-        <p class="cs-summary">MEmento is a hand-cranked music box that turns two physiological signals, galvanic skin response and heart rate, into a short musical composition. Turn the handle and it plays; stop turning and it pauses. We built it in 48 hours at the HARD MODE Hardware × AI Hackathon at the MIT Media Lab as an answer to a question we kept returning to: what if your body’s signal data could become a ritual, not a dashboard?</p>
+        <p class="cs-summary">MEmento is a hand-cranked music box that turns two physiological signals, galvanic skin response and heart rate, into a short musical composition. You turn the handle and it plays, and when you stop turning it pauses. My team and I built it in forty-eight hours at the HARD MODE Hardware × AI Hackathon at the MIT Media Lab, and the question we kept asking was whether the data your body gives off could become something you sit down and listen to rather than another dashboard to check.</p>
       </header>
 
       <div class="media cs-hero">
@@ -78,8 +78,8 @@
         <span class="label">01 · Design question</span>
         <h2>What were we trying to find out?</h2>
         <blockquote class="question">
-          Can a tangible object translate a person’s physiological traces into something they would want to listen to and reflect on, rather than a number to optimize?
-          <cite>The hackathon brief asked for hardware and AI together. We used it to test whether personal data could be made for reflection and connection instead of productivity.</cite>
+          Can a physical object turn someone’s heart rate and skin response into a short piece of music they’d actually want to listen to and think about, rather than another number to optimize?
+          <cite>The hackathon brief asked for hardware and AI together, and we used it to try out whether personal data could be made for reflecting and connecting instead of for productivity.</cite>
         </blockquote>
       </section>
 
@@ -87,8 +87,8 @@
         <span class="label">02 · Context</span>
         <h2>Why this mattered</h2>
         <div class="prose">
-          <p>We are surrounded by data and systems designed to optimize us. Wearables and dashboards count steps, score sleep, and chart heart rate, and far fewer tools help us slow down, reflect, or connect with ourselves and with others through that same data.</p>
-          <p>Galvanic skin response and heart rate are both linked to emotional arousal, which made them a natural pair for this: they carry something about how a stretch of time felt, not just what the body was doing. MEmento takes those traces and gives them back as a short piece of music you have to physically crank to hear. The tagline we landed on was “hear what you carry.”</p>
+          <p>We’re surrounded by data and by systems designed to optimize us. Wearables and dashboards count steps, score sleep, and chart heart rate, but far fewer tools help us slow down, reflect, or connect with ourselves and with other people through that same data.</p>
+          <p>Galvanic skin response and heart rate are both linked to emotional arousal, which made them a natural pair for this, since they carry something about how a stretch of time felt and not just what the body was doing. MEmento takes those two signals and gives them back as a short piece of music you have to physically crank to hear. The tagline we landed on was “hear what you carry.”</p>
         </div>
       </section>
 
@@ -96,15 +96,15 @@
         <span class="label">03 · Methods</span>
         <h2>How we approached it, and why</h2>
         <div class="prose">
-          <p>The build was an end-to-end pipeline: biosignals in, features out, a learned representation of each signal’s dynamics over time, and finally a composition engine that turns those representations into notes. We treated physiology as a story over time rather than a set of independent readings, which is why the sequence model sits at the center of the pipeline.</p>
+          <p>The build was an end-to-end pipeline, with biosignals coming in, features coming out, a learned representation of how each signal moved over time, and finally a composition engine that turns those representations into notes. We treated physiology as a sequence over time rather than a set of independent readings, which is why the sequence model sits at the center of the pipeline.</p>
         </div>
         <table class="methods" style="margin-top:24px">
           <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave us</th></tr></thead>
           <tbody>
-            <tr><td>Biosensing and preprocessing</td><td>Raw GSR and HR live on different scales and are noisy. Cleaning and normalizing both to a 0–1 range made them comparable, and a sliding window (20 samples) let small changes register without swamping the signal.</td><td>A sequence of 4D feature vectors over time: mean, standard deviation, slope, and peaks.</td></tr>
-            <tr><td>LSTM encoder–decoder</td><td>We wanted a representation of how each signal moved over time (stability vs. variability), not a snapshot. Training the decoder to reconstruct the signal forced the encoder to learn a meaningful latent vector.</td><td>Two trained models, one per signal, and latent values we could use as musical control signals: GSR shaping melody, HR shaping tempo and rhythm.</td></tr>
+            <tr><td>Biosensing and preprocessing</td><td>Raw GSR and HR live on different scales and are noisy. Cleaning and normalizing both to a 0–1 range made them comparable, and a sliding window (20 samples) let small changes register without swamping the signal.</td><td>A sequence of 4D feature vectors over time (mean, standard deviation, slope, and peaks).</td></tr>
+            <tr><td>LSTM encoder–decoder</td><td>We wanted a representation of how each signal moved over time (stability versus variability) rather than a snapshot. Training the decoder to reconstruct the signal forced the encoder to learn a latent vector that actually meant something.</td><td>Two trained models, one per signal, and latent values we could use as musical control signals, with GSR shaping the melody and HR shaping the tempo and rhythm.</td></tr>
             <tr><td>Rule-based MIDI composition</td><td>Physiology had to modulate the music without breaking it. Pitch steps stay within a C-major scale for smoothness while the body shapes pitch, velocity, and timing on top of that structure.</td><td>A roughly 30-second timeline of about 128 notes in phrases, with two instruments chosen automatically from the full MIDI set based on combined physiological state, written to MIDI tracks and synthesized to audio.</td></tr>
-            <tr><td>3D-printed physical prototyping</td><td>The interaction had to be legible in one gesture. A hand crank gives the object a single, familiar affordance: turn to play, stop to pause.</td><td>A PLA-printed music box housing the electronics, speaker, and a hand-cranked mechanism.</td></tr>
+            <tr><td>3D-printed physical prototyping</td><td>We wanted one obvious thing to do with it, and almost everyone already knows what a hand crank does. You turn it to play and stop turning to pause.</td><td>A PLA-printed music box housing the electronics, speaker, and a hand-cranked mechanism.</td></tr>
           </tbody>
         </table>
       </section>
@@ -116,22 +116,22 @@
           <li>
             <h3>Sensing the body</h3>
             <span class="when">Signal capture and cleaning</span>
-            <p>We wired GSR and heart rate sensors to an Arduino and read both signals from the wrist and fingers. The first work was unglamorous: cleaning the streams, normalizing them so they could be compared, and syncing them so a small bodily change could shape the music without breaking it.</p>
+            <p>We wired GSR and heart rate sensors to an Arduino and read both signals from the wrist and fingers. The first thing we had to do wasn’t exactly exciting. We cleaned the two streams, normalized them so they could be compared, and synced them so that a small change in the body could shape the music without breaking it.</p>
           </li>
           <li>
             <h3>Learning the shape of a signal</h3>
             <span class="when">Feature extraction and the LSTM</span>
-            <p>A sliding window turned each stream into features (mean, standard deviation, slope, peaks). We then trained two LSTM encoder–decoders, one for GSR and one for heart rate, so each encoder compressed its feature sequence into a latent vector that captured the signal’s dynamics. Reconstruction error was the training signal; the latent values became our musical controls.</p>
+            <p>A sliding window turned each stream into features (mean, standard deviation, slope, peaks). We then trained two LSTM encoder–decoders, one for GSR and one for heart rate, so each encoder compressed its feature sequence into a latent vector that captured the signal’s dynamics. Reconstruction error was the training signal, and the latent values became our musical controls.</p>
           </li>
           <li>
             <h3>Turning features into notes</h3>
             <span class="when">Composition engine</span>
-            <p>The generator picks two instruments from the full MIDI set (0–127) based on the combined physiological state, then builds a timeline of phrases. GSR shapes melody; heart rate influences note duration and rhythmic density. Keeping pitch steps inside a C-major scale was the decision that made the output listenable rather than a noisy sonification.</p>
+            <p>The generator picks two instruments from the full MIDI set (0–127) based on the combined physiological state, then builds a timeline of phrases. GSR shapes the melody, and heart rate shapes how long each note lasts and how dense the rhythm is. Keeping pitch steps inside a C-major scale was the decision that made the output listenable rather than a noisy sonification.</p>
           </li>
           <li>
             <h3>Building the box</h3>
             <span class="when">Physical form</span>
-            <p>We designed and printed a PLA enclosure with a speaker on top, a crank on the side, and a warm light inside, and connected the crank so that turning plays the piece and stopping pauses it. The form was deliberately plain: a small object you hold and turn, with nothing on it that looks like a dashboard.</p>
+            <p>We designed and printed a PLA enclosure with a speaker on top, a crank on the side, and a warm light inside, and connected the crank so that turning plays the piece and stopping pauses it. We kept the form plain on purpose. It’s a small object you hold and turn, and there’s nothing on it that looks like a dashboard.</p>
           </li>
         </ol>
         <figure class="figure figure--pair">
@@ -145,18 +145,18 @@
         <span class="label">05 · Findings</span>
         <h2>What we learned</h2>
         <ul class="findings">
-          <li><h3>The translation layer is everything</h3><p>Preprocessing, feature design, and the musical mapping determine whether the output feels like <em>you</em> or just like data. The sensors and the model mattered less to the experience than the decisions made between them.</p></li>
-          <li><h3>Treat physiology as a story over time</h3><p>LSTMs shine when a signal is handled as a sequence rather than as independent moments. Stability versus variability over a window is more expressive than any single reading.</p></li>
-          <li><h3>Structure makes variability legible</h3><p>Constraining pitch to a scale while letting physiology modulate velocity, timing, and density gave the music enough coherence to sound intentional and enough variability to feel alive.</p></li>
-          <li><h3>Our mapping is one of many</h3><p>There are multiple defensible ways to translate bodily signals into musical ones, and ours produced inconsistent outputs at times. Deeper grounding in a musical framework is needed before the mapping can be called principled.</p></li>
+          <li><h3>The translation layer mattered more than the sensors or the model</h3><p>Preprocessing, feature design, and the musical mapping are what decide whether the output feels like <em>you</em> or just like data. We think the sensors and the model mattered less to the experience than the decisions we made in between them.</p></li>
+          <li><h3>Physiology made more sense as a sequence than as single readings</h3><p>LSTMs work best when a signal is handled as a sequence rather than as independent moments, and how stable or variable a signal was over a window told us more than any single reading did.</p></li>
+          <li><h3>A fixed scale kept the variation from sounding like noise</h3><p>Keeping pitch inside a scale while letting physiology change the velocity, timing, and density gave the music enough structure to sound intentional and enough variation to sound like it came from a person.</p></li>
+          <li><h3>Our mapping is one of many</h3><p>There are a lot of reasonable ways to translate bodily signals into musical ones, and ours produced inconsistent outputs at times. We’d need to ground the mapping in an actual musical framework before we could say it was more than a first guess.</p></li>
         </ul>
       </section>
 
       <section class="cs-section" id="outcome">
         <span class="label">06 · Outcome</span>
-        <h2>Where it landed</h2>
+        <h2>What came out of it</h2>
         <div class="prose">
-          <p>By the end of the weekend we had a full working pipeline, biosignals to features to LSTM latent representations to MIDI composition to audio, housed in a hand-cranked box with a single legible interaction. The concept reframes personal data as material for reflection and connection rather than optimization. The full write-up, build list, and gallery are on <a href="https://devpost.com/software/memento-mlqs2o" target="_blank" rel="noopener">our Devpost submission &#8599;</a>.</p>
+          <p>By the end of the weekend we had a full working pipeline, from biosignals to features to LSTM latent representations to MIDI composition to audio, housed in a hand-cranked box with one obvious thing to do with it. The idea is that your own data could be something you think about and share with someone else rather than something you optimize. The full write-up, build list, and gallery are on <a href="https://devpost.com/software/memento-mlqs2o" target="_blank" rel="noopener">our Devpost submission &#8599;</a>.</p>
         </div>
         <figure class="figure" style="margin-top:28px">
           <div class="media" style="aspect-ratio:16/9">
@@ -172,11 +172,11 @@
 
       <section class="cs-section" id="reflection">
         <span class="label">07 · Reflection</span>
-        <h2>Looking back</h2>
+        <h2>What worked, what didn’t, what’s next</h2>
         <div class="reflect">
-          <div><h3>What worked</h3><p>Committing early to one gesture, crank to play and stop to pause, kept the hardware scope small enough to finish and gave the object a clear identity. Building the pipeline end to end, even roughly, meant we could hear the result and tune the mapping by ear.</p></div>
-          <div><h3>Limitations</h3><p>Forty-eight hours, sensors tested on ourselves, and a composition engine tuned by listening rather than by study. The outputs were not always consistent, and we have no evidence yet about whether listeners recognize themselves in the music.</p></div>
-          <div><h3>What I’d study next</h3><p>Connecting to data from wearables; a richer composition engine with stronger mappings between latent features and musical structure, possibly drawing on Terry Riley’s phrase-based framework; refining the physical form and embodied interaction; and exploring sharing, where people exchange “musical traces” with each other.</p></div>
+          <div><h3>What worked</h3><p>Committing early to one gesture, crank to play and stop to pause, kept the hardware small enough to finish in time and gave the object a clear identity. Building the pipeline end to end, even roughly, meant we could actually hear the result and tune the mapping by ear.</p></div>
+          <div><h3>Limitations</h3><p>We only had forty-eight hours, the sensors were only tested on ourselves, and the composition engine was tuned by listening to it rather than through any kind of study. The outputs weren’t always consistent, and we don’t have any evidence yet about whether people can tell the music came from them.</p></div>
+          <div><h3>What I’d study next</h3><p>The next step would be to connect it to data from wearables, build a richer composition engine with stronger mappings between the latent features and the musical structure, possibly drawing on Terry Riley’s phrase-based framework, refine the physical form and how you hold and turn it, and try out sharing, where people exchange their pieces of music with each other.</p></div>
         </div>
       </section>
 

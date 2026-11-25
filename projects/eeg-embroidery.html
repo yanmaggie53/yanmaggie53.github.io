@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The Space Between · Maggie Yan</title>
-  <meta name="description" content="An EEG-guided embroidery machine where head movement steers the fabric and attention sets the stitching speed. Final project for MAS.S60 Critical Matter at the MIT Media Lab, with two mini projects that led up to it.">
+  <meta name="description" content="A hands-free EEG controlled embroidery machine where head movement moves the fabric and attention sets the stitching speed. Final project for MAS.S60 Critical Matter at the MIT Media Lab, with the two mini projects that led up to it.">
 
   <script src="../assets/js/sky-time.js"></script>
 
@@ -57,7 +57,7 @@
           <span class="label">Biosignals · digital craft</span>
         </div>
         <h1 class="cs-title cs-title--long">The Space Between: <em>an EEG-guided embroidery machine</em></h1>
-        <p class="cs-summary">A sewing machine you steer with your head and your attention. A BrainCo EEG headband tracks the wearer’s head movement and attention level; head movement drives a two-axis plotter that moves the fabric hoop under a Brother embroidery machine, and attention sets the stitching speed. The person and the machine end up co-steering the same line of thread. It was our team’s final project for MAS.S60 Critical Matter: Emotive Design from Fashion to Urban Scale, and it grew out of two mini projects earlier in the semester: one that turned brainwaves into crochet patterns, and one that gave embroidered geometry a physical behavior.</p>
+        <p class="cs-summary">The Space Between is a hands-free embroidery machine that you steer with your head and your attention. A BrainCo EEG headband tracks the wearer’s head movement and attention level, and head movement drives a two-axis plotter that moves the fabric hoop under a Brother embroidery machine while attention sets the stitching speed, so the person and the machine both have a say in where the same line of thread goes. It was my group’s final project for MAS.S60 Critical Matter: Emotive Design from Fashion to Urban Scale, and it grew out of two mini projects earlier in the semester, one that turned brainwaves into crochet patterns and one that gave embroidered geometry a physical behavior.</p>
       </header>
 
       <div class="media cs-hero">
@@ -79,8 +79,8 @@
         <span class="label">01 · Design question</span>
         <h2>What were we trying to find out?</h2>
         <blockquote class="question">
-          Where does creativity live: in the hand, in the machine, or in the space between? And what happens to a craft when the tool it depends on shifts from the hand to the mind?
-          <cite>The semester kept returning to this. Each project answered a smaller version of it before the final one put a person and a machine on the same thread.</cite>
+          We wanted to know where creativity actually lives, whether it’s in the hand, in the machine, or in the space between the two, and what happens to a craft when the tool it depends on moves from the hand to the mind.
+          <cite>We kept coming back to this over the semester. Each project answered a smaller version of it, and the final one put a person and a machine on the same line of thread.</cite>
         </blockquote>
       </section>
 
@@ -88,9 +88,9 @@
         <span class="label">02 · Context</span>
         <h2>Why this mattered</h2>
         <div class="prose">
-          <p>Craft has always been a story about the human hand. But the hand trembles, the eye loses focus, the body tires. The craftsperson whose hands are no longer steady, or whose sight is going, is quietly written out of that story. We wanted to ask who gets to be a maker if the primary tool of craft can shift from manual dexterity to attention.</p>
-          <p>One person anchored that question for us. Kiyomi Osawa is a master of yokoburi, the horizontal swing embroidery of Kiryu, Japan, where she has sewn since she was seventeen. She lost half her eyesight at 73 and continues to embroider; her line is that thread is paint and the needle a brush. Our team interviewed her about how the industry treated the people who did its most skilled work, and why she decided to change it. Her practice became the reference point for a machine that would share authorship rather than replace the hand.</p>
-          <p>We also borrowed a frame from neuroscience: creative flow as a sustained tension between the default mode network (imagination, association, daydreaming) and the executive control network (evaluation, focus, decision). Let one dominate and you get work that is either novel but impractical or feasible but predictable. That idea runs through all three projects.</p>
+          <p>Craft has always depended on the hands, but hands shake and eyesight goes, and a craftsperson whose hands aren’t steady anymore or whose sight is going usually gets left out when people talk about who a maker is. We wanted to ask who gets to be a maker if the primary tool of craft can shift from manual dexterity to attention.</p>
+          <p>One person grounded that question for us. Kiyomi Osawa is a master of yokoburi, the horizontal swing embroidery of Kiryu, Japan, where she has sewn since she was seventeen. She lost half her eyesight at 73 and still embroiders, and the way she puts it is that thread is paint and the needle is a brush. My group interviewed her about how the industry treated the people who did its most skilled work and why she decided to change it, and her practice became the reference point for a machine that shares control with the hand rather than replacing it.</p>
+          <p>We also borrowed an idea from neuroscience, which is that creative flow is a sustained tension between the default mode network (imagination, association, daydreaming) and the executive control network (evaluation, focus, decision). If one of them dominates, you get work that is either novel but impractical or feasible but predictable, and that idea runs through all three projects.</p>
         </div>
       </section>
 
@@ -98,18 +98,18 @@
         <span class="label">03 · Lead-up</span>
         <h2>Two mini projects that pointed the way</h2>
         <div class="prose">
-          <p><strong>Mini Project 1, October: the mirror.</strong> We built a tool to observe creativity. A BrainCo EEG headset streamed brainwave band powers through a small Python bridge (Welch power spectral density over the raw signal, then a WebSocket) into a p5.js crochet pattern visualizer. Each band drove a parameter of a radial crochet motif: theta set the petal radius, alpha the number of petal buds, low beta the petal ring, high beta the spacing of the links between neighbors. A simple score weighed alpha and theta against beta and gamma to show whether the wearer was drifting toward the default mode or the executive side. Then one of us crocheted the pattern the brain had generated. It worked, and it taught us the limit of observation: a mirror cannot dance with you. Flow needs a counterforce, not just a display.</p>
+          <p><strong>Mini Project 1, October.</strong> We built a tool to observe creativity. A BrainCo EEG headset streamed brainwave band powers through a small Python bridge (Welch power spectral density over the raw signal, then a WebSocket) into a p5.js crochet pattern visualizer. Each band drove a parameter of a radial crochet motif, so theta set the petal radius, alpha the number of petal buds, low beta the petal ring, and high beta the spacing of the links between neighbors. A simple score weighed alpha and theta against beta and gamma to show whether the wearer was drifting toward the default mode or the executive side. Then one of us crocheted the pattern the brain had generated. It worked, but it also showed us the limit of just observing. If all the system does is reflect your brain state back at you, there’s nothing to push against, and we think flow needs something pushing back rather than just a display.</p>
         </div>
         <figure class="figure" style="margin-top:28px">
           <div class="media" style="aspect-ratio:2000/413"><img src="../assets/img/projects/eeg-mp1-strip.jpg" alt="Four panels: a crochet stitch diagram, a hand crocheting in front of the p5.js visualizer, the generated radial pattern, and the finished crocheted motif" loading="lazy"></div>
           <figcaption>Mini Project 1, left to right: a crochet chart, the EEG-driven visualizer in use, the generated motif, and the crocheted result.</figcaption>
         </figure>
         <div class="prose" style="margin-top:36px">
-          <p><strong>Mini Project 2, November: geometry and tension become controllable variables.</strong> We moved from the hand to the machine and from a screen to material. Using a Brother embroidery machine we stitched geometric patterns (a lattice of circles and octagons, parallel waves) in two heat-reactive threads, Chizimi shrink thread and liquid crystal elastomer fiber. Applying heat with a heat gun, and watching it with a thermal camera, made the stitched geometry contract and pucker the fabric into a three-dimensional texture. We ran a digital simulation of the same patterns alongside the physical samples to see how well the geometry predicted the behavior. The takeaway was that geometry plus tension plus heat gives you behavior, and that the machine’s stitch-by-stitch controls could be handed back to the person at the hoop.</p>
+          <p><strong>Mini Project 2, November.</strong> We moved from the hand to the machine and from the screen to material, and the point was to turn geometry and tension into variables we could control. Using a Brother embroidery machine we stitched geometric patterns (a lattice of circles and octagons, parallel waves) in two heat-reactive threads, Chizimi shrink thread and liquid crystal elastomer fiber. Applying heat with a heat gun, and watching it with a thermal camera, made the stitched geometry contract and pucker the fabric into a three-dimensional texture. We ran a digital simulation of the same patterns alongside the physical samples to see how well the geometry predicted the behavior. What we took away was that geometry plus tension plus heat gives you a behavior, and that the machine’s stitch-by-stitch controls could be handed back to the person at the hoop.</p>
         </div>
         <figure class="figure" style="margin-top:28px">
           <div class="media" style="aspect-ratio:16/9"><img src="../assets/img/projects/eeg-mp2-compare.jpg" alt="Three side-by-side panels labeled Chizimi Thread, LCE Fiber, and Simulation, showing a stitched lattice pattern being heated and its simulated counterpart" loading="lazy"></div>
-          <figcaption>Mini Project 2, after heating: the same lattice stitched in Chizimi thread and LCE fiber, with the digital simulation alongside.</figcaption>
+          <figcaption>Mini Project 2 after heating, with the same lattice stitched in Chizimi thread and LCE fiber and the digital simulation alongside.</figcaption>
         </figure>
         <figure class="figure figure--pair">
           <div class="media" style="aspect-ratio:3/4"><img src="../assets/img/projects/eeg-mp2-heat.jpg" alt="Thermal camera view of a heat gun warming an embroidered square of fabric, reading 33.2 degrees" loading="lazy"></div>
@@ -122,16 +122,16 @@
         <span class="label">04 · Methods</span>
         <h2>How we approached the final project, and why</h2>
         <div class="prose">
-          <p>The mini projects gave us an input we trusted (EEG band powers and head motion from the headband), a machine we knew (the Brother embroidery machine), and a reason to put them together: technology that participates rather than observes. The final project moved from a sequential loop, think then make, to a simultaneous one where the person and the machine act on the fabric at the same time and control is distributed between them.</p>
+          <p>The mini projects gave us an input we trusted (EEG band powers and head motion from the headband), a machine we knew (the Brother embroidery machine), and a reason to put them together, which was to make technology that takes part in the making rather than just observing it. The final project moved from a sequential loop, where you think and then make, to a simultaneous one where the person and the machine act on the fabric at the same time and control is shared between them.</p>
         </div>
         <table class="methods" style="margin-top:24px">
           <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave us</th></tr></thead>
           <tbody>
-            <tr><td>Interview with a master craftsperson</td><td>We needed the question to come from a practice, not from the hardware. Osawa-san’s account of Kiryu’s embroidery industry and of continuing to sew with half her sight grounded the accessibility framing.</td><td>The reference point for what shared authorship should feel like, and the opening of our final video.</td></tr>
-            <tr><td>Biosignal to motion mapping</td><td>Head movement is a signal almost everyone can produce, and attention is the state we most wanted to make visible. Mapping one to position and the other to speed kept each legible.</td><td>Head movement drives the x and y of the plotter; attention level sets the stitching speed.</td></tr>
+            <tr><td>Interview with a master craftsperson</td><td>We needed the question to come from an actual practice rather than from the hardware, and Osawa-san’s account of Kiryu’s embroidery industry and of continuing to sew with half her sight is what grounded the accessibility framing.</td><td>The reference point for what sharing control should feel like, and the opening of our final video.</td></tr>
+            <tr><td>Biosignal to motion mapping</td><td>Head movement is a signal almost everyone can produce, and attention is the state we most wanted to make visible. Mapping one to position and the other to speed kept the two easy to tell apart.</td><td>Head movement drives the x and y of the plotter, and attention level sets the stitching speed.</td></tr>
             <tr><td>Hardware modification</td><td>A commercial embroidery machine follows its own file. To let a person steer it live we had to move the fabric ourselves and take over the pedal.</td><td>A two-axis plotter carrying the hoop under the needle, and programmable speed control in place of the foot pedal.</td></tr>
-            <tr><td>Digital twin</td><td>The stitch happens under the needle where you cannot see it well. A live trace on screen lets the person see the negotiation as it happens and lets us compare intention against outcome afterward.</td><td>A record of each session: the path the head drew, and where the machine drifted or resisted.</td></tr>
-            <tr><td>Two task modes</td><td>A pre-printed pattern tests following; a blank hoop tests exploring. We wanted both in the same system so deviation could read as conversation rather than error.</td><td>A maze pattern to trace, and a free-form mode with no pattern at all.</td></tr>
+            <tr><td>Digital twin</td><td>The stitch happens under the needle, where you can’t see it well. A live trace on screen lets the person see what the machine is doing as it happens and lets us compare what they meant to do against what came out afterward.</td><td>A record of each session, with the path the head drew and where the machine drifted or resisted.</td></tr>
+            <tr><td>Two task modes</td><td>A pre-printed pattern tests following and a blank hoop tests exploring. We wanted both in the same system so that drifting off the line could read as part of the back and forth rather than as an error.</td><td>A maze pattern to trace, and a free-form mode with no pattern at all.</td></tr>
           </tbody>
         </table>
       </section>
@@ -148,7 +148,7 @@
           <li>
             <h3>Building the machine</h3>
             <span class="when">Week of December 1</span>
-            <p>A second plotter order went in, and we settled on the Brother machine for the demo. The motor hack and the pedal replacement happened in parallel. We also argued about the why: were we building this for blind makers, for makers with motor impairments, or for the broader question of who gets to make? Osawa-san’s story kept the answer honest.</p>
+            <p>A second plotter order went in, and we settled on the Brother machine for the demo. The motor hack and the pedal replacement happened in parallel. We also kept going back and forth on who this was actually for, whether it was blind makers, makers with motor impairments, or the bigger question of who gets to make at all, and Osawa-san’s story was what kept bringing us back to the people it was supposed to be about.</p>
           </li>
           <li>
             <h3>Closing the loop</h3>
@@ -158,7 +158,7 @@
           <li>
             <h3>Presenting it</h3>
             <span class="when">December 15</span>
-            <p>The final presentation framed the semester as a move from observation to negotiation: the mirror of Mini Project 1, the controllable material of Mini Project 2, and finally a partner. The claim we ended on was that when EEG starts pulling the fabric, authorship becomes shared.</p>
+            <p>In the final presentation we framed the semester as a move from observing to working together, from the mirror of Mini Project 1, to the controllable material of Mini Project 2, to finally a partner. The claim we ended on was that once the EEG starts pulling the fabric, the person and the machine share control of the work.</p>
           </li>
         </ol>
         <figure class="figure figure--pair">
@@ -172,18 +172,18 @@
         <span class="label">06 · Findings</span>
         <h2>What we learned</h2>
         <ul class="findings">
-          <li><h3>Observation is not enough</h3><p>Mini Project 1 made cognition visible and left the person in full control, and it felt inert. Flow needs a counterforce. The final system works because the machine pushes back.</p></li>
-          <li><h3>Deviation is conversation</h3><p>With a pre-printed maze, the gap between the printed line and the stitched one is where the negotiation shows. Following and drifting, intention and distraction, read as a record of attention rather than as mistakes.</p></li>
-          <li><h3>Material has agency too</h3><p>Mini Project 2 showed that thread, heat, and fabric tension actively shape outcomes. In the final system the fabric resists the plotter and the needle, so the artifact is negotiated three ways: mind, machine, material.</p></li>
-          <li><h3>The hardest part was the handoff</h3><p>Getting a commercial machine to accept live control meant replacing its pedal and moving the fabric ourselves. The interaction only became legible once speed and position were separated into two different signals.</p></li>
+          <li><h3>Showing someone their brain activity wasn’t enough</h3><p>Mini Project 1 made cognition visible and left the person in full control, and the whole thing felt flat because nothing was pushing back. We think the final system worked because the machine actually did push back.</p></li>
+          <li><h3>Where the stitch left the printed line was the interesting part</h3><p>With the pre-printed maze, you can see exactly where the person followed the line and where they drifted, so the finished piece reads as a record of someone’s attention rather than a list of mistakes.</p></li>
+          <li><h3>Material has agency too</h3><p>Mini Project 2 showed that thread, heat, and fabric tension shape the outcome on their own. In the final system the fabric resists the plotter and the needle, so the finished piece is worked out between the person’s mind, the machine, and the material.</p></li>
+          <li><h3>The hardest part was the handoff</h3><p>Getting a commercial machine to accept live control meant replacing its pedal and moving the fabric ourselves. The interaction only made sense to people once speed and position were separated into two different signals.</p></li>
         </ul>
       </section>
 
       <section class="cs-section" id="outcome">
         <span class="label">07 · Outcome</span>
-        <h2>Where it landed</h2>
+        <h2>What came out of it</h2>
         <div class="prose">
-          <p>A working system: a two-axis plotter and a Brother embroidery machine driven by a BrainCo EEG headband, with a digital twin on screen. It can stitch a pre-printed pattern or run free-form, and it works with different fabrics and patterns for people of different skill levels. The final video opens with our interview with Osawa-san and closes with the machine in use.</p>
+          <p>We ended up with a working system, a two-axis plotter and a Brother embroidery machine driven by a BrainCo EEG headband, with a digital twin on screen. It can stitch a pre-printed pattern or run free-form, and it works with different fabrics and patterns for people of different skill levels. The final video opens with our interview with Osawa-san and closes with the machine in use.</p>
         </div>
         <figure class="figure" style="margin-top:28px">
           <div class="media" style="aspect-ratio:16/9">
@@ -191,17 +191,17 @@
               <source src="../assets/video/eeg-demo.mp4" type="video/mp4">
             </video>
           </div>
-          <figcaption>The system demo from our final video: the setup, the headband mapping, the digital twin, and free-form stitching.</figcaption>
+          <figcaption>The system demo from our final video, showing the setup, the headband mapping, the digital twin, and free-form stitching.</figcaption>
         </figure>
       </section>
 
       <section class="cs-section" id="reflection">
         <span class="label">08 · Reflection</span>
-        <h2>Looking back</h2>
+        <h2>What worked, what didn’t, what’s next</h2>
         <div class="reflect">
-          <div><h3>What worked</h3><p>Building up through two mini projects meant the final one started with an input and a machine we already trusted, so the three weeks went into the handoff between them rather than into basics. Separating position from speed gave the interaction a shape people understood in seconds.</p></div>
-          <div><h3>Limitations</h3><p>Three weeks of build time, demoed by the team in the lab rather than with the makers the framing is about. We did not evaluate whether people can learn to modulate their attention to get the line they want, and the study design we sketched for novices, experienced makers, and blind or motor-impaired participants stayed a proposal.</p></div>
-          <div><h3>What I’d study next</h3><p>How makers experience the distribution of agency between cognitive state, manual control, and machine behavior; whether stable visual signatures of particular cognitive-machine states emerge in the stitching; whether people can learn to modulate their state to get the line they want; and, most of all, whether this gives makers with visual or motor impairments creative agency they would recognize as their own.</p></div>
+          <div><h3>What worked</h3><p>Building up through two mini projects meant the final one started with an input and a machine we already trusted, so the three weeks went into the handoff between them rather than into basics. Separating position from speed meant people understood the interaction within seconds.</p></div>
+          <div><h3>Limitations</h3><p>We had three weeks to build it, and we only ever demoed it ourselves in the lab rather than with the blind or motor-impaired makers it was meant for. We didn’t evaluate whether people can learn to control their attention to get the line they want, and the study design we sketched out for novices, experienced makers, and blind or motor-impaired participants stayed a proposal.</p></div>
+          <div><h3>What I’d study next</h3><p>That left me asking how makers experience the split in agency between their cognitive state, their hands, and the machine, whether particular cognitive and machine states leave a visual signature in the stitching that stays stable, whether people can learn to shift their state to get the line they want, and most of all whether this gives makers with visual or motor impairments creative agency they’d recognize as their own.</p></div>
         </div>
       </section>
 
