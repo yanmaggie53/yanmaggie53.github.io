@@ -77,7 +77,7 @@
         <div class="wide"><dt class="label">Methods</dt><dd>Field observation of handoffs, open coding, cognitive walkthroughs, retrospective interviews, post-study usability questionnaires (PSSUQ), thematic analysis using the technology acceptance model, and content analysis using a usability problem taxonomy</dd></div>
         <div><dt class="label">Participants</dt><dd>13 clinicians across 19 usability sessions</dd></div>
         <div class="wide"><dt class="label">Team</dt><dd>PI: Joanna Abraham, PhD. With Reshma Dangeti, Alicia Meng, Daoyi Zhu, Elise Eiden, Christopher King, and Thomas Kannampallil.</dd></div>
-        <div><dt class="label">Tools</dt><dd><span class="todo">e.g. Epic, Excel, HTML/CSS/JS</span></dd></div>
+        <div><dt class="label">Tools</dt><dd>Epic (the embedded handoff tool), a spreadsheet for coding the observation notes, and a hand-built website for the mid-program presentation</dd></div>
       </dl>
 
       <section class="cs-section" id="question">
@@ -102,7 +102,7 @@
         <span class="label">03 · Methods</span>
         <h2>How we approached it, and why</h2>
         <div class="prose">
-          <p>The evaluation was an iterative, convergent mixed-methods usability study (mixed-methods meaning it combined observation and interviews with questionnaires) across three phases, with OR and ICU clinicians at WashU Medicine reviewing real surgery cases headed to the ICU. Each session ran 1.5–2 hours. <span class="todo">Note which of these you ran or analyzed yourself.</span></p>
+          <p>The evaluation was an iterative, convergent mixed-methods usability study (mixed-methods meaning it combined observation and interviews with questionnaires) across three phases, with OR and ICU clinicians at WashU Medicine reviewing real surgery cases headed to the ICU. Each session ran 1.5–2 hours. I did the handoff observations and the open coding myself, helped conduct the phase III cognitive walkthroughs, and coded the clinicians’ feedback from them into themes.</p>
         </div>
         <table class="methods" style="margin-top:24px">
           <thead><tr><th scope="col">Method</th><th scope="col">Why this method</th><th scope="col">What it gave us</th></tr></thead>
@@ -138,12 +138,12 @@
           <li>
             <h3>Evaluating the ML risk report</h3>
             <span class="when">July 2026</span>
-            <p>In the third phase of the usability study, clinicians worked through handoff tasks with a more advanced version of the risk report while we observed and recorded. The main objective of the walkthroughs was to identify any remaining usability issues, and I took notes on everything (I’m talking everything they said, their non-verbal cues, etc.). <span class="todo">Your part in the walkthroughs and the analysis.</span></p>
+            <p>In the third phase of the usability study, clinicians worked through handoff tasks with a more advanced version of the risk report while we observed and recorded. The main objective of the walkthroughs was to identify any remaining usability issues, and I took notes on everything (I’m talking everything they said, their non-verbal cues, etc.). Afterward, I coded the clinicians’ feedback into themes.</p>
           </li>
           <li>
             <h3>Pulling three phases together</h3>
             <span class="when">Late July 2026</span>
-            <p>We analyzed all three phases together and summarized the results in a poster at the end of the program. <span class="todo">What you did for the analysis and the poster.</span></p>
+            <p>We analyzed all three phases together and summarized the results in a poster at the end of the program, which I put together as first author.</p>
           </li>
         </ol>
       </section>
@@ -167,7 +167,7 @@
         <h2>What came out of it</h2>
         <div class="prose">
           <p>I presented a poster on the study at the end of the BIDS summer program. To inform implementation, the team observed one hundred postoperative handoffs and mapped the existing workflow to find where the report could fit, and we proposed integrating the ML risk report into the Epic-embedded handoff tool through a SMART on FHIR link.</p>
-          <p>The next step for the team is to refine the report based on the latest findings, integrate it into the handoff tool, and evaluate its effect on care continuity, clinician adoption, and patient safety. The report had already gone through more than a year of iteration before I joined its third phase, and finding out whether it changes how clinicians make decisions will take longer still.</p>
+          <p>The next step for the team is to refine the report based on the latest findings, integrate it into the handoff tool, and evaluate its effect on care continuity, clinician adoption, and patient safety. The report had already gone through more than a year of iteration before I joined its third phase, and finding out whether it changes how clinicians make decisions will take longer still. Since then, I’ve stayed on with the SAFE-T Lab for a scoping review of EHR-derived indicators of care team teamwork.</p>
         </div>
         <figure class="figure" style="margin-top:28px">
           <a class="media poster-link" href="../assets/docs/Maggie_Yan_BIDS_Poster_2026.pdf" style="aspect-ratio:4/3">
@@ -182,9 +182,9 @@
         <span class="label">07 · Reflection</span>
         <h2>What worked, what didn’t, what’s next</h2>
         <div class="reflect">
-          <div><h3>What worked</h3><p><span class="todo">e.g. seeing the handoff in person before evaluating the tool.</span></p></div>
-          <div><h3>Limitations</h3><p><span class="todo">e.g. a small number of participants and sessions per phase, one health system.</span></p></div>
-          <div><h3>What I’d study next</h3><p><span class="todo">The open question this left you with, e.g. how to explain a model’s reasoning to clinicians without SHAP values. This connects directly to your interest in trust and adoption of AI decision support.</span></p></div>
+          <div><h3>What worked</h3><p>Being in the operating room before evaluating the report. Watching how people were actually using the technology we create for them, down to the notes on napkins, showed me that the real problems with trust only show up once a tool is in front of the people who have to use it.</p></div>
+          <div><h3>Limitations</h3><p>Thirteen clinicians across nineteen sessions, all at one health system. Trust is also harder to measure than usability. In the walkthroughs, I could hear that the clinicians were hesitant, but I had no way to measure whether they would follow the report when it was right and question it when it was wrong.</p></div>
+          <div><h3>What I’d study next</h3><p>That left me asking which forms of explanation fit how a clinician already thinks, and whether that fit helps clinicians tell when the model is right and when it isn’t, instead of just making them trust it more. The same risk estimate has to make sense to a clinician in the OR, a clinician in the ICU, and potentially the patient, and each of them thinks about risk differently, so I want to build alternatives to the Shapley values framed the way each reader already talks about risk and test which form fits which reader.</p></div>
         </div>
       </section>
 
