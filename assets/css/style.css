@@ -716,7 +716,7 @@ p { margin: 0; }
    themes by thin lines. Positions are set in index.html. */
 .interests { display: grid; gap: 14px; padding-bottom: 8px; }
 .ri { margin: 0; display: grid; gap: 14px; }
-.ri__field { position: relative; height: 280px; transition: height 0.8s var(--ease); }
+.ri__field { position: relative; height: 280px; }
 .ri__themes, .ri__projects { list-style: none; margin: 0; padding: 0; }
 .ri__theme {
   position: absolute;
@@ -726,25 +726,24 @@ p { margin: 0; }
   justify-items: center;
   gap: 8px;
   transform: translate(-50%, -5px);
-  transition: left 0.8s var(--ease), top 0.8s var(--ease), opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 .ri__theme[data-label="above"] { transform: translate(-50%, calc(-100% + 5px)); }
 .ri__chip {
   padding: 6px 14px;
   border: 0;
   border-radius: 999px;
-  background: var(--surface);
-  box-shadow: inset 0 0 0 1px var(--line);
+  background: transparent;
   font: inherit;
   font-size: 14px;
   font-weight: 500;
   color: var(--ink);
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.8s ease, box-shadow 0.8s ease, color 0.3s ease;
+  transition: color 0.3s ease;
 }
 .ri__chip:hover, .ri__theme.is-lit .ri__chip { color: var(--accent); }
-.ri__chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.ri__chip[aria-pressed="true"] { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent); }
 .ri__dot {
   width: 10px;
   height: 10px;
@@ -757,7 +756,7 @@ p { margin: 0; }
   left: var(--x);
   top: var(--y);
   transform: translate(-50%, -50%);
-  transition: left 0.8s var(--ease), top 0.8s var(--ease), opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 .ri__project a { position: relative; display: block; padding: 6px; color: var(--ink); text-decoration: none; }
 .ri__star {
@@ -795,9 +794,7 @@ p { margin: 0; }
 .ri__key { min-height: 2.8em; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
 .ri__key b { font-weight: 500; color: var(--ink-2); }
 .ri__key a { color: var(--ink-2); }
-/* By day it reads as a map. From sunset the chips lose their backgrounds and the
-   dots glow, so the same drawing reads as a constellation. */
-:root[data-mode="sunset"] .ri__chip, :root[data-mode="night"] .ri__chip { background: transparent; box-shadow: inset 0 0 0 1px transparent; }
+/* Drawn in ink by day; from sunset the dots glow. */
 :root[data-mode="sunset"] .ri__dot, :root[data-mode="night"] .ri__dot { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 :root[data-mode="night"] .ri__lines line:not(.is-lit) { opacity: 0.6; }
 /* On phones there's no room to scatter them: the themes are a plain row of chips. */
@@ -806,7 +803,7 @@ p { margin: 0; }
   .ri__themes { display: flex; flex-wrap: wrap; gap: 8px; }
   .ri__theme, .ri__theme[data-label="above"] { position: static; display: block; transform: none; }
   .ri__dot, .ri__projects, .ri__lines { display: none; }
-  .ri__chip, :root[data-mode="sunset"] .ri__chip, :root[data-mode="night"] .ri__chip { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .ri__chip { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
 }
 
 .focus { display: grid; gap: 12px; }

@@ -1,5 +1,5 @@
 /* home.js — the home page.
-   - research interests: chips by day, a constellation from sunset
+   - research interests: a constellation, in ink by day and glowing at night
    - research / practice switch + filters
    - video previews on project cards
    - the garden: build one before you go (saved for next visit) */
@@ -14,15 +14,13 @@
   function mode() { return document.documentElement.getAttribute('data-mode'); }
   function store(kind) { try { return window[kind]; } catch (err) { return null; } }
 
-  /* ---------- research interests: chips by day, a constellation from sunset ---------- */
+  /* ---------- research interests: a constellation, in the sky's colours ---------- */
 
-  // By day the five themes are chips in a tighter version of the sky's arrangement.
-  // From sunset each glides out to its spot in the sky (--x/--y in the HTML). The
-  // projects are small dots that go along: each lists its themes, and a line joins
-  // it to each of them, so it reads as a map by day and a constellation at night.
-  // Pointing at a theme
-  // lights up its projects and lines and writes what's inside it under the figure;
-  // a click keeps it there, and a click anywhere else lets it go.
+  // The five themes sit at --x/--y (in the HTML), each a dot with its name above or
+  // below it. The projects are smaller dots: each lists its themes, and a line joins
+  // it to each of them. It's drawn in ink by day and glows after sunset. Pointing
+  // at a theme lights up its projects and lines and writes what's inside it under
+  // the figure; a click keeps it there, and a click anywhere else lets it go.
   function setupInterests() {
     var fig = document.querySelector('[data-interests]');
     if (!fig) return;
@@ -62,52 +60,6 @@
         l.el.setAttribute('x2', b.x.toFixed(1));
         l.el.setAttribute('y2', b.y.toFixed(1));
       });
-    }
-
-    // By day the chips keep the sky's arrangement but pulled in towards the middle
-    // and squashed; from sunset each theme goes back out to its spot in the sky.
-    // It's the chip that gets placed, and the element is centred on its left and
-    // anchored on its dot (see the CSS), so the offsets allow for that.
-    var SKY = { sunset: true, night: true };
-    var DAY_SQUEEZE = 0.65, DAY_HEIGHT = 180;
-    function layout() {
-      var sky = !!SKY[mode()];
-      fig.classList.toggle('is-sky', sky);
-      if (sky) {
-        themes.concat(projects).forEach(function (el) { el.style.left = ''; el.style.top = ''; });
-        field.style.height = '';
-      } else {
-        var W = field.clientWidth;
-        var squeezed = function (el) {
-          return {
-            x: W / 2 + (parseFloat(el.style.getPropertyValue('--x')) / 100 - 0.5) * W * DAY_SQUEEZE,
-            y: parseFloat(el.style.getPropertyValue('--y')) / 100 * DAY_HEIGHT
-          };
-        };
-        themes.forEach(function (t) {
-          var h = t.querySelector('.ri__chip').offsetHeight;
-          var c = squeezed(t);
-          t.style.left = c.x + 'px';
-          t.style.top = (t.dataset.label === 'above' ? c.y + h / 2 + 13 : c.y - h / 2 - 13) + 'px';
-        });
-        projects.forEach(function (p) {
-          var c = squeezed(p);
-          p.style.left = c.x + 'px';
-          p.style.top = c.y + 'px';
-        });
-        field.style.height = DAY_HEIGHT + 'px';
-      }
-      settle();
-    }
-    // Keep the lines on the dots while things glide (the CSS transition takes 0.8s).
-    var settling = 0;
-    function settle() {
-      var until = Date.now() + 900;
-      if (settling) cancelAnimationFrame(settling);
-      (function step() {
-        draw();
-        settling = Date.now() < until ? requestAnimationFrame(step) : 0;
-      })();
     }
 
     function light(t, p) {
@@ -165,10 +117,9 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && selected) select(null); });
 
     var timer;
-    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(layout, 100); });
-    document.addEventListener('modechange', layout);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
-    layout();
+    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(draw, 100); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    draw();
   }
 
   /* ---------- research / practice ---------- */
