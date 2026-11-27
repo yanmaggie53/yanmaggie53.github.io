@@ -27,10 +27,10 @@ after-hours.html           figure drawings, self portraits, still lifes, archite
 about.html                 short intro + the full CV, readable on the page
 assets/css/style.css       all styles; mode colors are at the top
 assets/js/sky-time.js      sun math + picks the mode (loads first, in <head>)
-assets/js/site.js          sky, day bar, stickers, clock (every page)
+assets/js/site.js          sky, day bar, clock (every page)
 assets/js/home.js          word cloud, filters, previews, garden
 assets/js/pdf-reader.js    shows PDFs (CV, papers) as pages you can scroll
-assets/js/after-hours.js   pin-up wall + night lamp
+assets/js/after-hours.js   pin-up wall
 ```
 
 ## Editing

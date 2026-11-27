@@ -2,7 +2,6 @@
    - the sky (sun, moon, stars, clouds) drawn for the visitor's real time
    - the day bar: drag through the day to change the mode
    - Maggie's own clock in Wellesley
-   - stickers you can pick up and toss
    - table-of-contents highlighting on case studies */
 (function () {
   'use strict';
@@ -357,7 +356,7 @@
     }
   }
 
-  /* ---------- dragging (shared by stickers, the plot and the wall) ---------- */
+  /* ---------- dragging (shared by the plot and the wall) ---------- */
 
   // Calls onStart/onMove/onEnd with pixel offsets from where the drag began.
   // A press that never moves counts as a tap, so clicks still work.
@@ -421,93 +420,6 @@
     el.addEventListener('dragstart', function (e) { e.preventDefault(); });
   }
 
-  /* ---------- stickers in the bio: pick them up, toss them ---------- */
-
-  function setupStickers() {
-    var stickers = document.querySelectorAll('.sticker');
-    var reset = document.querySelector('[data-sticker-reset]');
-    var hint = document.querySelector('[data-sticker-hint]');
-    if (!stickers.length) return;
-    var loose = [];
-
-    stickers.forEach(function (st) {
-      var pos = { x: 0, y: 0 }, start = null, spin = 0;
-
-      draggable(st, {
-        onStart: function () {
-          if (!st.classList.contains('is-loose')) {
-            var rect = st.getBoundingClientRect();
-            var slot = document.createElement('span');
-            slot.className = 'sticker-slot';
-            slot.style.fontSize = getComputedStyle(st).fontSize;
-            st.parentNode.insertBefore(slot, st);
-            st._slot = slot;
-            st.style.width = rect.width + 'px';
-            st.style.height = rect.height + 'px';
-            pos = { x: rect.left + window.scrollX, y: rect.top + window.scrollY };
-            st.classList.add('is-loose');
-            document.body.appendChild(st);
-            loose.push(st);
-            if (reset) reset.hidden = false;
-            if (hint) hint.hidden = true;
-          }
-          st._fling && cancelAnimationFrame(st._fling);
-          start = { x: pos.x, y: pos.y };
-          moveTo(st, pos);
-        },
-        onMove: function (dx, dy) {
-          pos = { x: start.x + dx, y: start.y + dy };
-          moveTo(st, pos);
-        },
-        onEnd: function (v) {
-          if (reduceMotion.matches) return;
-          var vx = clamp(v.x, -60, 60), vy = clamp(v.y, -60, 60);
-          var maxX = document.documentElement.scrollWidth - st.offsetWidth;
-          var maxY = document.documentElement.scrollHeight - st.offsetHeight;
-          (function step() {
-            pos.x += vx;
-            pos.y += vy;
-            if (pos.x < 0 || pos.x > maxX) { vx *= -0.6; pos.x = clamp(pos.x, 0, maxX); }
-            if (pos.y < 0 || pos.y > maxY) { vy *= -0.6; pos.y = clamp(pos.y, 0, maxY); }
-            vx *= 0.93;
-            vy *= 0.93;
-            spin += vx * 0.6;
-            moveTo(st, pos, spin);
-            if (Math.abs(vx) + Math.abs(vy) > 0.4) st._fling = requestAnimationFrame(step);
-          })();
-        }
-      });
-    });
-
-    function moveTo(st, p, rot) {
-      st.style.left = p.x + 'px';
-      st.style.top = p.y + 'px';
-      if (rot !== undefined) st.style.setProperty('--r', (rot % 360).toFixed(1) + 'deg');
-    }
-
-    if (reset) {
-      reset.addEventListener('click', function () {
-        loose.forEach(function (st) {
-          st._fling && cancelAnimationFrame(st._fling);
-          var slot = st._slot;
-          var r = slot.getBoundingClientRect();
-          st.style.transition = 'left .6s var(--ease), top .6s var(--ease), transform .6s var(--ease)';
-          st.style.left = (r.left + window.scrollX) + 'px';
-          st.style.top = (r.top + window.scrollY) + 'px';
-          st.style.removeProperty('--r');
-          setTimeout(function () {
-            st.classList.remove('is-loose');
-            st.removeAttribute('style');
-            slot.parentNode.replaceChild(st, slot);
-          }, reduceMotion.matches ? 0 : 620);
-        });
-        loose = [];
-        reset.hidden = true;
-        if (hint) hint.hidden = false;
-      });
-    }
-  }
-
   /* ---------- case study table of contents ---------- */
 
   function setupToc() {
@@ -549,7 +461,6 @@
   function init() {
     buildSky();
     buildDaybars();
-    setupStickers();
     setupToc();
     setupUpdated();
     setupYear();

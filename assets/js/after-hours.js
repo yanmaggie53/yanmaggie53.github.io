@@ -1,7 +1,6 @@
 /* after-hours.js — the pin-up wall.
    - drag pieces around, click one to see it up close
-   - filter by kind
-   - at night (and dimly at sunset) the cursor becomes a desk lamp */
+   - filter by kind */
 (function () {
   'use strict';
 
@@ -101,36 +100,5 @@
     box.querySelector('[data-lb-jump]').addEventListener('click', function () {
       box.querySelector('[data-lb-story]').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-  }
-
-  /* ---------- the lamp ---------- */
-
-  var lamp = document.querySelector('[data-lamp]');
-  var main = document.querySelector('.main');
-  if (lamp && main && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    var pending = false, x = 0, y = 0;
-
-    // The dark only covers the wall side, so the sidebar (and the day bar) stay lit.
-    function fit() {
-      var left = main.getBoundingClientRect().left - 36;
-      lamp.style.left = Math.max(0, left) + 'px';
-    }
-    fit();
-    window.addEventListener('resize', fit);
-
-    window.addEventListener('pointermove', function (e) {
-      x = e.clientX;
-      y = e.clientY;
-      lamp.classList.add('is-on');
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(function () {
-        var offset = parseFloat(lamp.style.left) || 0;
-        lamp.style.setProperty('--lx', (x - offset) + 'px');
-        lamp.style.setProperty('--ly', y + 'px');
-        pending = false;
-      });
-    });
-    document.documentElement.addEventListener('pointerleave', function () { lamp.classList.remove('is-on'); });
   }
 })();
