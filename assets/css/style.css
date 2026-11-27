@@ -716,7 +716,7 @@ p { margin: 0; }
    themes by thin lines. Positions are set in index.html. */
 .interests { display: grid; gap: 14px; padding-bottom: 8px; }
 .ri { margin: 0; display: grid; gap: 14px; }
-.ri__field { position: relative; height: 280px; }
+.ri__field { position: relative; height: 280px; transition: height 0.8s var(--ease); }
 .ri__themes, .ri__projects { list-style: none; margin: 0; padding: 0; }
 .ri__theme {
   position: absolute;
@@ -726,7 +726,7 @@ p { margin: 0; }
   justify-items: center;
   gap: 8px;
   transform: translate(-50%, -5px);
-  transition: opacity 0.3s ease;
+  transition: left 0.8s var(--ease), top 0.8s var(--ease), opacity 0.3s ease;
 }
 .ri__theme[data-label="above"] { transform: translate(-50%, calc(-100% + 5px)); }
 .ri__chip {
@@ -808,7 +808,7 @@ p { margin: 0; }
 :root[data-mode="night"] .ri__lines { opacity: 1; }
 /* On phones there's no room to scatter them: the themes are a plain row of chips. */
 @media (max-width: 600px) {
-  .ri__field { height: auto; }
+  .ri__field { height: auto !important; }
   .ri__themes { display: flex; flex-wrap: wrap; gap: 8px; }
   .ri__theme, .ri__theme[data-label="above"] { position: static; display: block; transform: none; }
   .ri__dot, .ri__projects, .ri__lines { display: none; }

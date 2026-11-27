@@ -16,10 +16,11 @@
 
   /* ---------- research interests: chips by day, a constellation from sunset ---------- */
 
-  // The five themes sit at fixed spots (set in the HTML). Each project lists its
-  // themes, and a line joins the project's star to each of them. Pointing at a
-  // theme lights up its projects and lines and writes what's inside it under the
-  // figure; a click keeps it there.
+  // By day the five themes are a row of chips. From sunset each glides to its spot
+  // in the sky (--x/--y in the HTML), and the projects come out as stars: each lists
+  // its themes, and a line joins its star to each of them. Pointing at a theme
+  // lights up its projects and lines and writes what's inside it under the figure;
+  // a click keeps it there, and a click anywhere else lets it go.
   function setupInterests() {
     var fig = document.querySelector('[data-interests]');
     if (!fig) return;
@@ -61,6 +62,42 @@
       });
     }
 
+    // By day the chips sit in a tight row; from sunset each theme goes back to its
+    // spot in the sky. It's the chip that gets placed, and the element is centred on
+    // its left and anchored on its dot (see the CSS), so the offsets allow for that.
+    var SKY = { sunset: true, night: true };
+    function layout() {
+      var sky = !!SKY[mode()];
+      fig.classList.toggle('is-sky', sky);
+      if (sky) {
+        themes.forEach(function (t) { t.style.left = ''; t.style.top = ''; });
+        field.style.height = '';
+      } else {
+        var W = field.clientWidth, gap = 8, x = 0, y = 0, rowH = 0;
+        themes.forEach(function (t) {
+          var chip = t.querySelector('.ri__chip');
+          var w = chip.offsetWidth, h = chip.offsetHeight;
+          if (x > 0 && x + w > W) { x = 0; y += rowH + gap; rowH = 0; }
+          t.style.left = (x + w / 2) + 'px';
+          t.style.top = (t.dataset.label === 'above' ? y + h + 13 : y - 13) + 'px';
+          x += w + gap;
+          rowH = Math.max(rowH, h);
+        });
+        field.style.height = (y + rowH) + 'px';
+      }
+      settle();
+    }
+    // Keep the lines on the dots while things glide (the CSS transition takes 0.8s).
+    var settling = 0;
+    function settle() {
+      var until = Date.now() + 900;
+      if (settling) cancelAnimationFrame(settling);
+      (function step() {
+        draw();
+        settling = Date.now() < until ? requestAnimationFrame(step) : 0;
+      })();
+    }
+
     function light(t, p) {
       var on = !!(t || p);
       fig.classList.toggle('is-focus', on);
@@ -89,16 +126,17 @@
       key.appendChild(document.createTextNode('.'));
     }
     function rest() { light(selected); describe(selected); }
+    function select(t) {
+      selected = t;
+      themes.forEach(function (x) { x.querySelector('.ri__chip').setAttribute('aria-pressed', x === selected ? 'true' : 'false'); });
+      rest();
+    }
 
     themes.forEach(function (t) {
       var chip = t.querySelector('.ri__chip');
       chip.addEventListener('pointerenter', function () { light(t); describe(t); });
       chip.addEventListener('focus', function () { light(t); describe(t); });
-      chip.addEventListener('click', function () {
-        selected = selected === t ? null : t;
-        themes.forEach(function (x) { x.querySelector('.ri__chip').setAttribute('aria-pressed', x === selected ? 'true' : 'false'); });
-        rest();
-      });
+      chip.addEventListener('click', function () { select(selected === t ? null : t); });
     });
     projects.forEach(function (p) {
       var a = p.querySelector('a');
@@ -108,10 +146,17 @@
     fig.addEventListener('pointerleave', rest);
     fig.addEventListener('focusout', function (e) { if (!fig.contains(e.relatedTarget)) rest(); });
 
+    // A click anywhere else lets go of the chosen theme; so does Escape.
+    document.addEventListener('click', function (e) {
+      if (selected && !e.target.closest('.ri__chip') && !e.target.closest('.ri__key')) select(null);
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && selected) select(null); });
+
     var timer;
-    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(draw, 100); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
-    draw();
+    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(layout, 100); });
+    document.addEventListener('modechange', layout);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    layout();
   }
 
   /* ---------- research / practice ---------- */
