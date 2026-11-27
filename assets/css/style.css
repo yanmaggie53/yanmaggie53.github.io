@@ -7,7 +7,7 @@
    5. Shared components (nav, day bar, buttons, tags)
    6. Home (research interests, work, practice, garden)
    7. Case study
-   8. After hours
+   8. Studio (after-hours.html)
    9. About
    ========================================================================== */
 
@@ -1490,7 +1490,7 @@ div.tile { cursor: default; }
   .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* 8. After hours ---------------------------------------------------------- */
+/* 8. Studio (after-hours.html) ------------------------------------------ */
 
 .ah-header { padding-top: 40px; display: grid; gap: 8px; }
 .ah-title {
