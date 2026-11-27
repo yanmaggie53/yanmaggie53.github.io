@@ -21,14 +21,14 @@ Visitors can drag through their day on the bar in the sidebar to change the mode
 ## Where things live
 
 ```
-index.html                 home: research interests word cloud, work (research / practice), garden
+index.html                 home: research interests (chips by day, a constellation from sunset), work (research / practice), garden
 projects/*.html            case studies (one shared structure, see below)
 after-hours.html           studio: figure drawings, self portraits, still lifes, architecture sketches, made by hand
 about.html                 short intro + the full CV, readable on the page
 assets/css/style.css       all styles; mode colors are at the top
 assets/js/sky-time.js      sun math + picks the mode (loads first, in <head>)
 assets/js/site.js          sky, day bar, clock (every page)
-assets/js/home.js          word cloud, filters, previews, garden
+assets/js/home.js          research interests, filters, previews, garden
 assets/js/pdf-reader.js    shows PDFs (CV, papers) as pages you can scroll
 assets/js/after-hours.js   pin-up wall
 ```
@@ -39,7 +39,7 @@ assets/js/after-hours.js   pin-up wall
 - **Lately:** the `<ul class="news">` in the sidebar of `index.html`. Newest first, 2–4 items.
 - **Research:** each `<article class="project">` in `index.html`, newest first. The `data-methods` and `data-domains` lists feed the filter dropdowns automatically. Add `data-preview="assets/video/clip.mp4"` to play a muted clip on hover.
 - **Practice** (internship + class work): the `.tile`s in the `data-panel="practice"` block. Use `<a class="tile" href="…">` once a project has its own page.
-- **Research interests word cloud:** the `<figure data-wordcloud>` at the top of `index.html`. Each word's `data-w` (1 + the number of topics inside it) sets its size; `data-group` ties focus areas to their theme so they cluster and light up together. Wrap a word in a link to tie it to a project.
+- **Research interests:** the `<figure data-interests>` at the top of `index.html`. Each `.ri__theme` sits at `--x`/`--y` (percent of the field) with its name above or below the dot (`data-label`); `data-about` is the list of focus areas written under the figure when someone points at the theme. Each `.ri__project` lists its themes in `data-themes` and sits at its own `--x`/`--y`; by day it's reachable from that line under the figure, and from sunset it's a star joined to its themes. Put `data-side="left"` on a project near the right edge so its name opens leftward. On phones the themes are a plain row of chips.
 - **Studio** (`after-hours.html`)**:** each `.piece` on the wall. `data-kind` must match one of the filter chips. Artwork goes in `<div class="media media--art">` so it's never cropped: `src` is the 800px-wide wall copy (with its `width`/`height`), `data-full` is the big one shown up close. To give a piece a process story, add `<span class="piece__flag">process</span>` and a `<template class="piece__story">` inside it (copy the chainmail top's); it shows under the piece when it's opened.
 - **New case study:** copy `projects/zzalign.html`, then update the title, the sidebar table of contents, and the next-project link. Research pages link in a loop, newest to oldest.
 - **Images:** swap a `<div class="media__placeholder">…</div>` for `<img src="assets/img/…" alt="…">` (keep it inside the `.media` box).

@@ -710,32 +710,109 @@ p { margin: 0; }
 .main > section { padding-top: 96px; }
 .main > section:first-child { padding-top: 40px; }
 
-/* Research interests: a word cloud. Size = how big the category is. */
+/* Research interests: five themes with the projects under them. By day the
+   themes are chips. From sunset the chips lose their backgrounds, each theme
+   becomes a star, and the projects come out as smaller stars joined to their
+   themes by thin lines. Positions are set in index.html. */
 .interests { display: grid; gap: 14px; padding-bottom: 8px; }
-.wc { margin: 0; display: grid; gap: 18px; }
-.wc__words {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px 16px;
+.ri { margin: 0; display: grid; gap: 14px; }
+.ri__field { position: relative; height: 280px; }
+.ri__themes, .ri__projects { list-style: none; margin: 0; padding: 0; }
+.ri__theme {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  transform: translate(-50%, -5px);
+  transition: opacity 0.3s ease;
 }
-.wc__words > li { line-height: 1.1; white-space: nowrap; transition: opacity 0.25s ease, color 0.25s ease; }
-.wc__words > li[data-level="1"] { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.03em; color: var(--ink); font-size: 34px; }
-.wc__words > li[data-level="2"] { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; color: var(--accent); font-size: 24px; }
-.wc__words > li[data-level="3"] { font-weight: 500; color: var(--ink-2); font-size: 14px; }
-.wc__words a { color: inherit; text-decoration-color: color-mix(in srgb, var(--accent) 65%, transparent); }
-.wc.is-cloud .wc__words { display: block; position: relative; }
-/* 'backwards' so the entrance doesn't pin opacity once it's done (hover dimming needs it). */
-.wc.is-cloud .wc__words > li { position: absolute; animation: wc-in 0.6s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 35ms); }
-.wc.is-focused .wc__words > li:not(.is-lit) { opacity: 0.18; }
-.wc__words > li.is-lit[data-level="3"] { color: var(--accent); }
-.wc__key { font-size: 12.5px; color: var(--ink-3); }
-@keyframes wc-in {
-  from { opacity: 0; transform: translateY(6px) scale(0.96); }
-  to { opacity: 1; transform: none; }
+.ri__theme[data-label="above"] { transform: translate(-50%, calc(-100% + 5px)); }
+.ri__chip {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.8s ease, box-shadow 0.8s ease, color 0.3s ease;
+}
+.ri__chip:hover, .ri__theme.is-lit .ri__chip { color: var(--accent); }
+.ri__chip[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.ri__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transition: opacity 0.8s ease, box-shadow 0.8s ease;
+}
+.ri__project {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+}
+.ri__project a { position: relative; display: block; padding: 6px; color: var(--ink); text-decoration: none; }
+.ri__star {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink-2);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.ri__project a:hover .ri__star, .ri__project a:focus-visible .ri__star, .ri__project.is-lit .ri__star { background: var(--accent); transform: scale(1.5); }
+.ri__name {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--surface-solid);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  font-size: 12.5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.ri__project[data-side="left"] .ri__name { left: auto; right: 100%; }
+.ri__project a:hover .ri__name, .ri__project a:focus-visible .ri__name { opacity: 1; }
+.ri__lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: 0; pointer-events: none; transition: opacity 0.8s ease; }
+.ri__lines line { stroke: var(--ink-3); stroke-width: 1; opacity: 0.55; transition: opacity 0.3s ease, stroke 0.3s ease; }
+.ri__lines line.is-lit { stroke: var(--accent); opacity: 1; }
+/* Point at a theme or a project: everything not tied to it fades back. */
+.ri.is-focus .ri__theme:not(.is-lit), .ri.is-focus .ri__project:not(.is-lit) { opacity: 0.35; }
+.ri.is-focus .ri__lines line:not(.is-lit) { opacity: 0.2; }
+.ri__key { min-height: 2.8em; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
+.ri__key b { font-weight: 500; color: var(--ink-2); }
+.ri__key a { color: var(--ink-2); }
+/* From sunset the chips become stars and the projects come out. */
+:root[data-mode="sunset"] .ri__chip, :root[data-mode="night"] .ri__chip { background: transparent; box-shadow: inset 0 0 0 1px transparent; }
+:root[data-mode="sunset"] .ri__dot, :root[data-mode="night"] .ri__dot { opacity: 1; box-shadow: 0 0 10px var(--accent); }
+:root[data-mode="sunset"] .ri__project, :root[data-mode="night"] .ri__project { visibility: visible; transition-delay: 0s; }
+:root[data-mode="sunset"] .ri__project { opacity: 0.6; }
+:root[data-mode="sunset"] .ri__lines { opacity: 0.5; }
+:root[data-mode="night"] .ri__project { opacity: 1; }
+:root[data-mode="night"] .ri__lines { opacity: 1; }
+/* On phones there's no room to scatter them: the themes are a plain row of chips. */
+@media (max-width: 600px) {
+  .ri__field { height: auto; }
+  .ri__themes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ri__theme, .ri__theme[data-label="above"] { position: static; display: block; transform: none; }
+  .ri__dot, .ri__projects, .ri__lines { display: none; }
+  .ri__chip, :root[data-mode="sunset"] .ri__chip, :root[data-mode="night"] .ri__chip { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
 }
 
 .focus { display: grid; gap: 12px; }

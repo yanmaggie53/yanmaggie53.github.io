@@ -1,5 +1,5 @@
 /* home.js — the home page.
-   - research interests word cloud
+   - research interests: chips by day, a constellation from sunset
    - research / practice switch + filters
    - video previews on project cards
    - the garden: build one before you go (saved for next visit) */
@@ -14,128 +14,104 @@
   function mode() { return document.documentElement.getAttribute('data-mode'); }
   function store(kind) { try { return window[kind]; } catch (err) { return null; } }
 
-  /* ---------- research interests word cloud ---------- */
+  /* ---------- research interests: chips by day, a constellation from sunset ---------- */
 
-  // Packs the words outward from the middle. Bigger categories get bigger
-  // words; each focus area spirals out from its own theme, so they cluster.
-  function setupWordCloud() {
-    var fig = document.querySelector('[data-wordcloud]');
+  // The five themes sit at fixed spots (set in the HTML). Each project lists its
+  // themes, and a line joins the project's star to each of them. Pointing at a
+  // theme lights up its projects and lines and writes what's inside it under the
+  // figure; a click keeps it there.
+  function setupInterests() {
+    var fig = document.querySelector('[data-interests]');
     if (!fig) return;
-    var list = fig.querySelector('.wc__words');
-    var items = Array.prototype.slice.call(list.children);
-    var maxW = Math.max.apply(null, items.map(function (li) { return +li.dataset.w || 1; }));
-    var ctx = document.createElement('canvas').getContext('2d');
-    var STYLE = {
-      1: { weight: 800, family: '"Cabinet Grotesk", sans-serif', tracking: -0.03 },
-      2: { weight: 700, family: '"Cabinet Grotesk", sans-serif', tracking: -0.02 },
-      3: { weight: 500, family: 'Satoshi, sans-serif', tracking: 0 }
-    };
-    var lastWidth = 0;
+    var field = fig.querySelector('.ri__field');
+    var svg = fig.querySelector('.ri__lines');
+    var key = fig.querySelector('[data-key]');
+    var themes = Array.prototype.slice.call(fig.querySelectorAll('.ri__theme'));
+    var projects = Array.prototype.slice.call(fig.querySelectorAll('.ri__project'));
+    var restKey = key.innerHTML;
+    var byId = {};
+    var lines = [];
+    var selected = null;
 
-    function layout(force) {
-      var W = list.clientWidth;
-      if (!W || (!force && Math.abs(W - lastWidth) < 8)) return;
-      lastWidth = W;
-      var k = Math.max(0.58, Math.min(1, W / 780));
-      var gap = 8 * k;
-      var placed = [];
-      var themes = {};
-
-      function overlaps(b) {
-        for (var i = 0; i < placed.length; i++) {
-          var p = placed[i];
-          if (b.x < p.x + p.w + gap && b.x + b.w + gap > p.x &&
-              b.y < p.y + p.h + gap * 0.5 && b.y + b.h + gap * 0.5 > p.y) return true;
-        }
-        return false;
-      }
-
-      var order = items.slice().sort(function (a, b) { return a.dataset.level - b.dataset.level; });
-      // Themes start from evenly spaced points on a ring around the fields.
-      var themeCount = items.filter(function (li) { return li.dataset.level === '2'; }).length;
-      var themeIndex = 0;
-      order.forEach(function (li, i) {
-        var level = li.dataset.level;
-        var st = STYLE[level];
-        var w = +li.dataset.w || 1;
-        var size = (14 + 40 * Math.sqrt((w - 1) / Math.max(1, maxW - 1))) * k;
-        size = Math.max(size, level === '3' ? 13 : 17);
-        var text = li.textContent.trim();
-        ctx.font = st.weight + ' ' + size + 'px ' + st.family;
-        var tw = ctx.measureText(text).width + st.tracking * size * (text.length - 1);
-        if (tw > W) {
-          size *= W / tw;
-          tw = W;
-        }
-        var box = { w: tw, h: size * 1.1 };
-        var theme = themes[li.dataset.group];
-        var cx = W / 2;
-        var cy = 0;
-        if (level === '2') {
-          var a = -Math.PI / 2 + (themeIndex++ / themeCount) * Math.PI * 2;
-          cx = W / 2 + Math.cos(a) * W * 0.34;
-          cy = Math.sin(a) * 120 * k;
-        } else if (level === '3' && theme) {
-          cx = theme.x;
-          cy = theme.y;
-        }
-        for (var t = 0; t < 3000; t++) {
-          var ang = t * 0.33;
-          var r = 2 * k * ang;
-          box.x = cx + Math.cos(ang) * r * 1.9 - box.w / 2;
-          box.y = cy + Math.sin(ang) * r * 0.8 - box.h / 2;
-          if (box.x < 0 || box.x + box.w > W) continue;
-          if (!overlaps(box)) break;
-        }
-        placed.push(box);
-        if (level === '2') themes[li.dataset.group] = { x: box.x + box.w / 2, y: box.y + box.h / 2 };
-        li._box = box;
-        li._size = size;
-        li.style.setProperty('--i', i);
-      });
-
-      var minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-      placed.forEach(function (b) {
-        minX = Math.min(minX, b.x); maxX = Math.max(maxX, b.x + b.w);
-        minY = Math.min(minY, b.y); maxY = Math.max(maxY, b.y + b.h);
-      });
-      var dx = (W - (maxX - minX)) / 2 - minX;
-      items.forEach(function (li) {
-        li.style.fontSize = li._size.toFixed(2) + 'px';
-        li.style.left = (li._box.x + dx).toFixed(1) + 'px';
-        li.style.top = (li._box.y - minY).toFixed(1) + 'px';
-      });
-      list.style.height = Math.ceil(maxY - minY) + 'px';
-      fig.classList.add('is-cloud');
+    themes.forEach(function (t) { byId[t.dataset.theme] = t; });
+    function themesOf(p) {
+      return (p.dataset.themes || '').split(/\s+/).map(function (id) { return byId[id]; }).filter(Boolean);
     }
-
-    // Point at a theme (or one of its words) and its cluster lights up.
-    function light(group) {
-      fig.classList.toggle('is-focused', !!group);
-      items.forEach(function (li) { li.classList.toggle('is-lit', !!group && li.dataset.group === group); });
-    }
-    items.forEach(function (li) {
-      li.addEventListener('pointerenter', function () { light(li.dataset.group || null); });
-      li.addEventListener('focusin', function () { light(li.dataset.group || null); });
+    projects.forEach(function (p) {
+      themesOf(p).forEach(function (t) {
+        var el = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        svg.appendChild(el);
+        lines.push({ el: el, theme: t, project: p });
+      });
     });
-    list.addEventListener('pointerleave', function () { light(null); });
-    list.addEventListener('focusout', function () { light(null); });
 
-    var fontsReady = document.fonts && document.fonts.load
-      ? Promise.all([
-          document.fonts.load('800 40px "Cabinet Grotesk"'),
-          document.fonts.load('700 30px "Cabinet Grotesk"'),
-          document.fonts.load('500 14px Satoshi')
-        ])
-      : Promise.resolve();
-    var fallback = setTimeout(function () { layout(true); }, 1500);
-    fontsReady.then(function () { clearTimeout(fallback); layout(true); }, function () { layout(true); });
+    function centre(el) {
+      var r = el.getBoundingClientRect(), f = field.getBoundingClientRect();
+      return { x: r.left - f.left + r.width / 2, y: r.top - f.top + r.height / 2 };
+    }
+    function draw() {
+      svg.setAttribute('viewBox', '0 0 ' + field.clientWidth + ' ' + field.clientHeight);
+      lines.forEach(function (l) {
+        var a = centre(l.theme.querySelector('.ri__dot'));
+        var b = centre(l.project.querySelector('.ri__star'));
+        l.el.setAttribute('x1', a.x.toFixed(1));
+        l.el.setAttribute('y1', a.y.toFixed(1));
+        l.el.setAttribute('x2', b.x.toFixed(1));
+        l.el.setAttribute('y2', b.y.toFixed(1));
+      });
+    }
+
+    function light(t, p) {
+      var on = !!(t || p);
+      fig.classList.toggle('is-focus', on);
+      themes.forEach(function (x) { x.classList.toggle('is-lit', on && (x === t || (!!p && themesOf(p).indexOf(x) >= 0))); });
+      projects.forEach(function (x) { x.classList.toggle('is-lit', on && (x === p || (!!t && themesOf(x).indexOf(t) >= 0))); });
+      lines.forEach(function (l) { l.el.classList.toggle('is-lit', on && (l.theme === t || l.project === p)); });
+    }
+    function describe(t) {
+      if (!t) { key.innerHTML = restKey; return; }
+      key.textContent = '';
+      var b = document.createElement('b');
+      b.textContent = t.querySelector('.ri__chip').textContent.trim();
+      key.appendChild(b);
+      key.appendChild(document.createTextNode(' covers ' + (t.dataset.about || '') + '.'));
+      var under = projects.filter(function (p) { return themesOf(p).indexOf(t) >= 0; });
+      if (!under.length) return;
+      key.appendChild(document.createTextNode(' Projects: '));
+      under.forEach(function (p, i) {
+        var src = p.querySelector('a');
+        var a = document.createElement('a');
+        a.href = src.getAttribute('href');
+        a.textContent = src.textContent.trim();
+        if (i) key.appendChild(document.createTextNode(', '));
+        key.appendChild(a);
+      });
+      key.appendChild(document.createTextNode('.'));
+    }
+    function rest() { light(selected); describe(selected); }
+
+    themes.forEach(function (t) {
+      var chip = t.querySelector('.ri__chip');
+      chip.addEventListener('pointerenter', function () { light(t); describe(t); });
+      chip.addEventListener('focus', function () { light(t); describe(t); });
+      chip.addEventListener('click', function () {
+        selected = selected === t ? null : t;
+        themes.forEach(function (x) { x.querySelector('.ri__chip').setAttribute('aria-pressed', x === selected ? 'true' : 'false'); });
+        rest();
+      });
+    });
+    projects.forEach(function (p) {
+      var a = p.querySelector('a');
+      a.addEventListener('pointerenter', function () { light(null, p); });
+      a.addEventListener('focus', function () { light(null, p); });
+    });
+    fig.addEventListener('pointerleave', rest);
+    fig.addEventListener('focusout', function (e) { if (!fig.contains(e.relatedTarget)) rest(); });
 
     var timer;
-    window.addEventListener('resize', function () {
-      clearTimeout(timer);
-      timer = setTimeout(function () { layout(false); }, 150);
-    });
+    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(draw, 100); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+    draw();
   }
 
   /* ---------- research / practice ---------- */
@@ -685,7 +661,7 @@
   }
 
   function init() {
-    setupWordCloud();
+    setupInterests();
     setupWork();
     setupPreviews();
     setupGarden();

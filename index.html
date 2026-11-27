@@ -78,35 +78,51 @@
     <!-- ================= Main ================= -->
     <main class="main" id="main">
 
-      <!-- Research interests as a word cloud.
-           data-w = how big the category is (1 + the number of topics inside it),
-           which sets the word's size. data-group ties focus areas to their theme.
-           Wrap a word in a link to tie it to a project. -->
+      <!-- Research interests: five themes and the projects under them.
+           Each theme sits at --x/--y (percent of the field); data-label puts its name above or
+           below the dot; data-about is the list of focus areas written under the figure when
+           someone points at the theme. Each project lists its themes in data-themes. By day the
+           projects are reachable from that line under the figure; from sunset they come out as
+           stars joined to their themes. data-side="left" opens a project's name leftward. -->
       <section class="interests" aria-labelledby="interests-title">
         <span class="label" id="interests-title">Research interests</span>
-        <figure class="wc" data-wordcloud>
-          <ul class="wc__words">
-            <li data-w="18" data-level="1">human–computer interaction</li>
-            <li data-w="12" data-level="1">human–AI interaction</li>
-            <li data-w="5" data-level="2" data-group="trust">AI trust</li>
-            <li data-w="3" data-level="2" data-group="cocreation">co-creation</li>
-            <li data-w="3" data-level="2" data-group="usability">usability</li>
-            <li data-w="3" data-level="2" data-group="health">health</li>
-            <li data-w="3" data-level="2" data-group="decisions">decision-making</li>
-            <li data-w="1" data-level="3" data-group="trust">transparency</li>
-            <li data-w="1" data-level="3" data-group="trust">adoption</li>
-            <li data-w="1" data-level="3" data-group="trust"><a href="projects/xai-financial-literacy.html">explainable AI</a></li>
-            <li data-w="1" data-level="3" data-group="trust"><a href="projects/neurafutures.html">anthropomorphic systems</a></li>
-            <li data-w="1" data-level="3" data-group="cocreation">human–AI co-creation</li>
-            <li data-w="1" data-level="3" data-group="cocreation">collaborative design</li>
-            <li data-w="1" data-level="3" data-group="usability">accessible &amp; inclusive design</li>
-            <li data-w="1" data-level="3" data-group="usability">maker environments</li>
-            <li data-w="1" data-level="3" data-group="health">mental health technology</li>
-            <li data-w="1" data-level="3" data-group="health"><a href="projects/zzalign.html">medical devices</a></li>
-            <li data-w="1" data-level="3" data-group="decisions"><a href="projects/washu-i2db.html">AI-assisted decision support</a></li>
-            <li data-w="1" data-level="3" data-group="decisions">clinician- &amp; patient-facing systems</li>
-          </ul>
-          <figcaption class="wc__key">Bigger words are bigger categories. Point at a theme to light up what’s inside it. Underlined words lead to projects.</figcaption>
+        <figure class="ri" data-interests>
+          <div class="ri__field">
+            <ul class="ri__themes">
+              <li class="ri__theme" data-theme="trust" data-label="above" data-about="transparency, adoption, explainable AI, and anthropomorphic systems" style="--x:18.75%;--y:17%">
+                <button type="button" class="ri__chip" aria-pressed="false">AI trust</button>
+                <span class="ri__dot" aria-hidden="true"></span>
+              </li>
+              <li class="ri__theme" data-theme="health" data-label="above" data-about="mental health technology and medical devices" style="--x:81.25%;--y:17%">
+                <button type="button" class="ri__chip" aria-pressed="false">health</button>
+                <span class="ri__dot" aria-hidden="true"></span>
+              </li>
+              <li class="ri__theme" data-theme="usability" data-label="below" data-about="accessible and inclusive design, and maker environments" style="--x:12.5%;--y:74%">
+                <span class="ri__dot" aria-hidden="true"></span>
+                <button type="button" class="ri__chip" aria-pressed="false">usability</button>
+              </li>
+              <li class="ri__theme" data-theme="decisions" data-label="below" data-about="AI-assisted decision support, and clinician- and patient-facing systems" style="--x:87.5%;--y:74%">
+                <span class="ri__dot" aria-hidden="true"></span>
+                <button type="button" class="ri__chip" aria-pressed="false">decision-making</button>
+              </li>
+              <li class="ri__theme" data-theme="cocreation" data-label="below" data-about="human–AI co-creation and collaborative design" style="--x:50%;--y:84%">
+                <span class="ri__dot" aria-hidden="true"></span>
+                <button type="button" class="ri__chip" aria-pressed="false">co-creation</button>
+              </li>
+            </ul>
+            <ul class="ri__projects">
+              <li class="ri__project" data-themes="trust decisions" style="--x:51.5%;--y:53.5%"><a href="projects/xai-financial-literacy.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">Framing Financial Feedback</span></a></li>
+              <li class="ri__project" data-themes="trust" style="--x:29.7%;--y:39%"><a href="projects/neurafutures.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">NeuraFutures</span></a></li>
+              <li class="ri__project" data-themes="decisions health" data-side="left" style="--x:70%;--y:50%"><a href="projects/washu-i2db.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">Postoperative Risk Report</span></a></li>
+              <li class="ri__project" data-themes="health" data-side="left" style="--x:78%;--y:38.5%"><a href="projects/zzalign.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">3D Printed Mouthguard</span></a></li>
+              <li class="ri__project" data-themes="health usability" style="--x:40%;--y:32%"><a href="projects/understanding-psilocybin.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">Understanding Psilocybin</span></a></li>
+              <li class="ri__project" data-themes="cocreation" style="--x:39%;--y:68%"><a href="projects/eeg-embroidery.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">The Space Between</span></a></li>
+              <li class="ri__project" data-themes="cocreation health" style="--x:56%;--y:70%"><a href="projects/memento.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">MEmento</span></a></li>
+              <li class="ri__project" data-themes="usability cocreation" style="--x:26%;--y:76%"><a href="projects/afterimage.html"><span class="ri__star" aria-hidden="true"></span><span class="ri__name">afterimage</span></a></li>
+            </ul>
+            <svg class="ri__lines" aria-hidden="true"></svg>
+          </div>
+          <figcaption class="ri__key" data-key>Point at a theme to see what’s inside it. After sunset, the projects come out as stars.</figcaption>
         </figure>
       </section>
 
