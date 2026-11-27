@@ -492,6 +492,8 @@ p { margin: 0; }
 .links a { text-decoration: none; color: var(--ink-2); }
 .links a:hover { color: var(--accent); }
 .links a::after { content: ' \2197'; font-size: 0.85em; color: var(--ink-3); }
+/* The email is written out as plain text (no mailto link), so bots cannot scrape it. */
+.links span { color: var(--ink-2); user-select: all; -webkit-user-select: all; }
 
 .home-clock {
   font-size: 13px;
