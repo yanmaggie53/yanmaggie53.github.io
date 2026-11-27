@@ -17,9 +17,10 @@
   /* ---------- research interests: chips by day, a constellation from sunset ---------- */
 
   // By day the five themes are chips in a tighter version of the sky's arrangement.
-  // From sunset each glides out to its spot in the sky (--x/--y in the HTML), and
-  // the projects come out as stars: each lists
-  // its themes, and a line joins its star to each of them. Pointing at a theme
+  // From sunset each glides out to its spot in the sky (--x/--y in the HTML). The
+  // projects are small dots that go along: each lists its themes, and a line joins
+  // it to each of them, so it reads as a map by day and a constellation at night.
+  // Pointing at a theme
   // lights up its projects and lines and writes what's inside it under the figure;
   // a click keeps it there, and a click anywhere else lets it go.
   function setupInterests() {
@@ -73,16 +74,26 @@
       var sky = !!SKY[mode()];
       fig.classList.toggle('is-sky', sky);
       if (sky) {
-        themes.forEach(function (t) { t.style.left = ''; t.style.top = ''; });
+        themes.concat(projects).forEach(function (el) { el.style.left = ''; el.style.top = ''; });
         field.style.height = '';
       } else {
         var W = field.clientWidth;
+        var squeezed = function (el) {
+          return {
+            x: W / 2 + (parseFloat(el.style.getPropertyValue('--x')) / 100 - 0.5) * W * DAY_SQUEEZE,
+            y: parseFloat(el.style.getPropertyValue('--y')) / 100 * DAY_HEIGHT
+          };
+        };
         themes.forEach(function (t) {
           var h = t.querySelector('.ri__chip').offsetHeight;
-          var cx = W / 2 + (parseFloat(t.style.getPropertyValue('--x')) / 100 - 0.5) * W * DAY_SQUEEZE;
-          var cy = parseFloat(t.style.getPropertyValue('--y')) / 100 * DAY_HEIGHT;
-          t.style.left = cx + 'px';
-          t.style.top = (t.dataset.label === 'above' ? cy + h / 2 + 13 : cy - h / 2 - 13) + 'px';
+          var c = squeezed(t);
+          t.style.left = c.x + 'px';
+          t.style.top = (t.dataset.label === 'above' ? c.y + h / 2 + 13 : c.y - h / 2 - 13) + 'px';
+        });
+        projects.forEach(function (p) {
+          var c = squeezed(p);
+          p.style.left = c.x + 'px';
+          p.style.top = c.y + 'px';
         });
         field.style.height = DAY_HEIGHT + 'px';
       }

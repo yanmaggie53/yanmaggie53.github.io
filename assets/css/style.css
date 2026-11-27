@@ -749,18 +749,15 @@ p { margin: 0; }
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent);
-  opacity: 0;
-  transition: opacity 0.8s ease, box-shadow 0.8s ease;
+  background: var(--ink-2);
+  transition: background 0.8s ease, box-shadow 0.8s ease;
 }
 .ri__project {
   position: absolute;
   left: var(--x);
   top: var(--y);
   transform: translate(-50%, -50%);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+  transition: left 0.8s var(--ease), top 0.8s var(--ease), opacity 0.3s ease;
 }
 .ri__project a { position: relative; display: block; padding: 6px; color: var(--ink); text-decoration: none; }
 .ri__star {
@@ -789,8 +786,8 @@ p { margin: 0; }
 }
 .ri__project[data-side="left"] .ri__name { left: auto; right: 100%; }
 .ri__project a:hover .ri__name, .ri__project a:focus-visible .ri__name { opacity: 1; }
-.ri__lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; opacity: 0; pointer-events: none; transition: opacity 0.8s ease; }
-.ri__lines line { stroke: var(--ink-3); stroke-width: 1; opacity: 0.55; transition: opacity 0.3s ease, stroke 0.3s ease; }
+.ri__lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.ri__lines line { stroke: var(--ink-3); stroke-width: 1; opacity: 0.4; transition: opacity 0.3s ease, stroke 0.3s ease; }
 .ri__lines line.is-lit { stroke: var(--accent); opacity: 1; }
 /* Point at a theme or a project: everything not tied to it fades back. */
 .ri.is-focus .ri__theme:not(.is-lit), .ri.is-focus .ri__project:not(.is-lit) { opacity: 0.35; }
@@ -798,14 +795,11 @@ p { margin: 0; }
 .ri__key { min-height: 2.8em; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
 .ri__key b { font-weight: 500; color: var(--ink-2); }
 .ri__key a { color: var(--ink-2); }
-/* From sunset the chips become stars and the projects come out. */
+/* By day it reads as a map. From sunset the chips lose their backgrounds and the
+   dots glow, so the same drawing reads as a constellation. */
 :root[data-mode="sunset"] .ri__chip, :root[data-mode="night"] .ri__chip { background: transparent; box-shadow: inset 0 0 0 1px transparent; }
-:root[data-mode="sunset"] .ri__dot, :root[data-mode="night"] .ri__dot { opacity: 1; box-shadow: 0 0 10px var(--accent); }
-:root[data-mode="sunset"] .ri__project, :root[data-mode="night"] .ri__project { visibility: visible; transition-delay: 0s; }
-:root[data-mode="sunset"] .ri__project { opacity: 0.6; }
-:root[data-mode="sunset"] .ri__lines { opacity: 0.5; }
-:root[data-mode="night"] .ri__project { opacity: 1; }
-:root[data-mode="night"] .ri__lines { opacity: 1; }
+:root[data-mode="sunset"] .ri__dot, :root[data-mode="night"] .ri__dot { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+:root[data-mode="night"] .ri__lines line:not(.is-lit) { opacity: 0.6; }
 /* On phones there's no room to scatter them: the themes are a plain row of chips. */
 @media (max-width: 600px) {
   .ri__field { height: auto !important; }
