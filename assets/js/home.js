@@ -16,8 +16,9 @@
 
   /* ---------- research interests: chips by day, a constellation from sunset ---------- */
 
-  // By day the five themes are a row of chips. From sunset each glides to its spot
-  // in the sky (--x/--y in the HTML), and the projects come out as stars: each lists
+  // By day the five themes are chips in a tighter version of the sky's arrangement.
+  // From sunset each glides out to its spot in the sky (--x/--y in the HTML), and
+  // the projects come out as stars: each lists
   // its themes, and a line joins its star to each of them. Pointing at a theme
   // lights up its projects and lines and writes what's inside it under the figure;
   // a click keeps it there, and a click anywhere else lets it go.
@@ -62,10 +63,12 @@
       });
     }
 
-    // By day the chips sit in a tight row; from sunset each theme goes back to its
-    // spot in the sky. It's the chip that gets placed, and the element is centred on
-    // its left and anchored on its dot (see the CSS), so the offsets allow for that.
+    // By day the chips keep the sky's arrangement but pulled in towards the middle
+    // and squashed; from sunset each theme goes back out to its spot in the sky.
+    // It's the chip that gets placed, and the element is centred on its left and
+    // anchored on its dot (see the CSS), so the offsets allow for that.
     var SKY = { sunset: true, night: true };
+    var DAY_SQUEEZE = 0.65, DAY_HEIGHT = 180;
     function layout() {
       var sky = !!SKY[mode()];
       fig.classList.toggle('is-sky', sky);
@@ -73,17 +76,15 @@
         themes.forEach(function (t) { t.style.left = ''; t.style.top = ''; });
         field.style.height = '';
       } else {
-        var W = field.clientWidth, gap = 8, x = 0, y = 0, rowH = 0;
+        var W = field.clientWidth;
         themes.forEach(function (t) {
-          var chip = t.querySelector('.ri__chip');
-          var w = chip.offsetWidth, h = chip.offsetHeight;
-          if (x > 0 && x + w > W) { x = 0; y += rowH + gap; rowH = 0; }
-          t.style.left = (x + w / 2) + 'px';
-          t.style.top = (t.dataset.label === 'above' ? y + h + 13 : y - 13) + 'px';
-          x += w + gap;
-          rowH = Math.max(rowH, h);
+          var h = t.querySelector('.ri__chip').offsetHeight;
+          var cx = W / 2 + (parseFloat(t.style.getPropertyValue('--x')) / 100 - 0.5) * W * DAY_SQUEEZE;
+          var cy = parseFloat(t.style.getPropertyValue('--y')) / 100 * DAY_HEIGHT;
+          t.style.left = cx + 'px';
+          t.style.top = (t.dataset.label === 'above' ? cy + h / 2 + 13 : cy - h / 2 - 13) + 'px';
         });
-        field.style.height = (y + rowH) + 'px';
+        field.style.height = DAY_HEIGHT + 'px';
       }
       settle();
     }
